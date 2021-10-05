@@ -1,0 +1,38 @@
+const PROXY_CONFIG = [
+    {
+        context: [
+            "/totvs-rest",
+            "/totvs-login",
+            "/customer",
+            "/country",
+            "/contact",
+            "/order",
+            "/genericsZoom",
+            "/jobScheduler"
+        ],
+        target: "http://localhost:3000",
+        secure: false,
+        changeOrigin: true,
+        logLevel: "debug",
+        autoRewrite: true
+    }, {
+        context: [
+            "/josso",
+            "/dts/datasul-rest"
+        ],
+        //target: "http://vigia:8480",
+        target: "http://gales:8180",
+        secure: false,
+        changeOrigin: true,
+        logLevel: "debug",
+        autoRewrite: true,
+        headers: {
+            //Cookie: "loginMode=normal; JOSSO_SESSIONID=72B88B2C5A5000AFF9C23C56A3908603; JSESSIONID=F5201606657FDB646AF59E2C9D93ECB4"
+            // vigia Authorization: "Basic YWRyaWFub2F2OnNzemtAMTIz"
+            Authorization: "Basic dGVjaGZpbjp0ZWNoQDEyMw"
+        }
+    }
+]
+
+module.exports = PROXY_CONFIG;
+

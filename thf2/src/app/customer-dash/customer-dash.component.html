@@ -1,0 +1,89 @@
+<po-page-default
+    [p-title]="literals?.customerDash"
+    [p-breadcrumb]="breadcrumb">
+
+    <po-tabs>
+        <po-tab p-label="Pedidos" p-active>
+            <div class="po-row po-sm-12 po-md-12 po-lg-12 po-lx-12">
+
+                <po-lookup name="zoomCustomer" class="po-sm-4 po-md-4 po-lg-4 po-lx-4" 
+                    [p-label]="literals?.customer"
+                    [p-placeholder]="literals?.customer"
+                    [(ngModel)]="selectCustomer"
+                    p-field-label="shortName"
+                    p-field-value="code"
+                    [p-columns]="zoomCustomerColumns"
+                    [p-field-format]="zoomCustomerFormat"
+                    [p-filter-service]="servCustomer">
+                </po-lookup>
+
+               <po-select name="selectCustomer" class="po-sm-4 po-md-4 po-lg-4 po-lx-4"
+                    [p-label]="literals?.customer"
+                    [p-placeholder]="literals?.customer"
+                    [p-options]="customerOptions"
+                    [(ngModel)]="selectCustomer"
+                    (p-change)="changeCustomer()">
+                </po-select>
+
+                <po-datepicker class="po-sm-4 po-md-4 po-lg-4 po-lx-4"
+                    [p-format]="literals?.dateFormat"
+                    [p-placeholder]="literals?.dateFormatDesc"
+                    p-label="Data">
+                </po-datepicker>
+            </div>
+
+            <po-divider class="po-sm-12 po-md-12 po-lg-12 po-lx-12"></po-divider>
+
+            <div class="po-row po-sm-12 po-md-12 po-lg-12 po-lx-12">
+
+            <po-widget name="customerInfo" class="po-sm-12 po-md-4 po-lg-4 po-lx-6"
+                    [p-title]="literals?.customerInfo"
+                    [p-disabled]="disableCustDetail"
+                    [p-primary-label]="literals?.detail"
+                    (p-primary-action)="detailCustomer()">
+
+                    <po-info nome="customerName"
+                        p-orientation="horizontal"
+                        [p-label]="literals?.customerName"
+                        [p-value]="customer.name">
+                    </po-info>
+
+                    <po-info nome="customerCountry"
+                        p-orientation="horizontal"
+                        [p-label]="literals?.customerCountry"
+                        [p-value]="customer.country">
+                    </po-info>
+                    
+                </po-widget>
+
+                <po-widget name="orderInfo" class="po-sm-12 po-md-8 po-lg-8 po-lx-6"
+                    [p-title]="literals?.orderInfo"
+                    [p-disabled]="disableCustDetail">
+
+                    <po-table
+                        p-selectable="false"
+                        p-striped="true"
+                        [p-columns]="orderColumns"
+                        [p-items]="orderItems"
+                        [p-show-more-disabled]="!hasNext"
+                        (p-show-more)="searchOrder(true)">
+                    </po-table>
+
+                </po-widget>
+            </div>
+        </po-tab>
+
+        <po-tab p-label="Agendamento">
+            <app-totvs-schedule-execution #schParam
+                programName="pdapi701"
+                externalName="pdp/pdapi701"
+                parameters="parametersRpw"
+                programEMS5="no"
+                programVersion="2.00.22.11"
+                loading="true"
+                (endExecution)="endExecutionScheduleRPW($event)">
+            </app-totvs-schedule-execution>
+        </po-tab>
+    </po-tabs>
+
+</po-page-default>

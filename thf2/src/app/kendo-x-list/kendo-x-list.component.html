@@ -1,0 +1,61 @@
+<po-page-list name="KendoxList"
+    [p-title]="literals?.kendoxlist"
+    [p-disclaimer-group]="disclaimerGroup"
+    [p-filter]="filterSettings"
+    [p-breadcrumb]="breadcrumb"
+    [p-actions]="pageActions">
+
+    <dts-kendo-grid #kendoBasic class="po-md-12 po-p-0"
+        [d-columns]="columns"
+        [d-data]="items"
+        [d-show-more-disabled]="!hasNext"
+        [d-sortable]="true"
+        [d-filterable]="true"
+        [d-groupable]="false"
+        [d-reorderable]="false"
+        [d-resizable]="false"
+        [d-selectable]="false"
+        [d-editable]="false"
+        [d-actions]="tableActions"
+        d-show-maximize="full"
+        [d-show-column-manager]="true"
+        (d-show-more)="search(true)">
+    </dts-kendo-grid>
+
+</po-page-list>
+
+<po-modal #modalAdvanceSearch
+    p-size="sm"
+    [p-title]="literals?.modalAdvanceSearch"
+    [p-primary-action]="confirmAdvSearchAction"
+    [p-secondary-action]="cancelAdvSearchAction">
+
+    <div class="po-row">
+        <po-number class="po-md-6" name="codeInitial"
+            [(ngModel)]="filterCode.valInitial"
+            [p-label]="literals?.codeInitial"
+            [p-placeholder]="literals?.codeInitial"
+            p-minlength="1"
+            p-maxlength="9"
+            p-min="0">
+        </po-number>
+
+        <po-number class="po-md-6" name="codeFinal"
+            [(ngModel)]="filterCode.valFinal"
+            [p-label]="literals?.codeFinal"
+            [p-placeholder]="literals?.codeFinal"
+            p-minlength="1"
+            p-maxlength="9"
+            p-min="0"
+            p-required>
+        </po-number>
+
+        <po-multiselect class="po-md-12" name="filterCountryList"
+            [(ngModel)]="filterCountryList"
+            [p-label]="literals?.country"
+            [p-placeholder]="literals?.all"
+            [p-options]="filterCountryOptions"
+            p-required="true">
+        </po-multiselect>
+    </div>
+</po-modal>

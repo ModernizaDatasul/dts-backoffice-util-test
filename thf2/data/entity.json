@@ -1,0 +1,17 @@
+{
+    "entityName": "entity",
+    "entityLabel": "Label",
+    "keys": [
+        "atribKey"
+    ],
+    "database": [
+        {
+            "code": 1,
+            "name": "Reg 1"
+        },
+        {
+            "code": 2,
+            "name": "Reg 2"
+        }
+    ]
+}

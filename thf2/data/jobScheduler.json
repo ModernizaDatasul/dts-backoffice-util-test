@@ -1,0 +1,82 @@
+{
+    "entityName": "jobScheduler",
+    "entityLabel": "jobScheduler",
+    "keys": [
+        "processID"
+    ],
+    "database": [
+        {
+            "status": "active",
+            "processID": "pdapi701",
+            "recurrent": true,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "00001"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "pdp/pdapi701"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "yes"
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": "2.00.22.11"
+                    },
+                    {
+                        "parametros_negocio": "parametersRpw"
+                    }
+                ]
+            },
+            "firstExecution": "2020-5-15T19:44:00.000Z"
+        },
+        {
+            "status": "active",
+            "processID": "pdapi701-2",
+            "recurrent": true,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "00001"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "pdp/pdapi701"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "yes"
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": "2.00.22.11"
+                    },
+                    {
+                        "parametros_negocio": "parametersRpw"
+                    }
+                ]
+            },
+            "firstExecution": "2020-5-15T19:44:00.000Z",
+            "monthly": {
+                "hour": 8,
+                "minute": 54,
+                "day": 3
+            },
+            "rangeExecutions": {
+                "frequency": {
+                    "type": "hour",
+                    "value": 7
+                },
+                "rangeLimit": {
+                    "hour": 19,
+                    "minute": 41
+                }
+            }
+        }
+    ]
+}

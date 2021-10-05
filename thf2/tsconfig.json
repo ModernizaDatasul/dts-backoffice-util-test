@@ -1,0 +1,26 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": "./",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": [
+            "es2017",
+            "dom"
+        ],
+        "module": "es2020",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "target": "es5",
+        "paths": {
+            "@angular/*": [
+                "../node_modules/@angular/*"
+            ]
+        },
+        "outDir": "./dist/out-tsc",
+        "declaration": false,
+        "typeRoots": [
+            "node_modules/@types"
+        ]
+    }
+}

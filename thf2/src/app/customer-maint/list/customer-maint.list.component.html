@@ -1,0 +1,134 @@
+<po-page-list name="customerMaintList"
+    [p-title]="literals?.customerMaintList"
+    [p-disclaimer-group]="disclaimerGroup"
+    [p-filter]="filterSettings"
+    [p-breadcrumb]="breadcrumb"
+    [p-actions]="pageActions">
+
+    <po-table
+        p-selectable="false"
+        p-striped="true"
+        [p-columns]="columns"
+        [p-items]="items"
+        [p-actions]="tableActions"
+        [p-show-more-disabled]="!hasNext"
+        (p-show-more)="search(true)">
+    </po-table>
+
+</po-page-list>
+
+<po-modal #modalAdvanceSearch
+    p-size="sm"
+    [p-title]="literals?.modalAdvanceSearch"
+    [p-primary-action]="confirmAdvSearchAction"
+    [p-secondary-action]="cancelAdvSearchAction">
+
+    <div class="po-row">
+        <po-number class="po-md-6" name="codeInitial"
+            [(ngModel)]="filterCode.valInitial"
+            [p-label]="literals?.codeInitial"
+            [p-placeholder]="literals?.codeInitial"
+            p-minlength="1"
+            p-maxlength="9"
+            p-min="0">
+        </po-number>
+
+        <po-number class="po-md-6" name="codeFinal"
+            [(ngModel)]="filterCode.valFinal"
+            [p-label]="literals?.codeFinal"
+            [p-placeholder]="literals?.codeFinal"
+            p-minlength="1"
+            p-maxlength="9"
+            p-min="0"
+            p-required>
+        </po-number>
+
+        <po-multiselect class="po-md-12" name="filterCountryList"
+            [(ngModel)]="filterCountryList"
+            [p-label]="literals?.country"
+            [p-placeholder]="literals?.all"
+            [p-options]="filterCountryOptions"
+            p-required="true">
+        </po-multiselect>
+
+        <po-multiselect class="po-md-12" name="filterStatusList"
+            [(ngModel)]="filterStatusList"
+            [p-label]="literals?.status"
+            [p-placeholder]="literals?.all"
+            [p-options]="filterStatusOptions"
+            p-required="true">
+        </po-multiselect>
+
+        <po-switch class="po-md-12" name="filterActive"
+            [(ngModel)]="filterActive"
+            [p-label]="literals?.active">
+        </po-switch>
+    </div>
+
+</po-modal>
+
+<po-modal #modalScheduleRPW
+    p-size="sm"
+    [p-title]="literals?.scheduleRPW"
+    [p-primary-action]="confirmScheduleRPW"
+    [p-secondary-action]="cancelScheduleRPW">
+
+    <po-button
+            p-label="Habilita/Desabilita"
+            (p-click)="onHabilitDesabilitParam()">
+    </po-button>
+
+    <!--
+     programName="pdapi701"
+     externalName="pdp/pdapi701"
+     programVersion="2.00.22.11"
+     -->   
+
+     <app-totvs-schedule-execution #schParam
+        programName="api_executa_carga_dados_carol"
+        externalName="api_executa_carga_dados_carol"        
+        programVersion="1.00.00.001"     
+        [parameters]="parametersRpw"
+        programEMS5="true"
+        loading="true"
+        [disabledParams]="disableParamRpw"
+        (endExecution)="endExecutionScheduleRPW($event)">
+    </app-totvs-schedule-execution>
+
+</po-modal>
+
+<po-modal #modalOrderGeneration
+    p-size="sm"
+    [p-title]="literals?.order">
+
+    <po-input class="po-md-8"
+        p-label="Servidor RPW"
+        [(ngModel)]="executionServer">
+    </po-input>
+
+    <po-button class="po-md-4 po-mt-4"
+        p-label="Agendar"
+        (p-click)="agendamento()">
+    </po-button>    
+
+    <po-input class="po-md-8"
+        p-label="jobScheduleID"
+        p-readonly="false"
+        [(ngModel)]="jobScheduleID">
+    </po-input>
+
+    <po-button class="po-md-4 po-mt-4"
+        p-label="Acompanhar"
+        (p-click)="followUp()">
+    </po-button>
+
+    <po-table class="po-md-12"
+        p-selectable="false"
+        p-striped="true"
+        [p-loading]="orderLoading"
+        [p-columns]="orderColumns"
+        [p-items]="orderItems">
+    </po-table>    
+
+</po-modal>
+

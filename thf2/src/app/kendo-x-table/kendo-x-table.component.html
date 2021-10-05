@@ -1,0 +1,24 @@
+<po-page-default
+    [p-title]="literals?.kendoxTable">
+
+    <dts-kendo-grid class="po-md-12"
+        [d-selectable]="false"
+        [d-show-column-manager]="true"
+        [d-columns]="columnsKendo"
+        [d-data]="items"
+        [d-actions]="tableActions"
+        [d-show-more-disabled]="!hasNext"
+        (d-show-more)="search(true)">
+    </dts-kendo-grid>	
+
+    <po-table class="po-md-12"
+        p-selectable="false"
+        p-striped="true"
+        [p-columns]="columnsPo"
+        [p-items]="items"
+        [p-actions]="tableActions"
+        [p-show-more-disabled]="!hasNext"
+        (p-show-more)="search(true)">
+    </po-table>
+
+</po-page-default>

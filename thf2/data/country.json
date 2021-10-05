@@ -1,0 +1,29 @@
+{
+    "entityName": "country",
+    "entityLabel": "País",
+    "keys": [
+        "countryCode"
+    ],
+    "database": [
+        {
+            "countryCode": "USA",
+            "countryName": "Estados Unidos"
+        },
+        {
+            "countryCode": "ARG",
+            "countryName": "Argentina"
+        },
+        {
+            "countryCode": "CAN",
+            "countryName": "Canadá"
+        },
+        {
+            "countryCode": "BRA",
+            "countryName": "Brasil"
+        },
+        {
+            "countryCode": "CHI",
+            "countryName": "Chile"
+        }
+    ]
+}

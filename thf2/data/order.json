@@ -1,0 +1,78 @@
+{
+    "entityName": "order",
+    "entityLabel": "Pedido",
+    "keys": [
+        "customer",
+        "ordNumber"
+    ],
+    "base64Key": false,
+    "database": [
+        {
+            "customer": 1,
+            "ordNumber": 1,
+            "issueDate": "2019-12-10",
+            "ordValue": 3433.23,
+            "status": 1,
+            "orderLines": [
+                {
+                    "seq": 1,
+                    "item": "Borracha",
+                    "qtd": 10,
+                    "itemValue": 32.3
+                },
+                {
+                    "seq": 2,
+                    "item": "Caneta",
+                    "qtd": 3,
+                    "itemValue": 2.53
+                },
+                {
+                    "seq": 3,
+                    "item": "Caderno",
+                    "qtd": 2,
+                    "itemValue": 12.44
+                }
+            ]
+        },
+        {
+            "customer": 1,
+            "ordNumber": 2,
+            "issueDate": "2019-12-11",
+            "ordValue": 773.52,
+            "status": 2,
+            "orderLines": [
+                {
+                    "seq": 1,
+                    "item": "Caneta",
+                    "qtd": 3,
+                    "itemValue": 4.6
+                },
+                {
+                    "seq": 2,
+                    "item": "Folhas",
+                    "qtd": 4,
+                    "itemValue": 0.98
+                }
+            ]
+        },
+        {
+            "customer": 2,
+            "ordNumber": 3,
+            "issueDate": "2019-12-09",
+            "ordValue": 8411.23,
+            "status": 3,
+            "orderLines": [
+                {
+                    "seq": 1,
+                    "item": "Lápis de cor",
+                    "qtd": 10,
+                    "itemValue": 5.24
+                }
+            ]
+        },
+        {
+            "customer": 1,
+            "ordNumber": 5
+        }
+    ]
+}

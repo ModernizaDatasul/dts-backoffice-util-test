@@ -1,0 +1,63 @@
+<po-page-default
+    [p-title]="literals?.kendoxKendoPuro">
+
+    <div class="po-row">
+        <po-switch class="po-md-3" name="editable" 
+            p-label-off="d-editable"
+            p-label-on="d-editable"
+            [(ngModel)]="lEditable">
+        </po-switch>
+
+        <po-button
+            p-label="Modal"
+            (p-click)="onOpenModal()">
+        </po-button>
+    </div>
+
+    <kendo-grid
+        [data]="gridView"
+        [groupable]="true"
+        [group]="groups"
+        [sortable]="sortableSettigs"
+        [sort]="sortField"
+        [selectable]="selectableSettings"
+        [height]="400"
+        (groupChange)="groupChange($event)"
+        (sortChange)="sortChange($event)">
+
+        <kendo-grid-checkbox-column
+            [width]="30"
+            [showSelectAll]="true">
+        </kendo-grid-checkbox-column>
+
+        <kendo-grid-column field="code" title="Código" [width]="80"></kendo-grid-column>
+        <kendo-grid-column field="shortName" title="NomeAbrev" [width]="120"></kendo-grid-column>
+        <kendo-grid-column field="name" title="Nome" [width]="120"></kendo-grid-column>
+        <kendo-grid-column field="country" title="País" [width]="120"></kendo-grid-column>
+        <kendo-grid-column field="tax" title="Taxa?" [width]="120"></kendo-grid-column>
+        <kendo-grid-column field="taxValue" title="Valor" [width]="120"></kendo-grid-column>
+        <kendo-grid-column field="percent" title="%" [width]="120"></kendo-grid-column>
+        <kendo-grid-column field="admissDate" title="Admissão" [width]="120"></kendo-grid-column>
+    </kendo-grid>
+    
+</po-page-default>
+
+<po-modal #modalKendo
+
+    [p-title]="literals?.kendoxKendoPuro"
+    [p-primary-action]="confirmModal">
+
+  <!--  <dts-kendo-grid class="po-md-12"
+        [d-sortable]="true"
+        [d-selectable]="false"
+        [d-groupable]="true"
+        [d-filterable]="true"
+        [d-editable]="lEditable"
+        [d-actions]="tableActions"
+        [d-columns]="columns"
+        [d-data]="items"
+        [d-show-more-disabled]="!hasNext"
+        (d-show-more)="search(true)">
+    </dts-kendo-grid> -->
+
+</po-modal>

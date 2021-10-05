@@ -1,0 +1,17 @@
+{
+    "entityName": "genericsZoom",
+    "entityLabel": "genericsZoom",
+    "keys": [
+        "codServidExec"
+    ],
+    "database": [
+        {
+            "codServidExec": "RPW1",
+            "desServidExec": "Servidor 1"
+        },
+        {
+            "codServidExec": "RPW2",
+            "desServidExec": "Servidor 2"
+        }
+    ]
+}
