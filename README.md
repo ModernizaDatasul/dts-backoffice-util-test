@@ -1,27 +1,53 @@
 # dts-backoffice-util-test
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
+## Objetivo
 
-## Development server
+Projeto para realização de testes das bibliotecas:
+- [**dts-backoffice-util**](https://github.com/ModernizaDatasul/dts-backoffice-util/tree/master/projects/dts-backoffice-util)
+- [**dts-backoffice-kendo-grid**](https://github.com/ModernizaDatasul/dts-backoffice-util/tree/master/projects/dts-backoffice-kendo-grid)
+-  [**mock-totvs-builder**](https://github.com/ModernizaDatasul/mock-totvs-builder)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Nele é possível verificar e testar as implementações das funcionalidades das bibliotecas de forma mais detalhadas, através de exemplos das implementações.
 
-## Code scaffolding
+<br>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Instalação
+- Baixar o projeto;
+- Abrir na pasta:<br>
+**/dts-backoffice-util-test/thf2/**
+- Instalar:<br>
+**npm install**
 
-## Build
+<br>
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+## Utilização
+Abrir dois Terminais, um será utilizado para o **Mock** e outro para a **Aplicação**.
 
-## Running unit tests
+<br>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Mock
+Para carregar o mock, utilizar o comando:<br>
+**npm run mock**<br>
+Na pasta **thf2/data** é possível visualizar, alterar e configurar os arquivos utilizados pelo Mock.<br>
+É possível fazer um consulta visual dos dados mockados, através do caminho:<br>
+**http://localhost:3000/**
 
-## Running end-to-end tests
+<br>
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## Aplicação
+No outro terminal, carregar a aplicação:<br>
+**npm start**<br>
+Após o carregamento, ela estará disponível no caminho:<br>
+**http://localhost:4200/dts-backoffice-util-test/#/**<br>
+Será apresentado um menu lateral, onde é possível acessar as telas de teste das funcionalidades.
 
-## Further help
+<br>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Entidades
+Nem todas as entidades estão Mockadas, por exemplo os servidores RPW do Agendamento.
+<br>Neste caso, deve ser feito a configuração do Ambiente no Arquivo **th2/proxy.conf.js** informando o servidor **"target"**, e o **usuário/senha** de acesso **"Authorization"**.
+
+<br>
+
+## Funcionalidades
+Não existe uma tela específica para cada funcionalidade, elas estão **"espalhadas"** pelas telas, neste caso, para ver o exemplo da implementação, deve-se realizar um localizar no projeto pelo nome da funcionalidade.

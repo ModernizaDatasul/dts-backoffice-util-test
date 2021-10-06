@@ -24,7 +24,13 @@
             "method": "POST",
             "path": "/:idParam/duplic",
             "database": "db_duplic"
-        }
+        },
+        {
+            "name": "file",
+            "method": "GET",
+            "path": "/:idParam/file",
+            "database": "db_file"
+        }        
     ],
     "database": [
         {
@@ -46,6 +52,11 @@
                     "seq": 1,
                     "name": "Zezinho",
                     "phone": "9835-35456"
+                },
+                {
+                    "seq": 2,
+                    "name": "Robervindo",
+                    "phone": "23534544"
                 }
             ],
             "department": "10",
@@ -1661,5 +1672,11 @@
             "country": "CHI",
             "status": 1
         }
-    ]
+    ],
+    "db_file": [
+        {
+            "filename": "info_cli.txt",
+            "content": "SW5mb3JtYcOnw7VlcyBkbyBDbGllbnRlIEPDs2RpZ28gMSAhIQ0KUmVsYXTDs3JpbyBubyBmb3JtYXRvIFRYVC4NCkVtcHJlc2EgMTAuDQo="
+          }
+    ]    
 }

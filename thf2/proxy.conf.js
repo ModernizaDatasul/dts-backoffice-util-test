@@ -28,8 +28,8 @@ const PROXY_CONFIG = [
         autoRewrite: true,
         headers: {
             //Cookie: "loginMode=normal; JOSSO_SESSIONID=72B88B2C5A5000AFF9C23C56A3908603; JSESSIONID=F5201606657FDB646AF59E2C9D93ECB4"
-            // vigia Authorization: "Basic YWRyaWFub2F2OnNzemtAMTIz"
-            Authorization: "Basic dGVjaGZpbjp0ZWNoQDEyMw"
+            // vigia Authorization: "Basic XXXXXXXXX"
+            Authorization: "Basic XXXXXXXXX"
         }
     }
 ]

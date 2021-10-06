@@ -65,7 +65,7 @@ export class CustomerService {
     }
 
     getFile(): Observable<Object> {
-        const url = '/dts/datasul-rest/resources/prg/fin/v1/getfile';
+        const url = '/customer/1/file';
         return this.http.get(url, this.headers);
     }
 
