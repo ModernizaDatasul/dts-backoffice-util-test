@@ -50,4 +50,4 @@ Nem todas as entidades estão Mockadas, por exemplo os servidores RPW do Agendam
 <br>
 
 ## Funcionalidades
-Não existe uma tela específica para cada funcionalidade, elas estão **"espalhadas"** pelas telas, neste caso, para ver o exemplo da implementação, deve-se realizar um localizar no projeto pelo nome da funcionalidade.
+Para o **dtsKendoGrid** existe um menu específico para acessar as telas de teste, mas para as demais funcionalidades não há, elas estão **"espalhadas"** pelas telas. Neste caso, para ver o exemplo da implementação, deve-se realizar uma pesquisa no projeto pelo nome da funcionalidade.
