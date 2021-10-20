@@ -60,7 +60,7 @@
                 }
             ],
             "department": "10",
-            "federalID": "12345678901"
+            "federalID": "000712345678901"
         },
         {
             "code": 2,
@@ -78,7 +78,7 @@
             "states": "PR,SP,RJ",
             "contacts": [],
             "department": "10",
-            "federalID": "12345678901"
+            "federalID": "012345678901"
         },
         {
             "code": 3,
@@ -112,7 +112,7 @@
             "states": "BH,SP",
             "status": 1,
             "department": "30",
-            "federalID": "12345678901"
+            "federalID": "012345678901"
         },
         {
             "code": 6,
@@ -129,7 +129,7 @@
             "states": "RJ,SP,SC",
             "status": 3,
             "department": "10",
-            "federalID": "12345678901"
+            "federalID": "00012345678901"
         },
         {
             "code": 7,
@@ -141,7 +141,7 @@
             "contacts": [],
             "tax": true,
             "department": "20",
-            "federalID": "12345678901"
+            "federalID": "00003312345678901"
         },
         {
             "code": 8,

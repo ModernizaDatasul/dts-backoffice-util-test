@@ -29,8 +29,8 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
     servCustomerSubscription$: Subscription;
     servOrderSubscription$: Subscription;
 
-    //zoomCustomerColumns: Array<PoLookupColumn>;
-    zoomCustomerColumns: Array<PoTableColumn>;
+    zoomCustomerColumns: Array<PoLookupColumn>;
+    //zoomCustomerColumns: Array<PoTableColumn>;
 
     customerOptions: Array<PoSelectOption>;
     selectCustomer = 0;
@@ -168,17 +168,17 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
             { property: 'code', label: this.literals['code'], type: 'string' },
             { property: 'name', label: this.literals['name'], type: 'string' },
             { property: 'country', label: this.literals['country'], type: 'string' },
-            { property: 'tax', label: this.literals['tax'], type: 'string', visible: false },
-            { property: 'taxValue', label: this.literals['taxValue'], type: 'number', visible: false },
-            { property: 'percent', label: this.literals['percent'], type: 'number', visible: false },
-            { property: 'admissDate', label: this.literals['admissDate'], type: 'date', visible: false },
-            { property: 'resignationDate', label: this.literals['resignationDate'], type: 'date', visible: false },
-            {
+            { property: 'tax', label: this.literals['tax'], type: 'boolean' },
+            { property: 'taxValue', label: this.literals['taxValue'], type: 'number' /*, visible: false*/ },
+            { property: 'percent', label: this.literals['percent'], type: 'number' /*, visible: false*/ },
+            { property: 'admissDate', label: this.literals['admissDate'], type: 'date' /*, visible: false*/ },
+            { property: 'resignationDate', label: this.literals['resignationDate'], type: 'date' /*, visible: false*/ },
+            /*{
                 property: 'status', label: this.literals['status'],
-                //type: 'string'
-                type: 'label', labels: this.customerStatusLabelList
-            },
-            { property: 'federalID', label: this.literals['federalID'], type: 'string', visible: false },
+                type: 'string'
+                //type: 'label', labels: this.customerStatusLabelList
+            },*/
+            { property: 'federalID', label: this.literals['federalID'], type: 'string' /*, visible: false*/ },
         ];
 
         this.orderStatusLabelList = Order.statusLabelList(this.literals);

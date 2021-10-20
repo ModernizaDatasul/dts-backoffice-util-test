@@ -41,7 +41,7 @@
         "classlist.js": "^1.1.20150312",
         "core-js": "^3.6.1",
         "dts-backoffice-kendo-grid": "2.8.1",
-        "dts-backoffice-util": "2.7.0",
+        "dts-backoffice-util": "2.8.1",
         "hammerjs": "^2.0.8",
         "mdn-polyfills": "^5.18.0",
         "rxjs": "~6.6.2",

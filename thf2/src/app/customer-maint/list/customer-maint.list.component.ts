@@ -8,13 +8,13 @@ import { ICustomer, Customer } from '../../shared/model/customer.model';
 import { CustomerService } from '../../shared/services/customer.service';
 import { CountryService } from '../../shared/services/country.service';
 import { ICountry } from '../../shared/model/country.model';
-import { DownloadDataParams, IFilterRangeNumber } from 'dts-backoffice-util';
+import { IFilterRangeNumber } from 'dts-backoffice-util';
 import { FilterRangeUtil } from 'dts-backoffice-util';
 import { DisclaimerUtil } from 'dts-backoffice-util';
 import { FieldValidationUtil } from 'dts-backoffice-util';
 import { BreadcrumbControlService } from 'dts-backoffice-util';
 import { TotvsResponse } from 'dts-backoffice-util';
-import { FileUtil } from 'dts-backoffice-util';
+import { FileUtil, DownloadDataParams } from 'dts-backoffice-util';
 import { TotvsScheduleExecutionComponent } from 'dts-backoffice-util';
 import { IOrder } from '../../shared/model/order.model';
 import { OrderService } from '../../shared/services/order.service';
@@ -81,6 +81,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
 
     executionServer: string;
     jobScheduleID: string;
+    executionID: string;
     schedExecSubscription$: Subscription;
 
     pageActions: Array<PoPageAction>;
@@ -327,11 +328,51 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             });
     }
 
-    followUp(): void {
-        console.log('Acompanhando...');
+    getExecution(type: string): void {
+        console.log('Buscando... type: ', type);
+
+        if (type === 'jobScheduleID') {
+            this.schedExecSubscription$ = this.scheduleExecution
+                .getExecutionByJobScheduleID(this.jobScheduleID, true)
+                .subscribe((response: IExecutionStatus) => {
+
+                    console.log('Buscou Execução...: ', response);
+
+                    if (response) {
+                        this.executionID = response.executionID;
+                    } else {
+                        this.executionID = 'Não Encontrado !';
+                    }
+                });
+        }
+
+        if (type === 'executionID') {
+            this.schedExecSubscription$ = this.scheduleExecution
+                .getExecutionByExecutionID(this.executionID, true)
+                .subscribe((response: IExecutionStatus) => {
+
+                    console.log('Buscou Execução...: ', response);
+
+                    if (response) {
+                        this.jobScheduleID = response.jobScheduleID;
+                    } else {
+                        this.jobScheduleID = 'Não Encontrado !';
+                    }
+                });
+        }
+    }
+
+    followUp(type: string): void {
+        console.log('Acompanhando... type: ', type);
 
         this.orderLoading = true;
-        this.scheduleExecution.followUpExecution(this.jobScheduleID, 5000, this.followUpCallBack.bind(this));
+        if (type === 'jobScheduleID') {
+            this.scheduleExecution.followUpExcByJobScheduleID(this.jobScheduleID, 5000, this.followUpCallBack.bind(this));
+        }
+
+        if (type === 'executionID') {
+            this.scheduleExecution.followUpExcByExecutionID(this.executionID, 5000, this.followUpCallBack.bind(this));
+        }
     }
 
     followUpCallBack(execStatus: IExecutionStatus): boolean {
@@ -436,8 +477,8 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
                 dwldDataParam.fileName = 'clientes.csv';
                 dwldDataParam.literals = this.literals;
                 dwldDataParam.columnDelimiter = ';';
-                dwldDataParam.columnList = ['shortName', 'name', 'country', 'status', 'tax'];
-                dwldDataParam.columnExclude = ['states', 'contacts'];
+                dwldDataParam.columnList = ['country', 'status', 'shortName', 'name', 'percent', 'federalID', 'tax', 'code'];
+                dwldDataParam.columnExclude = ['states', 'contacts', 'tax'];
 
                 FileUtil.downloadData(response.items, dwldDataParam);
             });

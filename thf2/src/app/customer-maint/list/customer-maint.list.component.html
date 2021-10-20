@@ -101,26 +101,53 @@
     p-size="sm"
     [p-title]="literals?.order">
 
-    <po-input class="po-md-8"
-        p-label="Servidor RPW"
-        [(ngModel)]="executionServer">
-    </po-input>
+    <div class="po-row">
+        <po-input class="po-md-8"
+            p-label="Servidor RPW"
+            [(ngModel)]="executionServer">
+        </po-input>
 
-    <po-button class="po-md-4 po-mt-4"
-        p-label="Agendar"
-        (p-click)="agendamento()">
-    </po-button>    
+        <po-button class="po-md-4 po-mt-4"
+            p-label="Agendar"
+            (p-click)="agendamento()">
+        </po-button>    
+    </div>
 
-    <po-input class="po-md-8"
-        p-label="jobScheduleID"
-        p-readonly="false"
-        [(ngModel)]="jobScheduleID">
-    </po-input>
+    <div class="po-row">
+        <po-input class="po-md-6"
+            p-label="jobScheduleID"
+            p-readonly="false"
+            [(ngModel)]="jobScheduleID">
+        </po-input>
 
-    <po-button class="po-md-4 po-mt-4"
-        p-label="Acompanhar"
-        (p-click)="followUp()">
-    </po-button>
+        <po-button class="po-md-3 po-mt-4"
+            p-label="Buscar"
+            (p-click)="getExecution('jobScheduleID')">
+        </po-button>    
+
+        <po-button class="po-md-3 po-mt-4"
+            p-label="Acompanhar"
+            (p-click)="followUp('jobScheduleID')">
+        </po-button>
+    </div>
+
+    <div class="po-row">
+        <po-input class="po-md-6"
+            p-label="executionID"
+            p-readonly="false"
+            [(ngModel)]="executionID">
+        </po-input>
+
+        <po-button class="po-md-3 po-mt-4"
+            p-label="Buscar"
+            (p-click)="getExecution('executionID')">
+        </po-button>    
+
+        <po-button class="po-md-3 po-mt-4"
+            p-label="Acompanhar"
+            (p-click)="followUp('executionID')">
+        </po-button>
+    </div>
 
     <po-table class="po-md-12"
         p-selectable="false"
