@@ -21,6 +21,7 @@ export const generalEs = {
     no: 'No',
     remove: 'Eliminar',
     return: 'Regreso',
+    close: 'Cerca',
     save: 'Guardar',
     search: 'Buscar',
     select: 'Seleccionar',

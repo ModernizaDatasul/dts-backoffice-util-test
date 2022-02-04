@@ -14,7 +14,8 @@ export class AppComponent {
         { label: 'Home', link: '/' },
         {
             label: 'Cliente', subItems: [
-                { label: 'Cadastro de Cliente', action: this.goTo.bind(this, '/customerMaint') },
+                { label: 'Cadastro de Cliente (Estático)', action: this.goTo.bind(this, '/customerMaint') },
+                { label: 'Cadastro de Cliente (Dinâmico)', action: this.goTo.bind(this, '/custMaintDynamic') },
                 { label: 'Pedidos do Cliente', action: this.goTo.bind(this, '/customerDash') }
             ]
         },

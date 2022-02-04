@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PoI18nPipe, PoI18nService, PoNotificationService, PoTableColumn, PoBreadcrumb, PoPageAction, PoSelectOption } from '@po-ui/ng-components';
+import { PoI18nPipe, PoI18nService, PoNotificationService, PoTableColumn, PoBreadcrumb, PoPageAction, PoPopoverComponent } from '@po-ui/ng-components';
+import { PoSelectOption, PoLookupColumn, PoUploadComponent } from '@po-ui/ng-components';
 import { PoTableAction, PoDisclaimer, PoDisclaimerGroup, PoPageFilter, PoModalComponent, PoModalAction } from '@po-ui/ng-components';
 import { PoDialogService } from '@po-ui/ng-components';
 import { forkJoin, Subscription } from 'rxjs';
@@ -30,7 +31,9 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     @ViewChild('modalAdvanceSearch', { static: true }) modalAdvanceSearch: PoModalComponent;
     @ViewChild('modalScheduleRPW', { static: true }) modalScheduleRPW: PoModalComponent;
     @ViewChild('modalOrderGeneration', { static: true }) modalOrderGeneration: PoModalComponent;
+    @ViewChild('modalUpload', { static: true }) modalUpload: PoModalComponent;
     @ViewChild('schParam', { static: true }) schParam: TotvsScheduleExecutionComponent;
+    @ViewChild('uploadFiles', { static: true }) uploadFiles: PoUploadComponent;
 
     literals: any = {};
 
@@ -53,6 +56,9 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
 
     confirmScheduleRPW: PoModalAction;
     cancelScheduleRPW: PoModalAction;
+
+    confirmUpload: PoModalAction;
+    cancelUpload: PoModalAction;
 
     filterCode: IFilterRangeNumber;
     filterCountryList: Array<string>;
@@ -83,11 +89,15 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     jobScheduleID: string;
     executionID: string;
     schedExecSubscription$: Subscription;
+    zoomRpwServiceColumns: Array<PoLookupColumn>;
 
     pageActions: Array<PoPageAction>;
 
     parametersRpw = new Array<any>();
     disableParamRpw = true;
+
+    fileToSend: any;
+    public apiUploadUrl: string;
 
     constructor(
         private poI18nPipe: PoI18nPipe,
@@ -100,7 +110,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         private servCountry: CountryService,
         private servOrder: OrderService,
         private breadcrumbControlService: BreadcrumbControlService,
-        private scheduleExecution: TotvsScheduleExecutionService
+        public scheduleExecution: TotvsScheduleExecutionService
     ) { }
 
     ngOnInit(): void {
@@ -109,6 +119,8 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             this.poI18nService.getLiterals({ context: 'customerMaint' })
         ]).subscribe(literals => {
             literals.map(item => Object.assign(this.literals, item));
+
+            this.apiUploadUrl = this.servCustomer.getApiUploadUrl();
 
             console.log('LOG', 'Início do Programa de Lista');
 
@@ -122,6 +134,10 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
 
             this.search();
         });
+    }
+
+    fieldRpwServiceFormat(value) {
+        return `${value.code} - ${value.name}`;
     }
 
     search(loadMore = false): void {
@@ -307,7 +323,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         this.modalOrderGeneration.open();
     }
 
-    agendamento(): void {
+    scheduling(): void {
         console.log('Agendando para Agora...');
 
         const execParam = new ExecutionParameters();
@@ -446,7 +462,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         this.modalScheduleRPW.open();
     }
 
-    onHabilitDesabilitParam(): void {
+    onEnableDisableParam(): void {
         this.disableParamRpw = !this.disableParamRpw;
     }
 
@@ -461,10 +477,17 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
 
     downloadFile() {
         this.servCustomerSubscription$ = this.servCustomer
-            .getFile()  // Método do Serviço de Cliente que devolve do BackEnd um arquivo em base64
+            .getFile('1')  // Método do Serviço de Cliente que devolve do BackEnd um arquivo em base64
             .subscribe((response: Object) => {
 
                 FileUtil.downloadFile(response['content'], response['filename']);
+            });
+
+        this.servCustomerSubscription$ = this.servCustomer
+            .getQrCode('00020126360014BR.GOV.BCB.PIX0114+554798402310452040000530398654071500.005802BR5916Robervaldo6009Joinville62070503Novo%20QR%20pix63047EF5')  // Método do Serviço de Cliente que devolve a imagem de um QrCode
+            .subscribe((response: Blob) => {
+
+                FileUtil.downloadFile(response, 'qrCode.png', '', false);
             });
     }
 
@@ -482,6 +505,27 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
 
                 FileUtil.downloadData(response.items, dwldDataParam);
             });
+    }
+
+    upload(): void {
+        this.modalUpload.open();
+    }
+
+    onConfirmUpload(): void {
+        console.log('fileToSend', this.fileToSend);
+        this.uploadFiles.sendFiles();
+    }
+
+    onAddParamsToUpload(event): void {
+        event.data = { id: 'id do usuario' };
+        console.log('event', event);
+    }
+
+    onClickClosePopovObs(): void {
+        const iconObsComponent = document.getElementById('iconObs');
+        if (iconObsComponent) {
+            iconObsComponent.click();
+        }
     }
 
     setupComponents(): void {
@@ -516,6 +560,19 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             action: () => this.modalScheduleRPW.close(), label: this.literals['cancel']
         };
 
+        this.confirmUpload = {
+            action: () => this.onConfirmUpload(), label: this.literals['confirm']
+        };
+
+        this.cancelUpload = {
+            action: () => this.modalUpload.close(), label: this.literals['cancel']
+        };
+
+        this.zoomRpwServiceColumns = [
+            { property: 'code', label: 'Servidor', type: 'string', width: '20%' },
+            { property: 'name', label: 'Descrição', type: 'string', width: '80%' }
+        ];
+
         this.tableActions = [
             { action: this.detail.bind(this), label: this.literals['detail'], icon: 'po-icon po-icon-document' },
             { action: this.edit.bind(this), label: this.literals['edit'], icon: 'po-icon po-icon-edit' },
@@ -534,14 +591,15 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         });
 
         this.columns = [
+            { property: 'code', label: this.literals['code'], type: 'number' },
             {
-                property: 'codeIdenf', label: this.literals['code'], type: 'link',
-                action: (value, row) => { this.detail(row); },
+                property: 'shortName', label: this.literals['shortName'], type: 'link',
+                action: (value, row) => { this.detail(row); }
             },
-            { property: 'shortName', label: this.literals['shortName'], type: 'string' },
             { property: 'name', label: this.literals['name'], type: 'string' },
             { property: 'country', label: this.literals['country'], type: 'string' },
-            { property: 'status', label: this.literals['status'], type: 'label', labels: this.statusLabelList }
+            { property: 'status', label: this.literals['status'], type: 'label', labels: this.statusLabelList },
+            { property: 'observation', label: this.literals['observAbrev'], type: 'columnTemplate' }
         ];
 
         this.orderColumns = [
@@ -555,7 +613,8 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             { label: this.literals['scheduleRPW'], action: this.openScheduleRPW.bind(this) },
             { label: this.literals['order'], action: this.order.bind(this) },
             { label: this.literals['download'], action: this.downloadFile.bind(this) },
-            { label: this.literals['downloadList'], action: this.downloadList.bind(this) }
+            { label: this.literals['downloadList'], action: this.downloadList.bind(this) },
+            { label: this.literals['upload'], action: this.upload.bind(this) }
         ];
 
         this.filterCountryOptions = [];

@@ -1,9 +1,9 @@
 export const customerMaintPt = {
 
-    customerMaintList: 'Cadastro de Clientes',
-    customerMaintDetail: 'Detalhe de Clientes',
-    customerMaintEdit: 'Alteração de Clientes',
-    customerMaintAdd: 'Inclusão de Cliente',
+    customerMaintList: 'Cadastro de Clientes (Estático)',
+    customerMaintDetail: 'Detalhe de Clientes (Estático)',
+    customerMaintEdit: 'Alteração de Clientes (Estático)',
+    customerMaintAdd: 'Inclusão de Cliente (Estático)',
 
     code: 'Código',
     internalId: 'InternalID',
@@ -18,6 +18,9 @@ export const customerMaintPt = {
     resignationDate: 'Demissão',
     states: 'Estados',
     department: 'Depart',
+    federalID: 'ID Federal',
+    observation: 'Observação',
+    observAbrev: 'Obs',
 
     active: 'Ativo',
     inactive: 'Inativo',
@@ -45,5 +48,7 @@ export const customerMaintPt = {
     scheduleRPW: 'Agenda RPW',
     order: 'Pedido',
     download: 'Download Arquivo',
-    downloadList: 'Download Lista'
+    downloadList: 'Download Lista',
+    upload: 'Upload',
+    confirm: 'Confirmar'
 };

@@ -7,15 +7,23 @@ import { TotvsResponse } from 'dts-backoffice-util';
 
 @Injectable()
 export class CustomerService {
-
     private headers = { headers: { 'X-PO-Screen-Lock': 'true' } };
 
     // private apiBaseUrl = '/dts/datasul-rest/resources/prg/fin/v1/customer';
     private apiBaseUrl = '/customer';
+    private apiUploadUrl = `${this.apiBaseUrl}/addFile`;
 
     private expandables = [''];
 
     constructor(private http: HttpClient) { }
+
+    getApiBaseUrl(): string {
+        return this.apiBaseUrl;
+    }
+
+    getApiUploadUrl(): string {
+        return this.apiUploadUrl;
+    }
 
     query(filters: PoDisclaimer[], expandables: string[], page = 1, pageSize = 20): Observable<TotvsResponse<ICustomer>> {
         const url = this.getUrl(this.apiBaseUrl, filters, expandables, page, pageSize);
@@ -28,6 +36,13 @@ export class CustomerService {
         if (lstExpandables !== '') { lstExpandables = `?${lstExpandables}`; }
 
         return this.http.get<ICustomer>(`${this.apiBaseUrl}/${id}${lstExpandables}`, this.headers);
+    }
+
+    getMetadata(type = '', id = ''): Observable<any> {
+        let url = `${this.apiBaseUrl}/metadata`;
+        if (id) { url = `${url}/${id}`; }
+        if (type) { url = `${url}/${type}`; }
+        return this.http.get<TotvsResponse<ICustomer>>(url, this.headers);
     }
 
     getFilteredItems(params: PoLookupFilteredItemsParams): Observable<ICustomer> {
@@ -64,9 +79,14 @@ export class CustomerService {
         return this.http.post(`${this.apiBaseUrl}/${Customer.getInternalId(model)}/duplic`, model, this.headers);
     }
 
-    getFile(): Observable<Object> {
-        const url = '/customer/1/file';
+    getFile(id: string): Observable<Object> {
+        const url = `/customer/${id}/file`;
         return this.http.get(url, this.headers);
+    }
+
+    getQrCode(text: string): Observable<Blob> {
+        const url = `/qrcode/download?text=${text}`;
+        return this.http.get(url, { responseType: 'blob' });
     }
 
     getUrl(urlBase: string, filters: PoDisclaimer[], expandables: string[], page: number, pageSize: number): string {

@@ -12,7 +12,7 @@ export class Country implements ICountry {
     }
 
     static getInternalId(item: ICountry): string {
-        return item.countryCode.toString();
+        return item.countryCode;
     }
 
     get $countryCode(): string { return this.countryCode; }

@@ -4,7 +4,44 @@
     "keys": [
         "code"
     ],
+    "searchField": "shortName",
+    "base64Key": false,
     "customRoutes": [
+        {
+            "name": "metadataList",
+            "method": "GET",
+            "path": "/metadata/list",
+            "responseType": "object",
+            "database": "db_mtd_list"
+        },
+        {
+            "name": "metadataDetail",
+            "method": "GET",
+            "path": "/metadata/detail",
+            "responseType": "object",
+            "database": "db_mtd_detail"
+        },
+        {
+            "name": "metadataDetail2",
+            "method": "GET",
+            "path": "/metadata/:id/detail",
+            "responseType": "object",
+            "database": "db_mtd_detail2"
+        },
+        {
+            "name": "metadataEdit",
+            "method": "GET",
+            "path": "/metadata/edit",
+            "responseType": "object",
+            "database": "db_mtd_edit"
+        },
+        {
+            "name": "metadataNew",
+            "method": "GET",
+            "path": "/metadata/new",
+            "responseType": "object",
+            "database": "db_mtd_edit"
+        },
         {
             "name": "nextId",
             "method": "GET",
@@ -30,7 +67,470 @@
             "method": "GET",
             "path": "/:idParam/file",
             "database": "db_file"
-        }        
+        },
+        {
+            "name": "totalByStatus",
+            "method": "GET",
+            "path": "/totBySatus",
+            "script": "customer.js",
+            "database": "database"
+        },
+        {
+            "name": "changeStatus",
+            "method": "POST",
+            "path": "/:idParam/changeStatus",
+            "script": "customer.js",
+            "database": "database"
+        },
+        {
+            "name": "upload",
+            "method": "POST",
+            "path": "/addFile",
+            "fileParam": {
+                "fileName": "#file#_#today#",
+                "directory": "C:/Tmp/upload"
+            },
+            "database": "db_upload"
+        }
+    ],
+    "customValidation": [
+        {
+            "name": "vld_obrig",
+            "method": [
+                "PUT",
+                "POST"
+            ],
+            "route": [
+                "create",
+                "update"
+            ],
+            "from": [
+                "payload"
+            ],
+            "field": [
+                "code",
+                "shortName",
+                "country"
+            ],
+            "operation": "required",
+            "value": "true",
+            "msgError": "Campos obrigatório !"
+        }
+    ],
+    "db_mtd_list": [
+        {
+            "title": "Cadastro de Clientes (Dinâmico)",
+            "fields": [
+                {
+                    "property": "code",
+                    "label": "Código",
+                    "type": "number",
+                    "key": true,
+                    "filter": true,
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 12,
+                    "gridLgColumns": 12,
+                    "gridXlColumns": 12,
+                    "minValue": 0,
+                    "maxValue": 999999999,
+                    "minLength": 1,
+                    "maxLength": 9
+                },
+                {
+                    "property": "shortName",
+                    "label": "Nome Abrev",
+                    "type": "string"
+                },
+                {
+                    "property": "name",
+                    "label": "Nome",
+                    "type": "string"
+                },
+                {
+                    "property": "country",
+                    "label": "País",
+                    "type": "string",
+                    "filter": true,
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 12,
+                    "gridLgColumns": 12,
+                    "gridXlColumns": 12,
+                    "fieldLabel": "countryName",
+                    "fieldValue": "countryCode",
+                    "placeholder": "Todos",
+                    "optionsMulti": true,
+                    "optionsService": "/country"
+                },
+                {
+                    "property": "status",
+                    "label": "Status",
+                    "type": "label",
+                    "labels": [
+                        {
+                            "value": 1,
+                            "label": "Ativo",
+                            "color": "color-11"
+                        },
+                        {
+                            "value": 2,
+                            "label": "Inativo",
+                            "color": "color-07"
+                        },
+                        {
+                            "value": 3,
+                            "label": "Bloqueado",
+                            "color": "color-08"
+                        }
+                    ],
+                    "filter": true,
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 12,
+                    "gridLgColumns": 12,
+                    "gridXlColumns": 12,
+                    "options": [
+                        {
+                            "value": 1,
+                            "label": "Ativo"
+                        },
+                        {
+                            "value": 2,
+                            "label": "Inativo"
+                        },
+                        {
+                            "value": 3,
+                            "label": "Bloqueado"
+                        }
+                    ]
+                },
+                {
+                    "property": "foreign",
+                    "label": "Somente Estrangeiro",
+                    "type": "boolean",
+                    "booleanFalse": "Não",
+                    "booleanTrue": "Sim",
+                    "filter": true,
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 12,
+                    "gridLgColumns": 12,
+                    "gridXlColumns": 12,
+                    "allowColumnsManager": false,
+                    "divider": "Outros",
+                    "visible": false
+                }
+            ],
+            "actions": {
+                "detail": "/custMaintDynamic/detail/:id",
+                "edit": "/custMaintDynamic/edit/:id",
+                "new": "/custMaintDynamic/new",
+                "remove": true
+            },
+            "pageCustomActions": [
+                {
+                    "label": "Google2",
+                    "url": "http://www.google.com"
+                }
+            ],
+            "tableCustomActions": [
+                {
+                    "label": "Google2",
+                    "url": "/custMaintDynamic/new"
+                },
+                {
+                    "label": "Aprova Pagto",
+                    "action": ""
+                }
+            ],
+            "literals": {
+                "detail": "Detalhe 2"
+            }
+        }
+    ],
+    "db_mtd_detail": [
+        {
+            "title": "Detalhe de Clientes (Dinâmico)",
+            "fields": [
+                {
+                    "property": "code",
+                    "label": "Código",
+                    "type": "number",
+                    "key": true,
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 4,
+                    "gridLgColumns": 4,
+                    "gridXlColumns": 4
+                },
+                {
+                    "property": "shortName",
+                    "label": "Nome Abrev",
+                    "type": "string",
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 8,
+                    "gridLgColumns": 8,
+                    "gridXlColumns": 8
+                },
+                {
+                    "property": "name",
+                    "label": "Nome",
+                    "type": "string",
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 12,
+                    "gridLgColumns": 12,
+                    "gridXlColumns": 12
+                },
+                {
+                    "property": "country",
+                    "label": "País",
+                    "type": "string",
+                    "fieldLabel": "countryName",
+                    "fieldValue": "countryCode",
+                    "optionsService": "/country",
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 4,
+                    "gridLgColumns": 4,
+                    "gridXlColumns": 4
+                },
+                {
+                    "property": "status",
+                    "label": "Status",
+                    "type": "label",
+                    "tag": true,
+                    "labels": [
+                        {
+                            "value": 1,
+                            "label": "Ativo",
+                            "color": "color-11"
+                        },
+                        {
+                            "value": 2,
+                            "label": "Inativo",
+                            "color": "color-07"
+                        },
+                        {
+                            "value": 3,
+                            "label": "Bloqueado",
+                            "color": "color-08"
+                        }
+                    ],
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 8,
+                    "gridLgColumns": 8,
+                    "gridXlColumns": 8
+                }
+            ]
+        }
+    ],
+    "db_mtd_detail2": [
+        {
+            "title": "Detalhe de Clientes 2 (Dinâmico)",
+            "fields": [
+                {
+                    "property": "code",
+                    "label": "Código",
+                    "type": "number",
+                    "key": true,
+                    "disabled": true,
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 4,
+                    "gridLgColumns": 4,
+                    "gridXlColumns": 4
+                },
+                {
+                    "property": "shortName",
+                    "label": "Nome Abrev",
+                    "type": "string",
+                    "disabled": true,
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 8,
+                    "gridLgColumns": 8,
+                    "gridXlColumns": 8
+                },
+                {
+                    "property": "name",
+                    "label": "Nome",
+                    "type": "string",
+                    "disabled": true,
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 12,
+                    "gridLgColumns": 12,
+                    "gridXlColumns": 12
+                },
+                {
+                    "property": "country",
+                    "label": "País",
+                    "type": "string",
+                    "fieldLabel": "countryName",
+                    "fieldValue": "countryCode",
+                    "optionsService": "/country",
+                    "disabled": true,
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 4,
+                    "gridLgColumns": 4,
+                    "gridXlColumns": 4
+                },
+                {
+                    "property": "status",
+                    "label": "Status",
+                    "type": "label",
+                    "options": [
+                        {
+                            "value": 1,
+                            "label": "Ativo"
+                        },
+                        {
+                            "value": 2,
+                            "label": "Inativo"
+                        },
+                        {
+                            "value": 3,
+                            "label": "Bloqueado"
+                        }
+                    ],
+                    "disabled": true,
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 8,
+                    "gridLgColumns": 8,
+                    "gridXlColumns": 8
+                }
+            ],
+            "fieldsContact": [
+                {
+                    "property": "seq",
+                    "label": "Sequência",
+                    "type": "number"
+                },
+                {
+                    "property": "name",
+                    "label": "Nome",
+                    "type": "string"
+                },
+                {
+                    "property": "phone",
+                    "label": "Fone",
+                    "type": "string"
+                }
+            ],
+            "literals": {
+                "back": "Voltar",
+                "contact": "Contatos"
+            },
+            "value": {
+                "code": 1,
+                "codeIdenf": "1",
+                "internalId": 101,
+                "shortName": "João",
+                "name": "Joãozinho Maria da Silva",
+                "country": "BRA",
+                "status": 2,
+                "tax": true,
+                "taxValue": 10.3,
+                "percent": 89.0123456789,
+                "admissDate": "2011-04-09",
+                "resignationDate": "2020-12-31",
+                "states": "RS,SC",
+                "contacts": [
+                    {
+                        "seq": 1,
+                        "name": "Zezinho",
+                        "phone": "9835-35456"
+                    },
+                    {
+                        "seq": 2,
+                        "name": "Robervindo",
+                        "phone": "23534544"
+                    }
+                ],
+                "department": "10",
+                "federalID": "000712345678901",
+                "observation": ""
+            }
+        }
+    ],
+    "db_mtd_edit": [
+        {
+            "title": "Inclusão/Edição de Clientes (Dinâmico)",
+            "fields": [
+                {
+                    "property": "code",
+                    "label": "Código",
+                    "type": "number",
+                    "key": true,
+                    "disabled": false,
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 4,
+                    "gridLgColumns": 4,
+                    "gridXlColumns": 4
+                },
+                {
+                    "property": "shortName",
+                    "label": "Nome Abrev",
+                    "type": "string",
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 8,
+                    "gridLgColumns": 8,
+                    "gridXlColumns": 8
+                },
+                {
+                    "property": "name",
+                    "label": "Nome",
+                    "type": "string",
+                    "required": true,
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 12,
+                    "gridLgColumns": 12,
+                    "gridXlColumns": 12
+                },
+                {
+                    "property": "country",
+                    "label": "País",
+                    "type": "string",
+                    "fieldLabel": "countryName",
+                    "fieldValue": "countryCode",
+                    "searchService": "/country",
+                    "columns": [
+                        {
+                            "property": "countryCode",
+                            "label": "País",
+                            "type": "string"
+                        },
+                        {
+                            "property": "countryName",
+                            "label": "Nome",
+                            "type": "string"
+                        }
+                    ],
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 4,
+                    "gridLgColumns": 4,
+                    "gridXlColumns": 4
+                },
+                {
+                    "property": "status",
+                    "label": "Status",
+                    "type": "label",
+                    "options": [
+                        {
+                            "value": 1,
+                            "label": "Ativo"
+                        },
+                        {
+                            "value": 2,
+                            "label": "Inativo"
+                        },
+                        {
+                            "value": 3,
+                            "label": "Bloqueado"
+                        }
+                    ],
+                    "gridSmColumns": 12,
+                    "gridMdColumns": 8,
+                    "gridLgColumns": 8,
+                    "gridXlColumns": 8
+                }
+            ],
+            "actions": {
+                "save": "/custMaintDynamic/"
+            }
+        }
     ],
     "database": [
         {
@@ -39,7 +539,7 @@
             "internalId": 101,
             "shortName": "João",
             "name": "Joãozinho Maria da Silva",
-            "country": "BRA",
+            "country": "ARG",
             "status": 2,
             "tax": true,
             "taxValue": 10.3,
@@ -60,7 +560,8 @@
                 }
             ],
             "department": "10",
-            "federalID": "000712345678901"
+            "federalID": "000712345678901",
+            "observation": "Um observação média, para este cliente, muito importante."
         },
         {
             "code": 2,
@@ -78,7 +579,8 @@
             "states": "PR,SP,RJ",
             "contacts": [],
             "department": "10",
-            "federalID": "012345678901"
+            "federalID": "012345678901",
+            "observation": "Um cliente muito bom, paga tudo em dia."
         },
         {
             "code": 3,
@@ -95,13 +597,14 @@
             "states": "RJ",
             "status": 2,
             "department": "20",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": "Um observação grande, para este cliente, então tem que falar muita coisa sobre ele. Ele costuma sempre comprar conosco, quase todo mês."
         },
         {
             "code": 4,
             "codeIdenf": "4",
             "internalId": 104,
-            "shortName": "Chico",
+            "shortName": "Chicou",
             "name": "Chico Pereira Filho",
             "country": "CHI",
             "tax": true,
@@ -110,9 +613,10 @@
             "admissDate": "2018-10-29",
             "resignationDate": "9999-12-31",
             "states": "BH,SP",
-            "status": 1,
+            "status": 3,
             "department": "30",
-            "federalID": "012345678901"
+            "federalID": "012345678901",
+            "observation": ""
         },
         {
             "code": 6,
@@ -129,7 +633,8 @@
             "states": "RJ,SP,SC",
             "status": 3,
             "department": "10",
-            "federalID": "00012345678901"
+            "federalID": "00012345678901",
+            "observation": ""
         },
         {
             "code": 7,
@@ -141,7 +646,8 @@
             "contacts": [],
             "tax": true,
             "department": "20",
-            "federalID": "00003312345678901"
+            "federalID": "00003312345678901",
+            "observation": ""
         },
         {
             "code": 8,
@@ -152,23 +658,13 @@
             "status": 1,
             "tax": false,
             "department": "40",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 9,
             "internalId": 109,
             "shortName": "Vazio"
-        },
-        {
-            "code": 10,
-            "internalId": 110,
-            "shortName": "Usuario 10",
-            "name": "Usuario Nome 10",
-            "country": "BRA",
-            "status": 1,
-            "tax": false,
-            "department": "10",
-            "federalID": "12345678901"
         },
         {
             "code": 11,
@@ -179,7 +675,8 @@
             "status": 1,
             "tax": false,
             "department": "11",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 12,
@@ -190,7 +687,8 @@
             "status": 1,
             "tax": false,
             "department": "12",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 13,
@@ -201,7 +699,8 @@
             "status": 1,
             "tax": false,
             "department": "13",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 14,
@@ -212,7 +711,8 @@
             "status": 1,
             "tax": false,
             "department": "14",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 15,
@@ -223,7 +723,8 @@
             "status": 1,
             "tax": false,
             "department": "15",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 16,
@@ -234,7 +735,8 @@
             "status": 1,
             "tax": false,
             "department": "16",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 17,
@@ -245,7 +747,8 @@
             "status": 1,
             "tax": false,
             "department": "17",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 18,
@@ -256,7 +759,8 @@
             "status": 1,
             "tax": false,
             "department": "18",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 19,
@@ -267,7 +771,8 @@
             "status": 1,
             "tax": false,
             "department": "19",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 20,
@@ -278,7 +783,8 @@
             "status": 1,
             "tax": false,
             "department": "20",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 21,
@@ -289,7 +795,8 @@
             "status": 1,
             "tax": false,
             "department": "21",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 22,
@@ -300,7 +807,8 @@
             "status": 1,
             "tax": false,
             "department": "22",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 23,
@@ -311,7 +819,8 @@
             "status": 1,
             "tax": false,
             "department": "10",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 24,
@@ -322,7 +831,8 @@
             "status": 1,
             "tax": false,
             "department": "24",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 25,
@@ -333,7 +843,8 @@
             "status": 1,
             "tax": false,
             "department": "25",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 26,
@@ -344,7 +855,8 @@
             "status": 1,
             "tax": false,
             "department": "26",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 27,
@@ -355,7 +867,8 @@
             "status": 1,
             "tax": false,
             "department": "27",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 28,
@@ -366,7 +879,8 @@
             "status": 1,
             "tax": false,
             "department": "28",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 29,
@@ -377,7 +891,8 @@
             "status": 1,
             "tax": false,
             "department": "29",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 30,
@@ -388,7 +903,8 @@
             "status": 1,
             "tax": false,
             "department": "30",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 31,
@@ -399,7 +915,8 @@
             "status": 1,
             "tax": false,
             "department": "31",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 32,
@@ -410,7 +927,8 @@
             "status": 1,
             "tax": false,
             "department": "23",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 33,
@@ -421,7 +939,8 @@
             "status": 1,
             "tax": false,
             "department": "33",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 34,
@@ -432,7 +951,8 @@
             "status": 1,
             "tax": false,
             "department": "34",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 35,
@@ -443,7 +963,8 @@
             "status": 1,
             "tax": false,
             "department": "35",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 36,
@@ -454,7 +975,8 @@
             "status": 1,
             "tax": false,
             "department": "36",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 37,
@@ -465,7 +987,8 @@
             "status": 1,
             "tax": false,
             "department": "37",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 38,
@@ -476,18 +999,8 @@
             "status": 1,
             "tax": false,
             "department": "38",
-            "federalID": "12345678901"
-        },
-        {
-            "code": 39,
-            "internalId": 139,
-            "shortName": "Usuario 39",
-            "name": "Usuario Nome 39",
-            "country": "BRA",
-            "status": 1,
-            "tax": false,
-            "department": "39",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 40,
@@ -498,7 +1011,8 @@
             "status": 1,
             "tax": false,
             "department": "40",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 41,
@@ -509,7 +1023,8 @@
             "status": 1,
             "tax": false,
             "department": "41",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 42,
@@ -520,7 +1035,8 @@
             "status": 1,
             "tax": false,
             "department": "42",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 43,
@@ -531,7 +1047,8 @@
             "status": 1,
             "tax": false,
             "department": "43",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 44,
@@ -542,7 +1059,8 @@
             "status": 1,
             "tax": false,
             "department": "44",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 45,
@@ -553,7 +1071,8 @@
             "status": 1,
             "tax": false,
             "department": "45",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 46,
@@ -564,7 +1083,8 @@
             "status": 1,
             "tax": false,
             "department": "46",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 47,
@@ -575,7 +1095,8 @@
             "status": 1,
             "tax": false,
             "department": "47",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 48,
@@ -586,7 +1107,8 @@
             "status": 1,
             "tax": false,
             "department": "48",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 49,
@@ -597,7 +1119,8 @@
             "status": 1,
             "tax": false,
             "department": "49",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 50,
@@ -608,7 +1131,8 @@
             "status": 1,
             "tax": false,
             "department": "50",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 51,
@@ -619,7 +1143,8 @@
             "status": 1,
             "tax": false,
             "department": "51",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 52,
@@ -630,7 +1155,8 @@
             "status": 1,
             "tax": false,
             "department": "52",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 53,
@@ -641,7 +1167,8 @@
             "status": 1,
             "tax": false,
             "department": "53",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 54,
@@ -652,7 +1179,8 @@
             "status": 1,
             "tax": false,
             "department": "54",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 55,
@@ -663,7 +1191,8 @@
             "status": 1,
             "tax": false,
             "department": "55",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 56,
@@ -674,7 +1203,8 @@
             "status": 1,
             "tax": false,
             "department": "56",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 57,
@@ -685,7 +1215,8 @@
             "status": 1,
             "tax": false,
             "department": "57",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 58,
@@ -696,7 +1227,8 @@
             "status": 1,
             "tax": false,
             "department": "58",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 59,
@@ -707,7 +1239,8 @@
             "status": 1,
             "tax": false,
             "department": "59",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 60,
@@ -718,7 +1251,8 @@
             "status": 1,
             "tax": false,
             "department": "60",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 61,
@@ -729,7 +1263,8 @@
             "status": 1,
             "tax": false,
             "department": "61",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 62,
@@ -740,7 +1275,8 @@
             "status": 1,
             "tax": false,
             "department": "62",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 63,
@@ -751,7 +1287,8 @@
             "status": 1,
             "tax": false,
             "department": "63",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 64,
@@ -762,7 +1299,8 @@
             "status": 1,
             "tax": false,
             "department": "64",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 65,
@@ -773,7 +1311,8 @@
             "status": 1,
             "tax": false,
             "department": "65",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 66,
@@ -784,7 +1323,8 @@
             "status": 1,
             "tax": false,
             "department": "66",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 67,
@@ -795,7 +1335,8 @@
             "status": 1,
             "tax": false,
             "department": "67",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 68,
@@ -806,7 +1347,8 @@
             "status": 1,
             "tax": false,
             "department": "68",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 69,
@@ -817,7 +1359,8 @@
             "status": 1,
             "tax": false,
             "department": "69",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 70,
@@ -828,7 +1371,8 @@
             "status": 1,
             "tax": false,
             "department": "70",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 71,
@@ -839,7 +1383,8 @@
             "status": 1,
             "tax": false,
             "department": "71",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 72,
@@ -850,7 +1395,8 @@
             "status": 1,
             "tax": false,
             "department": "72",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 73,
@@ -861,7 +1407,8 @@
             "status": 1,
             "tax": false,
             "department": "73",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 74,
@@ -872,7 +1419,8 @@
             "status": 1,
             "tax": false,
             "department": "74",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 75,
@@ -883,7 +1431,8 @@
             "status": 1,
             "tax": false,
             "department": "75",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 76,
@@ -894,7 +1443,8 @@
             "status": 1,
             "tax": false,
             "department": "76",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 77,
@@ -905,7 +1455,8 @@
             "status": 1,
             "tax": false,
             "department": "77",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 78,
@@ -916,7 +1467,8 @@
             "status": 1,
             "tax": false,
             "department": "78",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 79,
@@ -927,7 +1479,8 @@
             "status": 1,
             "tax": false,
             "department": "79",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 80,
@@ -938,7 +1491,8 @@
             "status": 1,
             "tax": false,
             "department": "80",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 81,
@@ -949,7 +1503,8 @@
             "status": 1,
             "tax": false,
             "department": "81",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 82,
@@ -960,7 +1515,8 @@
             "status": 1,
             "tax": false,
             "department": "82",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 83,
@@ -971,7 +1527,8 @@
             "status": 1,
             "tax": false,
             "department": "83",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 84,
@@ -982,7 +1539,8 @@
             "status": 1,
             "tax": false,
             "department": "84",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 85,
@@ -993,7 +1551,8 @@
             "status": 1,
             "tax": false,
             "department": "85",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 86,
@@ -1004,7 +1563,8 @@
             "status": 1,
             "tax": false,
             "department": "86",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 87,
@@ -1015,7 +1575,8 @@
             "status": 1,
             "tax": false,
             "department": "87",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 88,
@@ -1026,7 +1587,8 @@
             "status": 1,
             "tax": false,
             "department": "88",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 89,
@@ -1037,7 +1599,8 @@
             "status": 1,
             "tax": false,
             "department": "89",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 90,
@@ -1048,7 +1611,8 @@
             "status": 1,
             "tax": false,
             "department": "90",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 91,
@@ -1059,7 +1623,8 @@
             "status": 1,
             "tax": false,
             "department": "91",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 92,
@@ -1070,7 +1635,8 @@
             "status": 1,
             "tax": false,
             "department": "92",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 93,
@@ -1081,7 +1647,8 @@
             "status": 1,
             "tax": false,
             "department": "93",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 94,
@@ -1092,7 +1659,8 @@
             "status": 1,
             "tax": false,
             "department": "94",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 95,
@@ -1103,7 +1671,8 @@
             "status": 1,
             "tax": false,
             "department": "95",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 96,
@@ -1114,7 +1683,8 @@
             "status": 1,
             "tax": false,
             "department": "96",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 97,
@@ -1125,7 +1695,8 @@
             "status": 1,
             "tax": false,
             "department": "97",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 98,
@@ -1136,7 +1707,8 @@
             "status": 1,
             "tax": false,
             "department": "98",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 99,
@@ -1147,7 +1719,8 @@
             "status": 1,
             "tax": false,
             "department": "99",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 100,
@@ -1158,7 +1731,8 @@
             "status": 1,
             "tax": false,
             "department": "100",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 101,
@@ -1169,7 +1743,8 @@
             "status": 1,
             "tax": false,
             "department": "101",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 102,
@@ -1180,7 +1755,8 @@
             "status": 1,
             "tax": false,
             "department": "102",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 103,
@@ -1191,7 +1767,8 @@
             "status": 1,
             "tax": false,
             "department": "103",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 104,
@@ -1202,7 +1779,8 @@
             "status": 1,
             "tax": false,
             "department": "104",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 105,
@@ -1213,7 +1791,8 @@
             "status": 1,
             "tax": false,
             "department": "105",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 106,
@@ -1234,7 +1813,8 @@
             "status": 1,
             "tax": false,
             "department": "107",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 108,
@@ -1245,7 +1825,8 @@
             "status": 1,
             "tax": false,
             "department": "108",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 109,
@@ -1256,7 +1837,8 @@
             "status": 1,
             "tax": false,
             "department": "109",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 110,
@@ -1267,7 +1849,8 @@
             "status": 1,
             "tax": false,
             "department": "110",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 111,
@@ -1278,7 +1861,8 @@
             "status": 1,
             "tax": false,
             "department": "111",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 112,
@@ -1289,7 +1873,8 @@
             "status": 1,
             "tax": false,
             "department": "112",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 113,
@@ -1300,7 +1885,8 @@
             "status": 1,
             "tax": false,
             "department": "113",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 114,
@@ -1311,7 +1897,8 @@
             "status": 1,
             "tax": false,
             "department": "114",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 115,
@@ -1322,7 +1909,8 @@
             "status": 1,
             "tax": false,
             "department": "115",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 116,
@@ -1333,7 +1921,8 @@
             "status": 1,
             "tax": false,
             "department": "116",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 117,
@@ -1344,7 +1933,8 @@
             "status": 1,
             "tax": false,
             "department": "117",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 118,
@@ -1355,7 +1945,8 @@
             "status": 1,
             "tax": false,
             "department": "118",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 119,
@@ -1366,7 +1957,8 @@
             "status": 1,
             "tax": false,
             "department": "119",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 120,
@@ -1377,7 +1969,8 @@
             "status": 1,
             "tax": false,
             "department": "120",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 121,
@@ -1388,7 +1981,8 @@
             "status": 1,
             "tax": false,
             "department": "121",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 122,
@@ -1399,7 +1993,8 @@
             "status": 1,
             "tax": false,
             "department": "122",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 123,
@@ -1410,7 +2005,8 @@
             "status": 1,
             "tax": false,
             "department": "123",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 124,
@@ -1421,7 +2017,8 @@
             "status": 1,
             "tax": false,
             "department": "124",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 125,
@@ -1432,7 +2029,8 @@
             "status": 1,
             "tax": false,
             "department": "125",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 126,
@@ -1443,7 +2041,8 @@
             "status": 1,
             "tax": false,
             "department": "126",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 127,
@@ -1454,7 +2053,8 @@
             "status": 1,
             "tax": false,
             "department": "127",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 128,
@@ -1465,7 +2065,8 @@
             "status": 1,
             "tax": false,
             "department": "128",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 129,
@@ -1476,7 +2077,8 @@
             "status": 1,
             "tax": false,
             "department": "129",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 130,
@@ -1487,7 +2089,8 @@
             "status": 1,
             "tax": false,
             "department": "130",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 131,
@@ -1498,7 +2101,8 @@
             "status": 1,
             "tax": false,
             "department": "131",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 132,
@@ -1509,7 +2113,8 @@
             "status": 1,
             "tax": false,
             "department": "132",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 133,
@@ -1520,7 +2125,8 @@
             "status": 1,
             "tax": false,
             "department": "133",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 134,
@@ -1531,7 +2137,8 @@
             "status": 1,
             "tax": false,
             "department": "134",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 135,
@@ -1542,7 +2149,8 @@
             "status": 1,
             "tax": false,
             "department": "135",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 136,
@@ -1553,7 +2161,8 @@
             "status": 1,
             "tax": false,
             "department": "136",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 137,
@@ -1564,7 +2173,8 @@
             "status": 1,
             "tax": false,
             "department": "137",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 138,
@@ -1575,7 +2185,8 @@
             "status": 1,
             "tax": false,
             "department": "138",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 139,
@@ -1586,7 +2197,8 @@
             "status": 1,
             "tax": false,
             "department": "139",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "code": 140,
@@ -1597,7 +2209,8 @@
             "status": 1,
             "tax": false,
             "department": "140",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
         },
         {
             "status": 1,
@@ -1605,7 +2218,29 @@
             "shortName": "5555",
             "name": "555",
             "country": "BRA",
-            "federalID": "12345678901"
+            "federalID": "12345678901",
+            "observation": ""
+        },
+        {
+            "name": "11"
+        },
+        {
+            "status": 1,
+            "code": 5,
+            "shortName": "Novo Dinâmico",
+            "name": "Um novo cliente dinâmico",
+            "country": "USA"
+        },
+        {
+            "name": "22",
+            "code": 222
+        },
+        {
+            "status": 3,
+            "code": 334,
+            "shortName": "3232",
+            "name": "2323",
+            "country": "BRA"
         }
     ],
     "db_nextId": [
@@ -1626,38 +2261,10 @@
         {
             "idParam": 6,
             "statusCodeResponse": 500,
-            "errorResponse": "Usuário já está bloqueado !!!!"
+            "errorResponse": "Usuário 6 já está bloqueado !!!!"
         }
     ],
     "db_duplic": [
-        {
-            "code": 6,
-            "shortName": "Mais um",
-            "name": "Um outro qualquer 3",
-            "country": "BRA",
-            "status": 3
-        },
-        {
-            "code": 4,
-            "shortName": "Chinfronésio",
-            "name": "Chinfronésio Pereira Filho",
-            "country": "BRA",
-            "status": 1
-        },
-        {
-            "code": 2,
-            "shortName": "Maria",
-            "name": "Maria Barbosa",
-            "country": "BRA",
-            "status": 1
-        },
-        {
-            "code": 1,
-            "shortName": "João",
-            "name": "Joãozinho Maria da Silva",
-            "country": "BRA",
-            "status": 2
-        },
         {
             "code": 6,
             "shortName": "Mais um",
@@ -1677,6 +2284,32 @@
         {
             "filename": "info_cli.txt",
             "content": "SW5mb3JtYcOnw7VlcyBkbyBDbGllbnRlIEPDs2RpZ28gMSAhIQ0KUmVsYXTDs3JpbyBubyBmb3JtYXRvIFRYVC4NCkVtcHJlc2EgMTAuDQo="
-          }
-    ]    
+        }
+    ],
+    "db_upload": [
+        {
+            "originalName": "info_cli (22).txt",
+            "size": 80,
+            "destination": "C:/Tmp/upload",
+            "fileName": "info_cli (22)_2021-11-17.txt"
+        },
+        {
+            "originalName": "qrCode (15).png",
+            "size": 3777,
+            "destination": "C:/Tmp/upload",
+            "fileName": "qrCode (15)_2021-11-17.png"
+        },
+        {
+            "originalName": "qrCode (14).png",
+            "size": 3777,
+            "destination": "C:/Tmp/upload",
+            "fileName": "qrCode (14)_2021-11-17.png"
+        },
+        {
+            "originalName": "pre-teste.txt",
+            "size": 939,
+            "destination": "C:/Tmp/upload",
+            "fileName": "pre-teste_2022-02-04.txt"
+        }
+    ]
 }

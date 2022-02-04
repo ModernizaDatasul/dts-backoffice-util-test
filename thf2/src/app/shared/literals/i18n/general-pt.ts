@@ -20,6 +20,7 @@ export const generalPt = {
     modalDeleteTitle: 'Deseja excluir este cadastro ?',
     remove: 'Remover',
     return: 'Voltar',
+    close: 'Fechar',
     save: 'Salvar',
     search: 'Buscar',
     select: 'Selecionar',

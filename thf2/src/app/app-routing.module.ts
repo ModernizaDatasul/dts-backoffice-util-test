@@ -12,6 +12,10 @@ const routes: Routes = [
         loadChildren: () => import('./customer-dash/customer-dash.module').then(m => m.CustomerDashModule)
     },
     {
+        path: 'custMaintDynamic',
+        loadChildren: () => import('./cust-maint-dynamic/cust-maint-dynamic.module').then(m => m.CustMaintDynamicModule)
+    },
+    {
         path: 'kendoxBasic',
         loadChildren: () => import('./kendo-x-basic/kendo-x-basic.module').then(m => m.KendoxBasicModule)
     },

@@ -6,20 +6,20 @@
     ],
     "database": [
         {
-            "countryCode": "USA",
-            "countryName": "Estados Unidos"
+            "countryCode": "BRA",
+            "countryName": "Brasil"
         },
         {
             "countryCode": "ARG",
             "countryName": "Argentina"
         },
         {
-            "countryCode": "CAN",
-            "countryName": "Canadá"
+            "countryCode": "USA",
+            "countryName": "Estados Unidos"
         },
         {
-            "countryCode": "BRA",
-            "countryName": "Brasil"
+            "countryCode": "CAN",
+            "countryName": "Canadá"
         },
         {
             "countryCode": "CHI",

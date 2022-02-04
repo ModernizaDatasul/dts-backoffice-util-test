@@ -13,6 +13,28 @@
         [p-actions]="tableActions"
         [p-show-more-disabled]="!hasNext"
         (p-show-more)="search(true)">
+
+        <ng-template p-table-column-template p-property="observation" let-value>
+            <po-popover #popovObs
+                [p-title]="literals?.observation"
+                p-trigger="click"
+                [p-target]="iconObs">
+
+                <po-textarea
+                    p-readonly
+                    p-rows="4"
+                    ngModel="{{value}}">
+                </po-textarea>
+                
+                <span on-click="onClickClosePopovObs()" class="po-table-link po-pull-right">
+                    {{ literals?.close }}
+                </span>
+            </po-popover>
+
+            <span>
+                <i #iconObs id="iconObs" class="po-table-link po-icon po-icon-document-filled"></i>
+            </span>
+        </ng-template>        
     </po-table>
 
 </po-page-list>
@@ -75,7 +97,7 @@
 
     <po-button
             p-label="Habilita/Desabilita"
-            (p-click)="onHabilitDesabilitParam()">
+            (p-click)="onEnableDisableParam()">
     </po-button>
 
     <!--
@@ -102,14 +124,21 @@
     [p-title]="literals?.order">
 
     <div class="po-row">
-        <po-input class="po-md-8"
+       <po-lookup class="po-md-8"
+            name="executionServer"
             p-label="Servidor RPW"
+            p-placeholder="Servidor RPW"
+            [p-columns]="zoomRpwServiceColumns"
+            [p-field-format]="fieldRpwServiceFormat"
+            [p-filter-service]="scheduleExecution"
+            p-field-label="name"
+            p-field-value="code"
             [(ngModel)]="executionServer">
-        </po-input>
+        </po-lookup>    
 
         <po-button class="po-md-4 po-mt-4"
             p-label="Agendar"
-            (p-click)="agendamento()">
+            (p-click)="scheduling()">
         </po-button>    
     </div>
 
@@ -159,3 +188,19 @@
 
 </po-modal>
 
+<po-modal #modalUpload
+    p-size="sm"
+    [p-title]="literals?.upload"
+    [p-primary-action]="confirmUpload"
+    [p-secondary-action]="cancelUpload">
+
+    <po-upload #uploadFiles
+        [p-label]="literals?.upload"
+        [(ngModel)]="fileToSend"
+        p-multiple="true"
+        p-hide-send-button="true"
+        (p-upload)="onAddParamsToUpload($event)"
+        [p-url]="apiUploadUrl">
+    </po-upload>
+
+</po-modal>    

@@ -3,6 +3,7 @@ import { DtsLabel } from 'dts-backoffice-kendo-grid';
 
 export interface ICustomer {
     code: number;
+    codeIdenf: string;
     internalId: number;
     shortName: string;
     name: string;
@@ -16,10 +17,13 @@ export interface ICustomer {
     states: string;
     contacts: Array<IContact>;
     department: string;
+    federalID: string;
+    observation: string;
 }
 
 export class Customer implements ICustomer {
     code: number;
+    codeIdenf: string;
     internalId: number;
     shortName: string;
     name: string;
@@ -33,6 +37,8 @@ export class Customer implements ICustomer {
     states: string;
     contacts: Array<IContact>;
     department: string;
+    federalID: string;
+    observation: string;
 
     constructor(values: Object = {}) {
         Object.assign(this, values);
@@ -62,6 +68,7 @@ export class Customer implements ICustomer {
     }
 
     get $code(): number { return this.code; }
+    get $codeIdenf(): string { return this.codeIdenf; }
     get $internalId(): number { return this.internalId; }
     get $shortName(): string { return this.shortName; }
     get $name(): string { return this.name; }
@@ -75,8 +82,11 @@ export class Customer implements ICustomer {
     get $states(): string { return this.states; }
     get $contacts(): Array<IContact> { return this.contacts; }
     get $department(): string { return this.department; }
+    get $federalID(): string { return this.federalID; }
+    get $observation(): string { return this.observation; }
 
     set $code(value: number) { this.code = value; }
+    set $codeIdenf(value: string) { this.codeIdenf = value; }
     set $internalId(value: number) { this.internalId = value; }
     set $shortName(value: string) { this.shortName = value; }
     set $name(value: string) { this.name = value; }
@@ -90,4 +100,6 @@ export class Customer implements ICustomer {
     set $states(value: string) { this.states = value; }
     set $contacts(value: Array<IContact>) { this.contacts = value; }
     set $department(value: string) { this.department = value; }
+    set $federalID(value: string) { this.federalID = value; }
+    set $observation(value: string) { this.observation = value; }
 }

@@ -4,19 +4,8 @@
 
     <po-tabs>
         <po-tab p-label="Pedidos" p-active>
+
             <div class="po-row po-sm-12 po-md-12 po-lg-12 po-lx-12">
-
-                <po-lookup name="zoomCustomer" class="po-sm-4 po-md-4 po-lg-4 po-lx-4" 
-                    [p-label]="literals?.customer"
-                    [p-placeholder]="literals?.customer"
-                    [(ngModel)]="selectCustomer"
-                    p-field-label="shortName"
-                    p-field-value="code"
-                    [p-columns]="zoomCustomerColumns"
-                    [p-field-format]="zoomCustomerFormat"
-                    [p-filter-service]="servCustomer">
-                </po-lookup>
-
                <po-select name="selectCustomer" class="po-sm-4 po-md-4 po-lg-4 po-lx-4"
                     [p-label]="literals?.customer"
                     [p-placeholder]="literals?.customer"
@@ -24,12 +13,6 @@
                     [(ngModel)]="selectCustomer"
                     (p-change)="changeCustomer()">
                 </po-select>
-
-                <po-datepicker class="po-sm-4 po-md-4 po-lg-4 po-lx-4"
-                    [p-format]="literals?.dateFormat"
-                    [p-placeholder]="literals?.dateFormatDesc"
-                    p-label="Data">
-                </po-datepicker>
             </div>
 
             <po-divider class="po-sm-12 po-md-12 po-lg-12 po-lx-12"></po-divider>

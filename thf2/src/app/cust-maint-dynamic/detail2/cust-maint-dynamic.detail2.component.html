@@ -1,0 +1,35 @@
+<po-page-default
+    [p-title]="metadata?.title"
+    [p-breadcrumb]="breadcrumb"
+    [p-actions]="pageCustomAction"
+    >
+
+    <div class="po-row 
+                po-sm-12
+                po-md-8 po-offset-md-2 
+                po-lg-6 po-offset-lg-3
+                po-lx-4 po-offset-lx-4">
+
+        <po-dynamic-form
+            [p-fields]="metadata?.fields"
+            [p-value]="metadata?.value">
+        </po-dynamic-form>
+
+        <po-divider class="po-sm-12 po-md-12 po-lg-12 po-lx-12"
+            [p-label]="metadata?.literals?.contact" >
+        </po-divider>
+
+        <po-table 
+            class="po-sm-12 
+                   po-md-10 po-offset-md-1
+                   po-lg-8  po-offset-lg-2
+                   po-lx-8  po-offset-lx-2"
+            p-selectable="false"
+            p-striped="true"
+            [p-columns]="metadata?.fieldsContact"
+            [p-items]="metadata?.value?.contacts">
+        </po-table>
+
+    </div>
+
+</po-page-default>

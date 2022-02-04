@@ -2,7 +2,6 @@
     "compileOnSave": false,
     "compilerOptions": {
         "baseUrl": "./",
-        "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "lib": [
             "es2017",

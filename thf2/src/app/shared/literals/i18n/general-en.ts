@@ -21,6 +21,7 @@ export const generalEn = {
     no: 'No',
     remove: 'Remove',
     return: 'Back',
+    close: 'Close',
     save: 'Save',
     search: 'Search',
     select: 'Select',

@@ -29,9 +29,6 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
     servCustomerSubscription$: Subscription;
     servOrderSubscription$: Subscription;
 
-    zoomCustomerColumns: Array<PoLookupColumn>;
-    //zoomCustomerColumns: Array<PoTableColumn>;
-
     customerOptions: Array<PoSelectOption>;
     selectCustomer = 0;
     customer: ICustomer = new Customer();
@@ -77,10 +74,6 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
 
             this.loadCustomerSelect();
         });
-    }
-
-    zoomCustomerFormat(value: ICustomer): string {
-        return `${value.code} x ${value.shortName}`;
     }
 
     loadCustomerSelect(): void {
@@ -163,23 +156,6 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
         this.customerOptions = [];
 
         this.customerStatusLabelList = Customer.statusLabelList(this.literals);
-
-        this.zoomCustomerColumns = [
-            { property: 'code', label: this.literals['code'], type: 'string' },
-            { property: 'name', label: this.literals['name'], type: 'string' },
-            { property: 'country', label: this.literals['country'], type: 'string' },
-            { property: 'tax', label: this.literals['tax'], type: 'boolean' },
-            { property: 'taxValue', label: this.literals['taxValue'], type: 'number' /*, visible: false*/ },
-            { property: 'percent', label: this.literals['percent'], type: 'number' /*, visible: false*/ },
-            { property: 'admissDate', label: this.literals['admissDate'], type: 'date' /*, visible: false*/ },
-            { property: 'resignationDate', label: this.literals['resignationDate'], type: 'date' /*, visible: false*/ },
-            /*{
-                property: 'status', label: this.literals['status'],
-                type: 'string'
-                //type: 'label', labels: this.customerStatusLabelList
-            },*/
-            { property: 'federalID', label: this.literals['federalID'], type: 'string' /*, visible: false*/ },
-        ];
 
         this.orderStatusLabelList = Order.statusLabelList(this.literals);
 

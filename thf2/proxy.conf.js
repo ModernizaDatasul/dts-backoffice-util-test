@@ -18,10 +18,11 @@ const PROXY_CONFIG = [
     }, {
         context: [
             "/josso",
-            "/dts/datasul-rest"
+            "/dts/datasul-rest",
+            "/qrcode/download"
         ],
         //target: "http://vigia:8480",
-        target: "http://gales:8180",
+        target: "https://gales:8180",
         secure: false,
         changeOrigin: true,
         logLevel: "debug",
