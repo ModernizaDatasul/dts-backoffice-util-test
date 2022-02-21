@@ -540,7 +540,6 @@
             "shortName": "João",
             "name": "Joãozinho Maria da Silva",
             "country": "ARG",
-            "status": 2,
             "tax": true,
             "taxValue": 10.3,
             "percent": 89.0123456789,
@@ -561,7 +560,8 @@
             ],
             "department": "10",
             "federalID": "000712345678901",
-            "observation": "Um observação média, para este cliente, muito importante."
+            "observation": "Um observação média, para este cliente, muito importante.",
+            "status": 2
         },
         {
             "code": 2,
@@ -631,7 +631,7 @@
             "admissDate": "2011-06-02",
             "resignationDate": "9999-12-31",
             "states": "RJ,SP,SC",
-            "status": 3,
+            "status": 2,
             "department": "10",
             "federalID": "00012345678901",
             "observation": ""
@@ -664,7 +664,8 @@
         {
             "code": 9,
             "internalId": 109,
-            "shortName": "Vazio"
+            "shortName": "Vazio",
+            "status": 2
         },
         {
             "code": 11,
@@ -684,7 +685,7 @@
             "shortName": "Usuario 12",
             "name": "Usuario Nome 12",
             "country": "BRA",
-            "status": 1,
+            "status": 2,
             "tax": false,
             "department": "12",
             "federalID": "12345678901",
@@ -744,7 +745,7 @@
             "shortName": "Usuario 17",
             "name": "Usuario Nome 17",
             "country": "BRA",
-            "status": 1,
+            "status": 3,
             "tax": false,
             "department": "17",
             "federalID": "12345678901",
@@ -804,7 +805,7 @@
             "shortName": "Usuario 22",
             "name": "Usuario Nome 22",
             "country": "BRA",
-            "status": 1,
+            "status": 2,
             "tax": false,
             "department": "22",
             "federalID": "12345678901",
@@ -1032,7 +1033,7 @@
             "shortName": "Usuario 42",
             "name": "Usuario Nome 42",
             "country": "BRA",
-            "status": 1,
+            "status": 3,
             "tax": false,
             "department": "42",
             "federalID": "12345678901",
@@ -2222,9 +2223,6 @@
             "observation": ""
         },
         {
-            "name": "11"
-        },
-        {
             "status": 1,
             "code": 5,
             "shortName": "Novo Dinâmico",
@@ -2233,7 +2231,8 @@
         },
         {
             "name": "22",
-            "code": 222
+            "code": 222,
+            "status": 3
         },
         {
             "status": 3,
@@ -2276,7 +2275,7 @@
             "code": 4,
             "shortName": "Chinfronésio",
             "name": "Chinfronésio Pereira Filho",
-            "country": "CHI",
+            "country": "BRA",
             "status": 1
         }
     ],

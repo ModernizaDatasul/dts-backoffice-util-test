@@ -29,6 +29,7 @@ import { ExecutionParameters, IExecutionStatus } from 'dts-backoffice-util';
 })
 export class CustomerMaintListComponent implements OnInit, OnDestroy {
     @ViewChild('modalAdvanceSearch', { static: true }) modalAdvanceSearch: PoModalComponent;
+    @ViewChild('modalTotalByStatus', { static: true }) modalTotalByStatus: PoModalComponent;
     @ViewChild('modalScheduleRPW', { static: true }) modalScheduleRPW: PoModalComponent;
     @ViewChild('modalOrderGeneration', { static: true }) modalOrderGeneration: PoModalComponent;
     @ViewChild('modalUpload', { static: true }) modalUpload: PoModalComponent;
@@ -84,6 +85,9 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     orderItems: Array<IOrder> = new Array<IOrder>();
     orderHasNext = false;
     orderCurrentPage = 1;
+
+    columnsTotalByStatus: Array<PoTableColumn>;
+    itemsTotalByStatus: Array<Object>;
 
     executionServer: string;
     jobScheduleID: string;
@@ -319,6 +323,17 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             });
     }
 
+    changeStatus(item: ICustomer): void {
+        let status = item.status + 1;
+        if (!status || status > this.statusLabelList.length) { status = 1; }
+
+        this.servCustomerSubscription$ = this.servCustomer
+            .changeStatus(Customer.getInternalId(item), status)
+            .subscribe(() => {
+                item.status = status;
+            });
+    }
+
     order(): void {
         this.modalOrderGeneration.open();
     }
@@ -449,6 +464,18 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             });
     }
 
+    openTotalByStatus(): void {
+        this.servCustomerSubscription$ = this.servCustomer
+            .getTotalByStatus()
+            .subscribe((response: TotvsResponse<IOrder>) => {
+                if (response && response.items) {
+                    this.itemsTotalByStatus = response.items;
+                }
+            });
+
+        this.modalTotalByStatus.open();
+    }
+
     openScheduleRPW(): void {
         this.schParam.setScheduleParameters(this.loadLocalStorage('schParam'));
 
@@ -529,7 +556,6 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     }
 
     setupComponents(): void {
-
         this.breadcrumb = this.breadcrumbControlService.getBreadcrumb();
 
         this.disclaimerGroup = {
@@ -578,7 +604,8 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             { action: this.edit.bind(this), label: this.literals['edit'], icon: 'po-icon po-icon-edit' },
             { action: this.delete.bind(this), label: this.literals['remove'], icon: 'po-icon po-icon-delete' },
             { action: this.block.bind(this), label: this.literals['block'], icon: 'po-icon po-icon-user-delete' },
-            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: 'po-icon po-icon-document-double' }
+            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: 'po-icon po-icon-document-double' },
+            { action: this.changeStatus.bind(this), label: this.literals['changeStatus'], icon: 'po-icon po-icon-refresh' }
         ];
 
         this.statusLabelList = Customer.statusLabelList(this.literals);
@@ -608,8 +635,14 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             { property: 'ordValue', label: this.literals['ordValue'], type: 'currency' }
         ];
 
+        this.columnsTotalByStatus = [
+            { property: 'status', label: this.literals['status'], type: 'label', labels: this.statusLabelList },
+            { property: 'total', label: this.literals['total'], type: 'number' }
+        ];
+
         this.pageActions = [
             { label: this.literals['add'], action: this.create.bind(this), icon: 'po-icon-plus' },
+            { label: this.literals['totalByStatus'], action: this.openTotalByStatus.bind(this) },
             { label: this.literals['scheduleRPW'], action: this.openScheduleRPW.bind(this) },
             { label: this.literals['order'], action: this.order.bind(this) },
             { label: this.literals['download'], action: this.downloadFile.bind(this) },

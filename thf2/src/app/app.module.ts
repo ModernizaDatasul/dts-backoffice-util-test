@@ -32,7 +32,7 @@ import { kendoPt } from './shared/literals/i18n/kendo-pt';
 import { kendoEn } from './shared/literals/i18n/kendo-en';
 import { kendoEs } from './shared/literals/i18n/kendo-es';
 import { OrderService } from './shared/services/order.service';
-import { BreadcrumbControlService } from 'dts-backoffice-util';
+import { BreadcrumbControlService, TotvsScheduleExecutionService } from 'dts-backoffice-util';
 import { TranslateService } from 'dts-backoffice-util';
 
 registerLocaleData(localePt);
@@ -99,7 +99,8 @@ const i18nConfig: PoI18nConfig = {
         CustomerService,
         CountryService,
         ContactService,
-        OrderService
+        OrderService,
+        TotvsScheduleExecutionService
     ],
     bootstrap: [AppComponent]
 })

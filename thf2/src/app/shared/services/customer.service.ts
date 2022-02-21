@@ -89,6 +89,17 @@ export class CustomerService {
         return this.http.get(url, { responseType: 'blob' });
     }
 
+    changeStatus(id: string, status: number): Observable<Object> {
+        const model = {};
+        model['status'] = status;
+
+        return this.http.post(`${this.apiBaseUrl}/${id}/changeStatus`, model, this.headers);
+    }
+
+    getTotalByStatus(): Observable<Object> {
+        return this.http.get('/customer/totBySatus', this.headers);
+    }
+
     getUrl(urlBase: string, filters: PoDisclaimer[], expandables: string[], page: number, pageSize: number): string {
         const urlParams = new Array<String>();
 

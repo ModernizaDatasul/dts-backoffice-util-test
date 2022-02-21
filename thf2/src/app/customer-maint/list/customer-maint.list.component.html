@@ -89,6 +89,20 @@
 
 </po-modal>
 
+<po-modal #modalTotalByStatus
+    p-size="sm"
+    [p-title]="literals?.totalByStatus">
+
+    <po-table
+        p-selectable="false"
+        p-striped="true"
+        p-hide-columns-manager="true"
+        [p-columns]="columnsTotalByStatus"
+        [p-items]="itemsTotalByStatus">
+    </po-table>
+
+</po-modal>
+
 <po-modal #modalScheduleRPW
     p-size="sm"
     [p-title]="literals?.scheduleRPW"

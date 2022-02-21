@@ -41,6 +41,10 @@ export const customerMaintPt = {
     duplic: 'Duplicar',
     duplicSucessMessage: 'Duplicação OK !',
 
+    changeStatus: 'Alterar Status',
+    totalByStatus: 'Total p/ Status',
+    total: 'Total',
+
     ordNumber: 'Número',
     issueDate: 'Data',
     ordValue: 'Valor',

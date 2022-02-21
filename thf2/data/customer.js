@@ -4,7 +4,7 @@ module.exports = {
         console.log('Custom Script GET');
         console.log('ParamPath:', paramPath);
         console.log('QueryParam:', queryParam);
-        console.log('Database:', database);
+        //console.log('Database:', database);
 
         let totStatus = [];
         database.forEach(customer => {
@@ -29,7 +29,7 @@ module.exports = {
         console.log('ParamPath:', paramPath);
         console.log('QueryParam:', queryParam);
         console.log('Payload:', payload);
-        console.log('Database:', database);
+        //console.log('Database:', database);
 
         let customer = database.find(cust => cust.code == paramPath.idParam);
 
