@@ -30,6 +30,7 @@ export class AppComponent {
 
             ]
         },
+        { label: 'Teste', action: this.goTo.bind(this, '/teste') },
         //{ label: 'Link Externo', action: this.goTo.bind(this, '/externalLink') }
     ];
 

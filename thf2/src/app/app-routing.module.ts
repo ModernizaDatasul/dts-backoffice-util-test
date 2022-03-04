@@ -40,6 +40,10 @@ const routes: Routes = [
         loadChildren: () => import('./kendo-x-kendo-puro/kendo-x-kendo-puro.module').then(m => m.KendoxKendoPuroModule)
     },
     {
+        path: 'teste',
+        loadChildren: () => import('./teste/teste.module').then(m => m.TesteModule)
+    },
+    {
         path: 'externalLink',
         component: AppComponent,
         resolve: {
