@@ -31,8 +31,12 @@ import { customerDashEs } from './shared/literals/i18n/customer-dash-es';
 import { kendoPt } from './shared/literals/i18n/kendo-pt';
 import { kendoEn } from './shared/literals/i18n/kendo-en';
 import { kendoEs } from './shared/literals/i18n/kendo-es';
+import { testePt } from './shared/literals/i18n/teste-pt';
+import { testeEn } from './shared/literals/i18n/teste-en';
+import { testeEs } from './shared/literals/i18n/teste-es';
 import { OrderService } from './shared/services/order.service';
-import { BreadcrumbControlService, TotvsScheduleExecutionService } from 'dts-backoffice-util';
+import { BreadcrumbControlService } from 'dts-backoffice-util';
+import { TotvsScheduleExecutionService } from 'dts-backoffice-util';
 import { TranslateService } from 'dts-backoffice-util';
 
 registerLocaleData(localePt);
@@ -72,6 +76,13 @@ const i18nConfig: PoI18nConfig = {
             'en-US': kendoEn,
             'en': kendoEn,
             'es': kendoEs
+        },
+        teste: {
+            'pt-BR': testePt,
+            'pt': testePt,
+            'en-US': testeEn,
+            'en': testeEn,
+            'es': testeEs
         }
     }
 };
@@ -79,8 +90,6 @@ const i18nConfig: PoI18nConfig = {
 @NgModule({
     declarations: [
         AppComponent
-    ],
-    entryComponents: [
     ],
     imports: [
         BrowserModule,

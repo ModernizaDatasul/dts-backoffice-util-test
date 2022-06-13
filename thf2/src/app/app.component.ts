@@ -3,6 +3,7 @@ import { PoI18nService } from '@po-ui/ng-components';
 import { Router } from '@angular/router';
 import { BreadcrumbControlService } from 'dts-backoffice-util';
 import { TranslateService } from 'dts-backoffice-util';
+import PackageInfo from '../../package.json';
 
 @Component({
     selector: 'app-root',
@@ -11,16 +12,16 @@ import { TranslateService } from 'dts-backoffice-util';
 })
 export class AppComponent {
     menus = [
-        { label: 'Home', link: '/' },
+        { label: 'Home', shortLabel: 'Home', link: '/' },
         {
-            label: 'Cliente', subItems: [
+            label: 'Cliente', shortLabel: 'Cliente', subItems: [
                 { label: 'Cadastro de Cliente (Estático)', action: this.goTo.bind(this, '/customerMaint') },
                 { label: 'Cadastro de Cliente (Dinâmico)', action: this.goTo.bind(this, '/custMaintDynamic') },
-                { label: 'Pedidos do Cliente', action: this.goTo.bind(this, '/customerDash') }
+                { label: 'Pedidos do Cliente', action: this.goTo.bind(this, '/customerDash') },
             ]
         },
         {
-            label: 'Kendo', subItems: [
+            label: 'Kendo', shortLabel: 'Kendo', subItems: [
                 { label: 'KendoGrid - Básico', action: this.goTo.bind(this, '/kendoxBasic') },
                 { label: 'KendoGrid x poTable', action: this.goTo.bind(this, '/kendoxTable') },
                 { label: 'KendoGrid x Modal', action: this.goTo.bind(this, '/kendoxModal') },
@@ -38,9 +39,18 @@ export class AppComponent {
         private poI18nService: PoI18nService,
         private router: Router,
         private breadcrumbControlService: BreadcrumbControlService) {
+        this.displayVersions();
         poI18nService.setLanguage(
             TranslateService.getCurrentLanguage()
         );
+    }
+
+    displayVersions(): void {
+        console.log('App:', PackageInfo.name);
+        console.log('Git Info:', PackageInfo.git);
+        console.log('Versão do App:', PackageInfo.version);
+        console.log('Dependencias:');
+        Object.keys(PackageInfo.dependencies).forEach((key) => console.log(' - ', key, ':', PackageInfo.dependencies[key]));
     }
 
     public goTo(url: string) {

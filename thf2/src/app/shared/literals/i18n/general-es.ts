@@ -25,6 +25,7 @@ export const generalEs = {
     save: 'Guardar',
     search: 'Buscar',
     select: 'Seleccionar',
+    selectItem: 'Selecciona un artículo',
     createMessage: 'Inclusión efectuada con éxito.',
     updatedMessage: 'Cambio efectuado con éxito.',
     deleteMessage: 'Exclusión efectuado con éxito.',

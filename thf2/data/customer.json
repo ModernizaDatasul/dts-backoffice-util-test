@@ -561,7 +561,7 @@
             "department": "10",
             "federalID": "000712345678901",
             "observation": "Um observação média, para este cliente, muito importante.",
-            "status": 2
+            "status": 1
         },
         {
             "code": 2,
@@ -570,7 +570,7 @@
             "shortName": "Maria",
             "name": "Maria Barbosa",
             "country": "BRA",
-            "status": 1,
+            "status": 3,
             "tax": true,
             "taxValue": 7,
             "percent": 1.932,

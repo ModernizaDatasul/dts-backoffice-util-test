@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PoI18nPipe, PoI18nService, PoNotificationService, PoTableColumn, PoBreadcrumb, PoPageAction, PoPopoverComponent } from '@po-ui/ng-components';
+import { PoI18nPipe, PoI18nService, PoNotificationService, PoTableColumn } from '@po-ui/ng-components';
+import { PoBreadcrumb, PoPageAction, PoPageListComponent } from '@po-ui/ng-components';
 import { PoSelectOption, PoLookupColumn, PoUploadComponent } from '@po-ui/ng-components';
 import { PoTableAction, PoDisclaimer, PoDisclaimerGroup, PoPageFilter, PoModalComponent, PoModalAction } from '@po-ui/ng-components';
 import { PoDialogService } from '@po-ui/ng-components';
@@ -21,6 +22,7 @@ import { IOrder } from '../../shared/model/order.model';
 import { OrderService } from '../../shared/services/order.service';
 import { TotvsScheduleExecutionService } from 'dts-backoffice-util';
 import { ExecutionParameters, IExecutionStatus } from 'dts-backoffice-util';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-customer-maint-list',
@@ -28,6 +30,7 @@ import { ExecutionParameters, IExecutionStatus } from 'dts-backoffice-util';
     styleUrls: ['./customer-maint.list.component.css']
 })
 export class CustomerMaintListComponent implements OnInit, OnDestroy {
+    @ViewChild('poPageList', { static: true }) poPageList: PoPageListComponent;
     @ViewChild('modalAdvanceSearch', { static: true }) modalAdvanceSearch: PoModalComponent;
     @ViewChild('modalTotalByStatus', { static: true }) modalTotalByStatus: PoModalComponent;
     @ViewChild('modalScheduleRPW', { static: true }) modalScheduleRPW: PoModalComponent;
@@ -166,6 +169,30 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             });
     }
 
+    getCustomerWithContry() {
+        this.servCustomerSubscription$ = this.servCustomer
+            .query(this.disclaimers || [], this.expandables, 1, 10)
+            .pipe(
+                map((respCustomer: TotvsResponse<ICustomer>) => this.getContry(respCustomer))
+            )
+            .subscribe((response: any) => {
+                console.log('last', response);
+            });
+    }
+
+    getContry(respCustomer: TotvsResponse<ICustomer>): any {
+        respCustomer.items.forEach(customer => {
+            if (customer.country) {
+                this.servCountry
+                    .getById(customer.country, null)
+                    .subscribe((response: ICountry) => {
+                        customer['countryName'] = response.countryName;
+                    });
+            }
+        });
+        return respCustomer;
+    }
+
     searchBy(filter = null): void {
         this.disclaimers = [];
 
@@ -200,11 +227,15 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     }
 
     refreshFilters(): void {
-
         if (!this.disclaimers || this.disclaimers.length === 0) {
+            this.poPageList.clearInputSearch();
             this.resetFilters();
             this.refreshDisclaimer();
             return;
+        }
+
+        if (this.disclaimers.findIndex(disclaimer => disclaimer.property === 'shortName') === -1) {
+            this.poPageList.clearInputSearch();
         }
 
         // Atualizar os Campos de Filtro conforme o Disclaimer
@@ -324,13 +355,17 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     }
 
     changeStatus(item: ICustomer): void {
-        let status = item.status + 1;
-        if (!status || status > this.statusLabelList.length) { status = 1; }
+        let newStatus = item.status + 1;
+        if (!newStatus || newStatus > this.statusLabelList.length) { newStatus = 1; }
 
+        this.changeStatusInTable(item, newStatus);
+    }
+
+    changeStatusInTable(item: ICustomer, newStatus: number): void {
         this.servCustomerSubscription$ = this.servCustomer
-            .changeStatus(Customer.getInternalId(item), status)
+            .changeStatus(Customer.getInternalId(item), newStatus)
             .subscribe(() => {
-                item.status = status;
+                item.status = newStatus;
             });
     }
 
@@ -555,6 +590,32 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         }
     }
 
+    parallel(): void {
+        console.log('Req. Paralela', 'INÍCIO');
+
+        const listCustomer: Array<ICustomer> = [];
+        listCustomer.push(new Customer({ code: 1, shortName: 'João', country: 'ARG' }));
+        listCustomer.push(new Customer({ code: 2, shortName: 'Maria', country: 'BRA' }));
+        listCustomer.push(new Customer({ code: 10, shortName: 'Usuario 10', country: 'BRA' }));
+        listCustomer.push(new Customer({ code: 20, shortName: 'Usuario 20', country: 'BRA' }));
+
+        let qtdRequest = 0;
+        listCustomer.forEach(cust => {
+            qtdRequest++;
+            this.servCustomerSubscription$ = this.servCustomer
+                .update(cust)
+                .subscribe((response: ICustomer) => {
+                    qtdRequest--;
+                    console.log('Req. Paralela', 'response', response);
+                    if (qtdRequest <= 0) { console.log('Req. Paralela', 'FIM'); }
+                }, (err: any) => {
+                    qtdRequest--;
+                    console.log('Req. Paralela', 'err', err);
+                    if (qtdRequest <= 0) { console.log('Req. Paralela', 'FIM'); }
+                });
+        });
+    }
+
     setupComponents(): void {
         this.breadcrumb = this.breadcrumbControlService.getBreadcrumb();
 
@@ -626,6 +687,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             { property: 'name', label: this.literals['name'], type: 'string' },
             { property: 'country', label: this.literals['country'], type: 'string' },
             { property: 'status', label: this.literals['status'], type: 'label', labels: this.statusLabelList },
+            // { property: 'status', label: this.literals['status'], type: 'cellTemplate' },
             { property: 'observation', label: this.literals['observAbrev'], type: 'columnTemplate' }
         ];
 
@@ -647,7 +709,8 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             { label: this.literals['order'], action: this.order.bind(this) },
             { label: this.literals['download'], action: this.downloadFile.bind(this) },
             { label: this.literals['downloadList'], action: this.downloadList.bind(this) },
-            { label: this.literals['upload'], action: this.upload.bind(this) }
+            { label: this.literals['upload'], action: this.upload.bind(this) },
+            { label: this.literals['parallel'], action: this.parallel.bind(this) }
         ];
 
         this.filterCountryOptions = [];

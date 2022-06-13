@@ -1,4 +1,6 @@
-<po-page-list name="customerMaintList"
+<po-page-list 
+    #poPageList
+    name="customerMaintList"
     [p-title]="literals?.customerMaintList"
     [p-disclaimer-group]="disclaimerGroup"
     [p-filter]="filterSettings"
@@ -8,11 +10,21 @@
     <po-table
         p-selectable="false"
         p-striped="true"
+        p-actions-right="true"
         [p-columns]="columns"
         [p-items]="items"
         [p-actions]="tableActions"
         [p-show-more-disabled]="!hasNext"
         (p-show-more)="search(true)">
+    
+        <ng-template p-table-cell-template let-column="column" let-row="row">
+            <po-select *ngIf="column.property === 'status'"
+                ngModel="{{row.status}}"
+                [p-placeholder]="literals?.selectItem"
+                [p-options]="filterStatusOptions"
+                (p-change)="changeStatusInTable(row, $event)">
+            </po-select>
+        </ng-template>    
 
         <ng-template p-table-column-template p-property="observation" let-value>
             <po-popover #popovObs

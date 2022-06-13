@@ -25,6 +25,7 @@ export const generalEn = {
     save: 'Save',
     search: 'Search',
     select: 'Select',
+    selectItem: 'Select an Item',
     createMessage: 'Inclusion made successfully.',
     updatedMessage: 'Change made successfully.',
     deleteMessage: 'Delete made successfully.',

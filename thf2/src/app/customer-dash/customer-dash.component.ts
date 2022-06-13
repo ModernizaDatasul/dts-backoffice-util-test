@@ -47,6 +47,8 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
 
     scheduleParms: IScheduleParameters;
 
+    showNewAba = true;
+
     constructor(
         private poI18nPipe: PoI18nPipe,
         private poI18nService: PoI18nService,
@@ -122,6 +124,8 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
         } else {
             this.disableCustDetail = true;
         }
+
+        this.showNewAba = (this.selectCustomer % 2 === 0);
     }
 
     detailCustomer(): void {

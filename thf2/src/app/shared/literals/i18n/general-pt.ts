@@ -24,6 +24,7 @@ export const generalPt = {
     save: 'Salvar',
     search: 'Buscar',
     select: 'Selecionar',
+    selectItem: 'Selecione um Item',
     createMessage: 'Inclusão efetuada com sucesso.',
     updatedMessage: 'Alteração efetuada com sucesso.',
     deleteMessage: 'Exclusão efetuada com sucesso.',

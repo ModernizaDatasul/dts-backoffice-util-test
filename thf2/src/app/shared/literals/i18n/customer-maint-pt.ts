@@ -54,5 +54,6 @@ export const customerMaintPt = {
     download: 'Download Arquivo',
     downloadList: 'Download Lista',
     upload: 'Upload',
+    parallel: 'Req. Paralelo',
     confirm: 'Confirmar'
 };
