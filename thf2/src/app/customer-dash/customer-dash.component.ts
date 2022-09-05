@@ -79,12 +79,11 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
     }
 
     loadCustomerSelect(): void {
-        this.customerOptions.length = 0;
-
         this.servCustomerSubscription$ = this.servCustomer
             .query([], this.expandables)
             .subscribe((response: TotvsResponse<ICustomer>) => {
-
+                
+                this.customerOptions = [];
                 if (response && response.items) {
                     response.items.map(cust => {
                         this.customerOptions.push(

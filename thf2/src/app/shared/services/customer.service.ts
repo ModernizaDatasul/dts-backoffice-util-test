@@ -11,7 +11,7 @@ export class CustomerService {
 
     //private apiBaseUrl = '/dts/datasul-rest/resources/prg/fin/v1/customer';
     private apiBaseUrl = '/customer';
-    
+
     //private apiUploadUrl = `/dts/datasul-rest/resources/prg/upload/v1/testeUpload`;
     private apiUploadUrl = `${this.apiBaseUrl}/addFile`;
 
