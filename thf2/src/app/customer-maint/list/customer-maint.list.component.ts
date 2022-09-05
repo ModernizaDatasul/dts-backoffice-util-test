@@ -500,6 +500,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     }
 
     openTotalByStatus(): void {
+        this.itemsTotalByStatus = [];
         this.servCustomerSubscription$ = this.servCustomer
             .getTotalByStatus()
             .subscribe((response: TotvsResponse<IOrder>) => {

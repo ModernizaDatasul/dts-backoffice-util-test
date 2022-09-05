@@ -21,7 +21,9 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@totvs/po-theme/css/po-theme-default-variables.min.css",
               "node_modules/@totvs/po-theme/css/po-theme-default.min.css",
+              "node_modules/@po-ui/style/css/po-theme-core.min.css",
               "node_modules/@progress/kendo-theme-default/dist/all.css",
               "src/styles.css"
             ],
@@ -84,7 +86,9 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
             "styles": [
+              "node_modules/@totvs/po-theme/css/po-theme-default-variables.min.css",
               "node_modules/@totvs/po-theme/css/po-theme-default.min.css",
+              "node_modules/@po-ui/style/css/po-theme-core.min.css",
               "node_modules/@progress/kendo-theme-default/dist/all.css",
               "src/styles.css"
             ],
@@ -110,7 +114,6 @@
       }
     }
   },
-  "defaultProject": "dts-backoffice-util-test",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

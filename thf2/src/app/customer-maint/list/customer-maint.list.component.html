@@ -95,6 +95,8 @@
 
         <po-switch class="po-md-12" name="filterActive"
             [(ngModel)]="filterActive"
+            [p-label-off]="literals?.no"
+            [p-label-on]="literals?.yes"            
             [p-label]="literals?.active">
         </po-switch>
     </div>
@@ -121,18 +123,18 @@
     [p-primary-action]="confirmScheduleRPW"
     [p-secondary-action]="cancelScheduleRPW">
 
-    <po-button
-            p-label="Habilita/Desabilita"
-            (p-click)="onEnableDisableParam()">
+    <po-button 
+        [p-label]="literals?.enableDisable"
+        (p-click)="onEnableDisableParam()">
     </po-button>
 
     <!--
      programName="pdapi701"
      externalName="pdp/pdapi701"
      programVersion="2.00.22.11"
-     -->   
-
-     <app-totvs-schedule-execution #schParam
+     --> 
+     
+    <app-totvs-schedule-execution #schParam
         programName="api_executa_carga_dados_carol"
         externalName="api_executa_carga_dados_carol"        
         programVersion="1.00.00.001"     
@@ -152,7 +154,7 @@
     <div class="po-row">
        <po-lookup class="po-md-8"
             name="executionServer"
-            p-label="Servidor RPW"
+            [p-label]="literals?.rpwService"
             p-placeholder="Servidor RPW"
             [p-columns]="zoomRpwServiceColumns"
             [p-field-format]="fieldRpwServiceFormat"
@@ -163,43 +165,43 @@
         </po-lookup>    
 
         <po-button class="po-md-4 po-mt-4"
-            p-label="Agendar"
+            [p-label]="literals?.scheduling"
             (p-click)="scheduling()">
         </po-button>    
     </div>
 
     <div class="po-row">
         <po-input class="po-md-6"
-            p-label="jobScheduleID"
+            [p-label]="literals?.jobScheduleID"
             p-readonly="false"
             [(ngModel)]="jobScheduleID">
         </po-input>
 
         <po-button class="po-md-3 po-mt-4"
-            p-label="Buscar"
+            [p-label]="literals?.search"
             (p-click)="getExecution('jobScheduleID')">
         </po-button>    
 
         <po-button class="po-md-3 po-mt-4"
-            p-label="Acompanhar"
+            [p-label]="literals?.followUp"
             (p-click)="followUp('jobScheduleID')">
         </po-button>
     </div>
 
     <div class="po-row">
         <po-input class="po-md-6"
-            p-label="executionID"
+            [p-label]="literals?.executionID"
             p-readonly="false"
             [(ngModel)]="executionID">
         </po-input>
 
         <po-button class="po-md-3 po-mt-4"
-            p-label="Buscar"
+            [p-label]="literals?.search"
             (p-click)="getExecution('executionID')">
         </po-button>    
 
         <po-button class="po-md-3 po-mt-4"
-            p-label="Acompanhar"
+            [p-label]="literals?.followUp"
             (p-click)="followUp('executionID')">
         </po-button>
     </div>

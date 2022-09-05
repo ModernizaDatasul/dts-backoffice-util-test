@@ -50,5 +50,11 @@ export const customerMaintEs = {
     download: 'Descargar archivo',
     downloadList: 'Descargar Lista',
     upload: 'Upload',
-    confirm: 'Confirmar'
+    confirm: 'Confirmar',
+    enableDisable: 'Habilita/Desabilita',
+    rpwService: 'Servidor RPW',
+    scheduling: 'Agendar',
+    jobScheduleID: 'jobScheduleID',
+    executionID: 'executionID',
+    followUp: 'Acompanhar'
 };

@@ -10,7 +10,7 @@ export class CountryService {
 
     private headers = { headers: { 'X-PO-Screen-Lock': 'true' } };
 
-    // private apiBaseUrl = '/dts/datasul-rest/resources/prg/fin/v1/country';
+    //private apiBaseUrl = '/dts/datasul-rest/resources/prg/fin/v1/country';
     private apiBaseUrl = '/country';
 
     private expandables = [''];
@@ -41,7 +41,7 @@ export class CountryService {
     }
 
     getObjectByValue(id: string): Observable<ICountry> {
-        return this.http.get<ICountry>(`${this.apiBaseUrl}/${id}`);
+        return this.http.get<ICountry>(`${this.apiBaseUrl}/${id}`, this.headers);
     }
 
     create(model: ICountry): Observable<ICountry> {

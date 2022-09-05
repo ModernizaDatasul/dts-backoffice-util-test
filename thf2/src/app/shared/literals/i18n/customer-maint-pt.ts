@@ -55,5 +55,11 @@ export const customerMaintPt = {
     downloadList: 'Download Lista',
     upload: 'Upload',
     parallel: 'Req. Paralelo',
-    confirm: 'Confirmar'
+    confirm: 'Confirmar',
+    enableDisable: 'Habilita/Desabilita',
+    rpwService: 'Servidor RPW',
+    scheduling: 'Agendar',
+    jobScheduleID: 'jobScheduleID',
+    executionID: 'executionID',
+    followUp: 'Acompanhar'
 };

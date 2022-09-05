@@ -9,8 +9,10 @@ import { TotvsResponse } from 'dts-backoffice-util';
 export class CustomerService {
     private headers = { headers: { 'X-PO-Screen-Lock': 'true' } };
 
-    // private apiBaseUrl = '/dts/datasul-rest/resources/prg/fin/v1/customer';
+    //private apiBaseUrl = '/dts/datasul-rest/resources/prg/fin/v1/customer';
     private apiBaseUrl = '/customer';
+    
+    //private apiUploadUrl = `/dts/datasul-rest/resources/prg/upload/v1/testeUpload`;
     private apiUploadUrl = `${this.apiBaseUrl}/addFile`;
 
     private expandables = [''];
