@@ -20,7 +20,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
               <directory>dist</directory>
             </fileset>
             <!--fileset  xx comentario xx  >
-              <directory>node</directory>
+              <directory>node - alterado xxx </directory>
             </fileset>
             <fileset>
               <directory>node_modules</directory>
