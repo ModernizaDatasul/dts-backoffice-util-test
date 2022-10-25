@@ -91,6 +91,8 @@ const i18nConfig: PoI18nConfig = {
     declarations: [
         AppComponent
     ],
+    entryComponents: [
+    ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,

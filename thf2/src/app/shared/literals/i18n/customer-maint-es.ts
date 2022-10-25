@@ -56,5 +56,6 @@ export const customerMaintEs = {
     scheduling: 'Agendar',
     jobScheduleID: 'jobScheduleID',
     executionID: 'executionID',
-    followUp: 'Acompanhar'
+    followUp: 'Acompanhar',
+    getDataSchedule: 'Busca Dados Agenda'
 };

@@ -44,7 +44,7 @@
     "@totvs/po-theme": "14.4.0",
     "core-js": "^3.6.1",
     "dts-backoffice-kendo-grid": "14.0.0",
-    "dts-backoffice-util": "14.0.0",
+    "dts-backoffice-util": "14.1.0",
     "hammerjs": "^2.0.8",
     "mdn-polyfills": "^5.18.0",
     "rxjs": "~7.5.6",

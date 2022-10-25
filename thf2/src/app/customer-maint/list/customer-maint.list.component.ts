@@ -529,6 +529,12 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         this.disableParamRpw = !this.disableParamRpw;
     }
 
+    onGetDataSchedure(): void {
+        const dataSchParam = this.schParam.getScheduleParameters();
+        console.log('dataSchParam', dataSchParam);
+        this.saveLocalStorage('schParam', dataSchParam);
+    }
+
     onConfirmScheduleRPW(): void {
         this.modalScheduleRPW.close();
     }
