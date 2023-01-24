@@ -19,12 +19,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
             <fileset>
               <directory>dist</directory>
             </fileset>
-            <!--fileset>
+            <fileset>
               <directory>node</directory>
             </fileset>
             <fileset>
               <directory>node_modules</directory>
-            </fileset-->            
+            </fileset>            
             <fileset>
               <directory>.</directory>
               <includes>
@@ -65,7 +65,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
               <goal>npm</goal>
             </goals>
             <configuration>
-              <arguments>run-script ng build -- --prod</arguments>
+              <arguments>run-script ng build -- --configuration production</arguments>
             </configuration>
             <phase>generate-resources</phase>
           </execution>

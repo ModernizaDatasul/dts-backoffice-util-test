@@ -1,0 +1,53 @@
+<po-page-default
+    p-title="Teste Heroes">
+
+    <!--<po-info class="po-md-2"
+            p-label="Herói"
+            [p-value]="hero.label">
+    </po-info>
+
+    <po-info class="po-md-2"
+            p-label="ID"
+            [p-value]="hero.value | number : '1.0-0'">
+    </po-info>
+    
+    <po-info class="po-md-2"
+            p-label="Salário"
+            [p-value]="hero.salary | number : '1.2-2'">
+    </po-info>
+    
+    <po-decimal #fieldId 
+        class="po-md-2"
+        p-label="ID"
+        [(ngModel)]="hero.value">
+    </po-decimal>
+
+    <po-decimal #fieldSalary
+        id="fieldSalary"
+        class="po-md-2 {{ invalidFieldClass }}"
+        p-label="Salário"
+        (p-change-model)="cleanValid()"
+        [(ngModel)]="hero.salary">
+    </po-decimal>
+
+    <po-button
+            p-label="Foco Salário"
+            (p-click)="onClickButton()">
+    </po-button>-->
+
+    <po-lookup class="po-md-4" name="heroesZoom"
+        p-label="Heróis"
+        p-field-label="label"
+        p-field-value="nickname"
+        [p-columns]="zoomHeroesColumns"
+        [p-field-format]="zoomHeroesFormat"
+        [p-filter-service]="heroesService"
+        p-required>
+    </po-lookup>    
+
+    <po-table class="po-md-12"
+        [p-columns]="heroesColumns"
+        [p-items]="heroesItems">
+    </po-table>
+
+</po-page-default>

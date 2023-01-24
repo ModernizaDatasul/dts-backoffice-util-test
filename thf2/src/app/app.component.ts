@@ -31,6 +31,12 @@ export class AppComponent {
 
             ]
         },
+        {
+            label: 'Heróis', shortLabel: 'Heróis', subItems: [
+                { label: 'Teste de Heróis', action: this.goTo.bind(this, '/heroesMaint') },
+                { label: 'Consulta Heróis', action: this.goTo.bind(this, '/heroesView') },
+            ]
+        },
         { label: 'Teste', action: this.goTo.bind(this, '/teste') },
         //{ label: 'Link Externo', action: this.goTo.bind(this, '/externalLink') }
     ];

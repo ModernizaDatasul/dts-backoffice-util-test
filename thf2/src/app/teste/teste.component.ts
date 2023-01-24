@@ -11,6 +11,8 @@ import { forkJoin, Subscription } from 'rxjs';
 export class TesteComponent implements OnInit, OnDestroy {
     literals: any = {};
 
+    servSubscription$: Subscription;
+
     constructor(
         private poI18nPipe: PoI18nPipe,
         private poI18nService: PoI18nService,
@@ -38,6 +40,6 @@ export class TesteComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-
+        if (this.servSubscription$) { this.servSubscription$.unsubscribe(); }
     }
 }

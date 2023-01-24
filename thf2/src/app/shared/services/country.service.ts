@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PoDisclaimer, PoLookupFilteredItemsParams } from '@po-ui/ng-components';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs';
 import { ICountry, Country } from '../model/country.model';
 import { TotvsResponse } from 'dts-backoffice-util';
 
@@ -30,18 +31,26 @@ export class CountryService {
         return this.http.get<ICountry>(`${this.apiBaseUrl}/${id}${lstExpandables}`, this.headers);
     }
 
-    getFilteredItems(params: PoLookupFilteredItemsParams): Observable<ICountry> {
-        const header = { params: { page: params.page.toString(), pageSize: params.pageSize.toString() } };
-
+    getFilteredItems(params: PoLookupFilteredItemsParams): Observable<TotvsResponse<ICountry>> {
+        const filters = new Array<PoDisclaimer>();
         if (params.filter && params.filter.length > 0) {
-            header.params['countryCode'] = params.filter;
+            filters.push({ property: 'countryCode', value: params.filter });
         }
 
-        return this.http.get<ICountry>(`${this.apiBaseUrl}`, header);
+        return this.query(filters, null, params.page, params.pageSize);
     }
 
-    getObjectByValue(id: string): Observable<ICountry> {
-        return this.http.get<ICountry>(`${this.apiBaseUrl}/${id}`, this.headers);
+    getObjectByValue(id: any, filterParams: any): Observable<any> {
+        if (filterParams && filterParams.multiple) {
+            let paramId = Array.isArray(id) ? id : [id];
+
+            const filters = new Array<PoDisclaimer>();
+            filters.push({ property: 'countryCode', value: paramId.join(',') });
+
+            return this.query(filters, null, 1, 999).pipe(map((resp: TotvsResponse<ICountry>) => resp.items));
+        } else {
+            return this.getById(id, null);
+        }
     }
 
     create(model: ICountry): Observable<ICountry> {

@@ -66,7 +66,9 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
 
     filterCode: IFilterRangeNumber;
     filterCountryList: Array<string>;
-    filterCountryOptions: Array<PoSelectOption>;
+    zoomCountryColumns: Array<PoLookupColumn>;
+    filterParamsCountry =  { multiple: true };
+
     filterStatusList: Array<number>;
     filterStatusOptions: Array<PoSelectOption>;
     filterActive: boolean;
@@ -114,7 +116,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private servCustomer: CustomerService,
-        private servCountry: CountryService,
+        public servCountry: CountryService,
         private servOrder: OrderService,
         private breadcrumbControlService: BreadcrumbControlService,
         public scheduleExecution: TotvsScheduleExecutionService
@@ -147,6 +149,10 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         return `${value.code} - ${value.name}`;
     }
 
+    fieldCountryFormat(value) {
+        return `${value.countryCode} - ${value.countryName}`;
+    }    
+
     search(loadMore = false): void {
         if (loadMore === true) {
             this.currentPage = this.currentPage + 1;
@@ -173,14 +179,14 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         this.servCustomerSubscription$ = this.servCustomer
             .query(this.disclaimers || [], this.expandables, 1, 10)
             .pipe(
-                map((respCustomer: TotvsResponse<ICustomer>) => this.getContry(respCustomer))
+                map((respCustomer: TotvsResponse<ICustomer>) => this.getCountry(respCustomer))
             )
             .subscribe((response: any) => {
                 console.log('last', response);
             });
     }
 
-    getContry(respCustomer: TotvsResponse<ICustomer>): any {
+    getCountry(respCustomer: TotvsResponse<ICustomer>): any {
         respCustomer.items.forEach(customer => {
             if (customer.country) {
                 this.servCountry
@@ -281,22 +287,6 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             this.filterCode.valInitial, this.filterCode.valFinal)) { isOk = false; }
 
         return isOk;
-    }
-
-    loadCountryOptions(): void {
-        this.servCountrySubscription$ = this.servCountry
-            .query([], null, 1, 999)
-            .subscribe((response: TotvsResponse<ICountry>) => {
-
-                this.filterCountryOptions.length = 0;
-                response.items.map(country => {
-                    this.filterCountryOptions.push(
-                        { label: `${country.countryCode} - ${country.countryName}`, value: country.countryCode }
-                    );
-                });
-            });
-
-        return;
     }
 
     detail(item: ICustomer): void {
@@ -667,6 +657,11 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             { property: 'name', label: 'Descrição', type: 'string', width: '80%' }
         ];
 
+        this.zoomCountryColumns = [
+            { property: 'countryCode', label: this.literals['code'], type: 'string' },
+            { property: 'countryName', label: this.literals['name'], type: 'string' }
+        ];        
+
         this.tableActions = [
             { action: this.detail.bind(this), label: this.literals['detail'], icon: 'po-icon po-icon-document' },
             { action: this.edit.bind(this), label: this.literals['edit'], icon: 'po-icon po-icon-edit' },
@@ -719,10 +714,6 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             { label: this.literals['upload'], action: this.upload.bind(this) },
             { label: this.literals['parallel'], action: this.parallel.bind(this) }
         ];
-
-        this.filterCountryOptions = [];
-
-        this.loadCountryOptions();
 
         this.resetFilters();
     }

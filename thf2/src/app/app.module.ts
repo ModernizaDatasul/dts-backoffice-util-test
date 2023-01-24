@@ -36,6 +36,7 @@ import { testeEn } from './shared/literals/i18n/teste-en';
 import { testeEs } from './shared/literals/i18n/teste-es';
 import { OrderService } from './shared/services/order.service';
 import { BreadcrumbControlService } from 'dts-backoffice-util';
+import { HeroesService } from './shared/services/heroes.service';
 import { TotvsScheduleExecutionService } from 'dts-backoffice-util';
 import { TranslateService } from 'dts-backoffice-util';
 
@@ -111,7 +112,8 @@ const i18nConfig: PoI18nConfig = {
         CountryService,
         ContactService,
         OrderService,
-        TotvsScheduleExecutionService
+        TotvsScheduleExecutionService,
+        HeroesService
     ],
     bootstrap: [AppComponent]
 })

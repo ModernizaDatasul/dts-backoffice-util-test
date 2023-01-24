@@ -144,5 +144,6 @@ export class KendoxKendoComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
+        if (this.servCustomerSubscription$) { this.servCustomerSubscription$.unsubscribe(); }
     }
 }

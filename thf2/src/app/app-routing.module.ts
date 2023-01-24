@@ -12,6 +12,14 @@ const routes: Routes = [
         loadChildren: () => import('./customer-dash/customer-dash.module').then(m => m.CustomerDashModule)
     },
     {
+        path: 'heroesMaint',
+        loadChildren: () => import('./heroes-maint/heroes-maint.module').then(m => m.HeroesMaintModule)
+    },
+    {
+        path: 'heroesView',
+        loadChildren: () => import('./heroes-view/heroes-view.module').then(m => m.HeroesViewModule)
+    },
+    {
         path: 'custMaintDynamic',
         loadChildren: () => import('./cust-maint-dynamic/cust-maint-dynamic.module').then(m => m.CustMaintDynamicModule)
     },

@@ -76,14 +76,19 @@
             p-min="0"
             p-required>
         </po-number>
-
-        <po-multiselect class="po-md-12" name="filterCountryList"
+     
+        <po-lookup class="po-md-12" name="filterCountryList"
             [(ngModel)]="filterCountryList"
             [p-label]="literals?.country"
             [p-placeholder]="literals?.all"
-            [p-options]="filterCountryOptions"
-            p-required="true">
-        </po-multiselect>
+            [p-columns]="zoomCountryColumns"
+            [p-field-format]="fieldCountryFormat"
+            [p-filter-service]="servCountry"
+            [p-filter-params]="filterParamsCountry"
+            p-field-label="countryName"
+            p-field-value="countryCode"
+            p-multiple="true">
+        </po-lookup>        
 
         <po-multiselect class="po-md-12" name="filterStatusList"
             [(ngModel)]="filterStatusList"

@@ -1,0 +1,57 @@
+<po-page-default
+    p-title="Consulta Heróis">
+
+    <po-button
+        class="po-md-2 po-mt-1"
+        p-label="Incluir"
+        (p-click)="add()">
+    </po-button>
+
+    <!--<po-slide #slideHeroes p-height="400" [p-slides]="listHeroesImage" p-interval="1" class="po-md-12">
+    </po-slide>-->
+
+    <po-slide #slideHeroes p-height="400" [p-slides]="listHeroes" p-interval="0" class="po-md-12">
+        <ng-template p-slide-content-template let-item>
+
+            <div
+                [style.backgroundSize]="'cover'"
+                [style.height.%]="100">
+
+                <br>
+                
+                <!--<div class="po-row po-md-7" style="margin: 5px 0px 5px 50px;">
+                    <img class="po-md-12" [src]="item.image | imageFormat" alt="" width="300" height="300">
+                </div>-->
+                
+                <div class="po-md-4" style="padding: 0px; margin: 5px;">
+                
+                    <po-info 
+                        p-label="ID"
+                        [p-value]="item.value">
+                    </po-info>
+
+                    <po-info
+                        p-label="NickName"
+                        [p-value]="item.nickname">
+                    </po-info>
+
+                    <po-info
+                        p-label="Name"
+                        [p-value]="item.label">
+                    </po-info>
+
+                    <po-button class="po-md-4 po-mt-2"
+                        p-label="Alterar"
+                        (p-click)="edit(item.value)">
+                    </po-button>
+
+                    <po-button class="po-md-4 po-mt-2"
+                        p-label="Excluir"
+                        (p-click)="delete(item.value)">
+                    </po-button>
+                </div>
+            </div>
+        </ng-template>
+    </po-slide>
+
+</po-page-default>

@@ -15,7 +15,6 @@
 
 	<modules>
 		<module>thf2</module>
-		<module>war-jboss</module>
 		<module>war-wildfly</module>
 	</modules>
 

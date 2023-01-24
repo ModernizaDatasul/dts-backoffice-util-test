@@ -30,7 +30,6 @@ export class CustomerMaintDetailComponent implements OnInit, OnDestroy {
     customer: ICustomer = new Customer();
 
     contactColumns: Array<PoTableColumn>;
-    contactTableActions: Array<PoTableAction>;
     contactItems: Array<IContact> = new Array<IContact>();
 
     constructor(

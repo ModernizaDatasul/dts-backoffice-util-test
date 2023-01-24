@@ -21,8 +21,8 @@ const PROXY_CONFIG = [
             "/dts/datasul-rest",
             "/qrcode/download"
         ],
-        //target: "http://vigia:8480",
-        target: "https://gales:8180",
+        target: "http://embau:8480",
+        //target: "https://gales:8180",
         secure: false,
         changeOrigin: true,
         logLevel: "debug",
