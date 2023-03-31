@@ -7,8 +7,10 @@
     [p-breadcrumb]="breadcrumb"
     [p-actions]="pageActions">
 
-    <po-table
-        p-selectable="false"
+    <po-table #TableCustomer
+        p-selectable="true"
+        p-selectable-entire-line="true"
+        p-single-select="true"
         p-striped="true"
         p-actions-right="true"
         [p-columns]="columns"
@@ -123,7 +125,7 @@
 </po-modal>
 
 <po-modal #modalScheduleRPW
-    p-size="sm"
+    p-size="md"
     [p-title]="literals?.scheduleRPW"
     [p-primary-action]="confirmScheduleRPW"
     [p-secondary-action]="cancelScheduleRPW">

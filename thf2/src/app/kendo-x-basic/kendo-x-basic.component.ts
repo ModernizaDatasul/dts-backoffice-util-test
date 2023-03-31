@@ -206,6 +206,7 @@ export class KendoxBasicComponent implements OnInit, OnDestroy {
 
         this.kendoBasic.changeColumnConfigView({ column: 'internalId', locked: !column.locked });
     }
+
     saveLocalStorage(key: string, value: any): void {
         if (typeof (Storage) === 'undefined') { return; }
 

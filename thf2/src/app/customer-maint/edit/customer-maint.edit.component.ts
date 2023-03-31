@@ -106,16 +106,13 @@ export class CustomerMaintEditComponent implements OnInit, OnDestroy {
             });
     }
 
-    save(): void {
+    save(doNew = false): void {
         if (this.onValidFields()) {
             if (this.isEdit) {
                 this.servCustomerSubscription$ = this.servCustomer
                     .update(this.customer)
                     .subscribe(() => {
-
-                        this.poNotification.success(this.literals['updatedMessage']);
-                        this.router.navigate([this.breadcrumbControlService.getPrevRouter()]);
-
+                        this.finishSave('updatedMessage', doNew);
                     }, (err: any) => {
 
                     });
@@ -123,14 +120,32 @@ export class CustomerMaintEditComponent implements OnInit, OnDestroy {
                 this.servCustomerSubscription$ = this.servCustomer
                     .create(this.customer)
                     .subscribe(() => {
-
-                        this.poNotification.success(this.literals['createMessage']);
-                        this.router.navigate([this.breadcrumbControlService.getPrevRouter()]);
-
+                        this.finishSave('createMessage', doNew);
                     }, (err: any) => {
 
                     });
             }
+        }
+    }
+
+    saveAndNew(): void {
+        this.save(true);
+    }
+
+    finishSave(lType: string, doNew: boolean): void {
+        this.poNotification.success(this.literals[lType]);
+
+        if (doNew) {
+            this.breadcrumbControlService.delBreadcrumb(this.getTitle());
+            if (lType === 'createMessage') {
+                this.router.navigate(['/'], {skipLocationChange: true}).then(() => {
+                    this.router.navigate(['/customerMaint', 'new']);
+                });
+            } else {
+                this.router.navigate(['/customerMaint', 'new']);
+            }
+        } else {
+            this.router.navigate([this.breadcrumbControlService.getPrevRouter()]);
         }
     }
 

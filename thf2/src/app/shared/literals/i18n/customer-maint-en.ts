@@ -57,5 +57,6 @@ export const customerMaintEn = {
     jobScheduleID: 'jobScheduleID',
     executionID: 'executionID',
     followUp: 'followUp',
-    getDataSchedule: 'Get Data Schedule'
+    getDataSchedule: 'Get Data Schedule',
+    selectLine: 'Select Line'
 };

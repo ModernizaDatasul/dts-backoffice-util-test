@@ -2,6 +2,7 @@
     [p-title]="getTitle()"
     [p-breadcrumb]="breadcrumb"
     (p-save)="save()"
+    (p-save-new)="saveAndNew()"
     (p-cancel)="cancel()"
     >
 
@@ -71,7 +72,7 @@
                 (p-click)="contactAdd()"
                 p-icon="po-icon-plus"
                 [p-label]="literals?.contact"
-                p-type="primary">
+                p-kind="primary">
             </po-button> 
         </div>
 

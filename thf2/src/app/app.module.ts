@@ -8,6 +8,7 @@ import '@progress/kendo-angular-intl/locales/en/all';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 import { PoModule, PoI18nModule, PoI18nPipe } from '@po-ui/ng-components';
 import { PoI18nConfig } from '@po-ui/ng-components';
 
@@ -34,11 +35,13 @@ import { kendoEs } from './shared/literals/i18n/kendo-es';
 import { testePt } from './shared/literals/i18n/teste-pt';
 import { testeEn } from './shared/literals/i18n/teste-en';
 import { testeEs } from './shared/literals/i18n/teste-es';
-import { OrderService } from './shared/services/order.service';
+
 import { BreadcrumbControlService } from 'dts-backoffice-util';
-import { HeroesService } from './shared/services/heroes.service';
 import { TotvsScheduleExecutionService } from 'dts-backoffice-util';
 import { TranslateService } from 'dts-backoffice-util';
+import { MenuDatasulService } from 'dts-backoffice-util';
+import { OrderService } from './shared/services/order.service';
+import { HeroesService } from './shared/services/heroes.service';
 
 registerLocaleData(localePt);
 registerLocaleData(localeEs);
@@ -101,7 +104,8 @@ const i18nConfig: PoI18nConfig = {
         CommonModule,
         FormsModule,
         AppRoutingModule,
-        PoI18nModule.config(i18nConfig)
+        PoI18nModule.config(i18nConfig),
+        HttpClientModule
     ],
     providers: [
         { provide: LOCALE_ID, useValue: TranslateService.getCurrentLanguage() },
@@ -113,7 +117,8 @@ const i18nConfig: PoI18nConfig = {
         ContactService,
         OrderService,
         TotvsScheduleExecutionService,
-        HeroesService
+        HeroesService,
+        MenuDatasulService
     ],
     bootstrap: [AppComponent]
 })

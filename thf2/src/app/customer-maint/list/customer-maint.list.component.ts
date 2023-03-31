@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PoI18nPipe, PoI18nService, PoNotificationService, PoTableColumn } from '@po-ui/ng-components';
+import { PoI18nPipe, PoI18nService, PoNotificationService, PoTableColumn, PoTableComponent } from '@po-ui/ng-components';
 import { PoBreadcrumb, PoPageAction, PoPageListComponent } from '@po-ui/ng-components';
 import { PoSelectOption, PoLookupColumn, PoUploadComponent } from '@po-ui/ng-components';
 import { PoTableAction, PoDisclaimer, PoDisclaimerGroup, PoPageFilter, PoModalComponent, PoModalAction } from '@po-ui/ng-components';
@@ -23,6 +23,7 @@ import { OrderService } from '../../shared/services/order.service';
 import { TotvsScheduleExecutionService } from 'dts-backoffice-util';
 import { ExecutionParameters, IExecutionStatus } from 'dts-backoffice-util';
 import { map } from 'rxjs/operators';
+import { MenuDatasulService } from 'dts-backoffice-util';
 
 @Component({
     selector: 'app-customer-maint-list',
@@ -38,6 +39,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     @ViewChild('modalUpload', { static: true }) modalUpload: PoModalComponent;
     @ViewChild('schParam', { static: true }) schParam: TotvsScheduleExecutionComponent;
     @ViewChild('uploadFiles', { static: true }) uploadFiles: PoUploadComponent;
+    @ViewChild('TableCustomer', { static: true }) TableCustomer: PoTableComponent;
 
     literals: any = {};
 
@@ -67,7 +69,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     filterCode: IFilterRangeNumber;
     filterCountryList: Array<string>;
     zoomCountryColumns: Array<PoLookupColumn>;
-    filterParamsCountry =  { multiple: true };
+    filterParamsCountry = { multiple: true };
 
     filterStatusList: Array<number>;
     filterStatusOptions: Array<PoSelectOption>;
@@ -108,6 +110,8 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     fileToSend: any;
     public apiUploadUrl: string;
 
+    initPos = true;
+
     constructor(
         private poI18nPipe: PoI18nPipe,
         private poI18nService: PoI18nService,
@@ -119,7 +123,8 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         public servCountry: CountryService,
         private servOrder: OrderService,
         private breadcrumbControlService: BreadcrumbControlService,
-        public scheduleExecution: TotvsScheduleExecutionService
+        public scheduleExecution: TotvsScheduleExecutionService,
+        public menuDatasulService: MenuDatasulService
     ) { }
 
     ngOnInit(): void {
@@ -151,7 +156,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
 
     fieldCountryFormat(value) {
         return `${value.countryCode} - ${value.countryName}`;
-    }    
+    }
 
     search(loadMore = false): void {
         if (loadMore === true) {
@@ -169,6 +174,11 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
                 if (response && response.items) {
                     this.items = [...this.items, ...response.items];
                     this.hasNext = response.hasNext;
+                }
+
+                if (this.initPos) {
+                    this.initPos = false;
+                    this.selectLine();
                 }
 
                 if (this.items.length === 0) { this.currentPage = 1; }
@@ -571,7 +581,14 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     }
 
     onConfirmUpload(): void {
+        if (!this.fileToSend || this.fileToSend.length < 1) { return; }
+
         console.log('fileToSend', this.fileToSend);
+
+        FileUtil.fileToB64(this.fileToSend[0].rawFile).then(
+            (data: string) => console.log('fileToB64', data)
+        );
+
         this.uploadFiles.sendFiles();
     }
 
@@ -611,6 +628,58 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
                     if (qtdRequest <= 0) { console.log('Req. Paralela', 'FIM'); }
                 });
         });
+    }
+
+    selectLine(): void {
+        let idx = this.items.findIndex(item => item.code === 3);
+        if (idx !== -1) {
+            this.items[idx]['$selected'] = true;
+        }
+
+        //this.TableCustomer.selectRowItem(item => item.code === 3);
+    }
+
+    execMenu(): void {
+        /* Os metodos testados aqui (dentro do método execMenu), realizam uma integração direta com o 
+           Menu do Datasul (parte HTML do Menu). Portanto, eles somente funcionam quando o projeto está 
+           sendo executado por dentro do Menu do Datasul. Para realizar o teste, é necessário: compilar 
+           o projeto, jogar o .war o tomcat, cadastrar o projeto no menu e executar */
+        let program = {
+            prg: 'bas_lote_liquidac_acr',
+            params: [
+                { type: 'character', value: 'ABC' },
+                { type: 'integer', value: '345' }
+            ]
+        };
+        this.menuDatasulService.callProgress(program);
+
+        this.menuDatasulService.openPath('html.inquiryItem', '1509;10;1', true);
+
+        let notification = {
+            type: 'success',
+            title: 'Operação foi executada com Sucesso.',
+            detail: 'A Operação 4343 foi executada conforme parametrizado e finalizou.'
+        };
+        this.menuDatasulService.sendNotification(notification);
+    }
+
+    vldSegurMenu(): void {
+        this.menuDatasulService
+            .programSecurity('html.cashControl')
+            .subscribe((response: Array<Object>) => {
+                console.log('response:', response[0]);
+            });
+
+        let programList = [];
+        programList.push('empresa');
+        programList.push('html.prgNoExist');
+        programList.push('bas_empresa');
+
+        this.menuDatasulService
+            .programSecurity(programList)
+            .subscribe((response: Array<Object>) => {
+                console.log('response:', response);
+            });
     }
 
     setupComponents(): void {
@@ -660,7 +729,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         this.zoomCountryColumns = [
             { property: 'countryCode', label: this.literals['code'], type: 'string' },
             { property: 'countryName', label: this.literals['name'], type: 'string' }
-        ];        
+        ];
 
         this.tableActions = [
             { action: this.detail.bind(this), label: this.literals['detail'], icon: 'po-icon po-icon-document' },
@@ -712,7 +781,8 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             { label: this.literals['download'], action: this.downloadFile.bind(this) },
             { label: this.literals['downloadList'], action: this.downloadList.bind(this) },
             { label: this.literals['upload'], action: this.upload.bind(this) },
-            { label: this.literals['parallel'], action: this.parallel.bind(this) }
+            { label: this.literals['parallel'], action: this.parallel.bind(this) },
+            { label: this.literals['selectLine'], action: this.selectLine.bind(this) },
         ];
 
         this.resetFilters();

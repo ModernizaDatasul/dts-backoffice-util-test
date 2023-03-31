@@ -57,5 +57,6 @@ export const customerMaintEs = {
     jobScheduleID: 'jobScheduleID',
     executionID: 'executionID',
     followUp: 'Acompanhar',
-    getDataSchedule: 'Busca Dados Agenda'
+    getDataSchedule: 'Busca Dados Agenda',
+    selectLine: 'Seleciona Linha'
 };
