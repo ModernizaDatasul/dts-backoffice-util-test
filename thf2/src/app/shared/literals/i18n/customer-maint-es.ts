@@ -9,6 +9,7 @@ export const customerMaintEs = {
     internalId: 'InternalID',
     shortName: 'Nombre Corto',
     name: 'Nombre Cliente',
+    branch: 'Estab',
     country: 'País',
     status: 'Status',
     tax: 'Taxa?',
@@ -41,15 +42,23 @@ export const customerMaintEs = {
     duplic: 'Duplicar',
     duplicSucessMessage: 'Duplicación OK !',
 
+    changeStatus: 'Cambiar Status',
+    totalByStatus: 'Total p/ Status',
+    total: 'Total',
+
     ordNumber: 'Número',
     issueDate: 'Fecha',
     ordValue: 'Valor',
 
     scheduleRPW: 'Horario RPW',
+    product: 'Produto',
+    ems2: 'EMS2',
+    ems5: 'EMS5',
     order: 'Pedido',
     download: 'Descargar archivo',
     downloadList: 'Descargar Lista',
     upload: 'Upload',
+    parallel: 'Req. Paralelo',
     confirm: 'Confirmar',
     enableDisable: 'Habilita/Desabilita',
     rpwService: 'Servidor RPW',
@@ -58,5 +67,7 @@ export const customerMaintEs = {
     executionID: 'executionID',
     followUp: 'Acompanhar',
     getDataSchedule: 'Busca Dados Agenda',
-    selectLine: 'Seleciona Linha'
+    selectLine: 'Seleciona Linha',
+    execMenu: 'Executa Prog Menu',
+    uploadMessage: 'Ingrese un <b>archivo</b> válido para ser enviado al <i><b>Servidor</b></i> !!!'
 };

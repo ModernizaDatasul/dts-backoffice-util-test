@@ -12,7 +12,9 @@
 
         <po-dynamic-form
             [p-fields]="metadata?.fields"
-            [p-value]="metadata?.value">
+            [p-value]="metadata?.value"
+            [p-validate]="metadata?.validate"
+            [p-validate-fields]="metadata?.validateFields">
         </po-dynamic-form>
 
         <po-divider class="po-sm-12 po-md-12 po-lg-12 po-lx-12"
@@ -24,6 +26,7 @@
                    po-md-10 po-offset-md-1
                    po-lg-8  po-offset-lg-2
                    po-lx-8  po-offset-lx-2"
+            p-hide-columns-manager="true"
             p-selectable="false"
             p-striped="true"
             [p-columns]="metadata?.fieldsContact"

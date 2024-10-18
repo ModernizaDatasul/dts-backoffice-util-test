@@ -3,14 +3,13 @@
     [p-breadcrumb]="breadcrumb"
     (p-save)="save()"
     (p-save-new)="saveAndNew()"
-    (p-cancel)="cancel()"
-    >
+    (p-cancel)="cancel()">
 
     <div class="po-row 
                 po-sm-12
-                po-md-8 po-offset-md-2 
-                po-lg-6 po-offset-lg-3
-                po-lx-4 po-offset-lx-4">
+                po-md-10 po-offset-md-1 
+                po-lg-8  po-offset-lg-2
+                po-lx-6  po-offset-lx-3">
 
         <po-number class="po-md-4" name="code"
             [(ngModel)]="customer.code"
@@ -64,23 +63,22 @@
         </po-divider>
 
         <div class="po-md-12">
-            <po-button 
-                class="po-sm-12 
+            <po-button class="po-sm-12 
                        po-md-6 po-offset-md-1
                        po-lg-4 po-offset-lg-2
                        po-lx-4 po-offset-lx-2"
                 (p-click)="contactAdd()"
-                p-icon="po-icon-plus"
+                p-icon="ph ph-plus"
                 [p-label]="literals?.contact"
                 p-kind="primary">
-            </po-button> 
+            </po-button>
         </div>
 
-        <po-table 
-            class="po-sm-12 
+        <po-table class="po-sm-12 
                    po-md-10 po-offset-md-1
                    po-lg-8  po-offset-lg-2
                    po-lx-8  po-offset-lx-2"
+            p-hide-columns-manager="true"       
             p-selectable="false"
             p-striped="true"
             p-actions-right="true"

@@ -11,6 +11,8 @@ export class CustomerService {
 
     //private apiBaseUrl = '/dts/datasul-rest/resources/prg/fin/v1/customer';
     private apiBaseUrl = '/customer';
+    //private apiBaseUrl = '/dts/datasul-rest/resources/prg/fin/v1/mdcustomer';
+    //private apiBaseUrl = '/dts/datasul-rest/resources/prg/fin/v1/shareholder';
 
     //private apiUploadUrl = `/dts/datasul-rest/resources/prg/upload/v1/testeUpload`;
     private apiUploadUrl = `${this.apiBaseUrl}/addFile`;
@@ -73,6 +75,10 @@ export class CustomerService {
         return this.http.delete(`${this.apiBaseUrl}/${id}`, this.headers);
     }
 
+    disable(id: string): Observable<Object> {
+        return this.http.delete(`${this.apiBaseUrl}/${id}/disable`, this.headers);
+    }
+
     block(id: string): Observable<Object> {
         return this.http.post(`${this.apiBaseUrl}/${id}/block`, null, this.headers);
     }
@@ -86,16 +92,21 @@ export class CustomerService {
         return this.http.get(url, this.headers);
     }
 
+    getFileServer(id: string): Observable<Object> {
+        const url = `/customer/getFile/${id}`;
+        return this.http.put(url, this.headers);
+    }
+
     getQrCode(text: string): Observable<Blob> {
         const url = `/qrcode/download?text=${text}`;
         return this.http.get(url, { responseType: 'blob' });
     }
 
-    changeStatus(id: string, status: number): Observable<Object> {
+    changeStatus(id: string, status: number): Observable<ICustomer> {
         const model = {};
         model['status'] = status;
 
-        return this.http.post(`${this.apiBaseUrl}/${id}/changeStatus`, model, this.headers);
+        return this.http.post<ICustomer>(`${this.apiBaseUrl}/${id}/changeStatus`, model, this.headers);
     }
 
     getTotalByStatus(): Observable<Object> {
@@ -103,7 +114,7 @@ export class CustomerService {
     }
 
     getUrl(urlBase: string, filters: PoDisclaimer[], expandables: string[], page: number, pageSize: number): string {
-        const urlParams = new Array<String>();
+        const urlParams = new Array<string>();
 
         urlParams.push(`pageSize=${pageSize}`);
         urlParams.push(`page=${page}`);

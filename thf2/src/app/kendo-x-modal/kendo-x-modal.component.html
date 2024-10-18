@@ -2,23 +2,20 @@
     [p-title]="literals?.kendoxModal">
 
     <div class="po-row">
-        <po-switch class="po-md-3" name="editable" 
-            p-label-off="d-editable"
-            p-label-on="d-editable"
+        <po-checkbox class="po-md-3" name="editable" 
+            p-label="d-editable"
             [(ngModel)]="lEditable">
-        </po-switch>
+        </po-checkbox>
 
-        <po-switch class="po-md-4" name="showMaximize" 
-            p-label-off="d-show-maximize"
-            p-label-on="d-show-maximize"
+        <po-checkbox class="po-md-4" name="showMaximize" 
+            p-label="d-show-maximize"
             [(ngModel)]="lShowMaximize">
-        </po-switch>
+        </po-checkbox>
 
-        <po-switch class="po-md-4" name="showExportButtons" 
-            p-label-off="d-show-export-buttons"
-            p-label-on="d-show-export-buttons"
+        <po-checkbox class="po-md-4" name="showExportButtons" 
+            p-label="d-show-export-buttons"
             [(ngModel)]="lShowExportButtons">
-        </po-switch>        
+        </po-checkbox>        
    
         <po-button
             p-label="Modal"

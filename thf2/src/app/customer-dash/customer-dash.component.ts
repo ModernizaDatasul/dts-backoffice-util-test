@@ -82,7 +82,7 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
         this.servCustomerSubscription$ = this.servCustomer
             .query([], this.expandables)
             .subscribe((response: TotvsResponse<ICustomer>) => {
-                
+
                 this.customerOptions = [];
                 if (response && response.items) {
                     response.items.map(cust => {
@@ -151,6 +151,10 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
 
                 if (this.orderItems.length === 0) { this.currentPage = 1; }
             });
+    }
+
+    selectedState(state: string) {
+        alert(state);
     }
 
     setupComponents(): void {

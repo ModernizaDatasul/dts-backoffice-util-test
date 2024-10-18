@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PoModule } from '@po-ui/ng-components';
@@ -12,16 +12,6 @@ import { CustMaintDynamicEditComponent } from './edit/cust-maint-dynamic.edit.co
 import { CustMaintDynamicListComponent } from './list/cust-maint-dynamic.list.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        PoModule,
-        PoPageDynamicTableModule,
-        PoPageDynamicDetailModule,
-        PoPageDynamicEditModule,
-        FormsModule,
-        HttpClientModule,
-        CustMaintDynamicRoutingModule
-    ],
     declarations: [
         CustMaintDynamicListComponent,
         CustMaintDynamicDetailComponent,
@@ -34,7 +24,17 @@ import { CustMaintDynamicListComponent } from './list/cust-maint-dynamic.list.co
         CustMaintDynamicDetail2Component,
         CustMaintDynamicEditComponent
     ],
-    providers: [
+    imports: [
+        CommonModule,
+        PoModule,
+        PoPageDynamicTableModule,
+        PoPageDynamicDetailModule,
+        PoPageDynamicEditModule,
+        FormsModule,
+        CustMaintDynamicRoutingModule
     ],
+    providers: [
+        provideHttpClient(withInterceptorsFromDi())
+    ]
 })
 export class CustMaintDynamicModule { }

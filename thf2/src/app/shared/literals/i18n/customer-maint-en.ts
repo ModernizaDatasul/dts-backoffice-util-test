@@ -9,6 +9,7 @@ export const customerMaintEn = {
     internalId: 'InternalID',
     shortName: 'Short Name',
     name: 'Name Customer',
+    branch: 'Branch',
     country: 'Country',
     status: 'Status',
     tax: 'Tax?',
@@ -41,15 +42,23 @@ export const customerMaintEn = {
     duplic: 'Duplicate',
     duplicSucessMessage: 'Duplication OK !',
 
+    changeStatus: 'Change Status',
+    totalByStatus: 'Total by Status',
+    total: 'Total',
+
     ordNumber: 'NÃºmero',
     issueDate: 'Data',
     ordValue: 'Valor',
 
     scheduleRPW: 'Schedule RPW',
+    product: 'Product',
+    ems2: 'EMS2',
+    ems5: 'EMS5',
     order: 'Order',
     download: 'Download File',
     downloadList: 'Download List',
     upload: 'Upload',
+    parallel: 'Req. Parallel',
     confirm: 'Confirm',
     enableDisable: 'Enable/Disable',
     rpwService: 'RPW Service',
@@ -58,5 +67,7 @@ export const customerMaintEn = {
     executionID: 'executionID',
     followUp: 'followUp',
     getDataSchedule: 'Get Data Schedule',
-    selectLine: 'Select Line'
+    selectLine: 'Select Line',
+    execMenu: 'Execute Prog Menu',
+    uploadMessage: 'Enter a valid <b>file</b> to be sent to the <i><b>Server</b></i> !!!'
 };

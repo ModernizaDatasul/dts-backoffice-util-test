@@ -7,6 +7,10 @@ export const customerDashEs = {
     customerName: 'Nombre',
     customerCountry: 'País',
 
+    active: 'Activo',
+    inactive: 'Inactivo',
+    blocked: 'Obstruido',
+
     orderInfo: 'Pedidos del Cliente',
     ordNumber: 'Número',
     issueDate: 'Fecha',

@@ -3,8 +3,8 @@ const PROXY_CONFIG = [
         context: [
             "/totvs-rest",
             "/totvs-login",
-            "/customer",
             "/country",
+            "/customer",
             "/contact",
             "/order",
             "/genericsZoom",
@@ -21,8 +21,8 @@ const PROXY_CONFIG = [
             "/dts/datasul-rest",
             "/qrcode/download"
         ],
-        target: "http://embau:8480",
-        //target: "https://gales:8180",
+        //target: "https://caraiva:8180",
+        target: "http://engjv-devdock01:8183",
         secure: false,
         changeOrigin: true,
         logLevel: "debug",

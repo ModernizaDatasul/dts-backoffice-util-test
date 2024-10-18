@@ -1,17 +1,15 @@
 <po-page-default
     [p-title]="literals?.kendoxKendo">
 
-    <po-switch class="po-md-3" name="show" 
-        p-label-off="show"
-        p-label-on="show"
+    <po-checkbox class="po-md-3" name="show" 
+        p-label="show"
         [(ngModel)]="showKendo">
-    </po-switch>
+    </po-checkbox>
 
-    <po-switch class="po-md-3" name="editable" 
-        p-label-off="d-editable"
-        p-label-on="d-editable"
+    <po-checkbox class="po-md-3" name="editable" 
+        p-label="d-editable"
         [(ngModel)]="lEditable">
-    </po-switch>
+    </po-checkbox>
 
     <po-button
         p-label="Zera"

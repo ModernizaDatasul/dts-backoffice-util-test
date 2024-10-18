@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PoModule } from '@po-ui/ng-components';
@@ -10,22 +10,22 @@ import { DtsBackofficeUtilsModule } from 'dts-backoffice-util';
 import { DtsBackofficeKendoGridModule } from 'dts-backoffice-kendo-grid';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        PoModule,
-        FormsModule,
-        HttpClientModule,
-        KendoxListRoutingModule,
-        DtsBackofficeKendoGridModule,
-        DtsBackofficeUtilsModule
-    ],
     declarations: [
         KendoxListComponent
     ],
     exports: [
         KendoxListComponent
     ],
-    providers: [
+    imports: [
+        CommonModule,
+        PoModule,
+        FormsModule,
+        KendoxListRoutingModule,
+        DtsBackofficeKendoGridModule,
+        DtsBackofficeUtilsModule
     ],
+    providers: [
+        provideHttpClient(withInterceptorsFromDi())
+    ]
 })
 export class KendoxListModule { }

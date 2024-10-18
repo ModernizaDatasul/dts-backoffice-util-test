@@ -9,6 +9,7 @@ export const customerMaintPt = {
     internalId: 'InternalID',
     shortName: 'Nome Abrev',
     name: 'Nome',
+    branch: 'Estab', 
     country: 'País',
     status: 'Status',
     tax: 'Taxa?',
@@ -50,6 +51,9 @@ export const customerMaintPt = {
     ordValue: 'Valor',
 
     scheduleRPW: 'Agenda RPW',
+    product: 'Produto',
+    ems2: 'EMS2',
+    ems5: 'EMS5',
     order: 'Pedido',
     download: 'Download Arquivo',
     downloadList: 'Download Lista',
@@ -63,5 +67,7 @@ export const customerMaintPt = {
     executionID: 'executionID',
     followUp: 'Acompanhar',
     getDataSchedule: 'Busca Dados Agenda',
-    selectLine: 'Seleciona Linha'
+    selectLine: 'Seleciona Linha',
+    execMenu: 'Executa Prog Menu',
+    uploadMessage: 'Informe um <b>arquivo</b> válido para ser enviado ao <i><b>Servidor</b></i> !!!'
 };

@@ -36,6 +36,14 @@
             "database": "db_mtd_edit"
         },
         {
+            "name": "validateEdit",
+            "method": "POST",
+            "path": "/validate",
+            "savePayload": true,
+            "responseType": "object",
+            "database": "db_vld_edit"
+        },
+        {
             "name": "metadataNew",
             "method": "GET",
             "path": "/metadata/new",
@@ -76,7 +84,14 @@
             "database": "database"
         },
         {
-            "name": "changeStatus",
+            "name": "changeStatus1",
+            "method": "POST",
+            "path": "/changeStatus",
+            "script": "customer.js",
+            "database": "database"
+        },
+        {
+            "name": "changeStatus2",
             "method": "POST",
             "path": "/:idParam/changeStatus",
             "script": "customer.js",
@@ -91,6 +106,13 @@
                 "directory": "C:/Tmp/upload"
             },
             "database": "db_upload"
+        },
+        {
+            "name": "deleteList",
+            "method": "DELETE",
+            "path": "",
+            "responseType": "object",
+            "database": "db_mtd_delete_list"
         }
     ],
     "customValidation": [
@@ -120,6 +142,17 @@
     "db_mtd_list": [
         {
             "title": "Cadastro de Clientes (Dinâmico)",
+            "breadcrumb": {
+                "items": [
+                    {
+                        "label": "Cadastro de Clientes (Dinâmico)"
+                    }
+                ]
+            },
+            "hideColumnsManager": false,
+            "hideCloseDisclaimers": [
+                "status"
+            ],
             "fields": [
                 {
                     "property": "code",
@@ -134,17 +167,21 @@
                     "minValue": 0,
                     "maxValue": 999999999,
                     "minLength": 1,
-                    "maxLength": 9
+                    "maxLength": 9,
+                    "color": "color-07",
+                    "order": 1
                 },
                 {
                     "property": "shortName",
                     "label": "Nome Abrev",
-                    "type": "string"
+                    "type": "string",
+                    "order": 3
                 },
                 {
                     "property": "name",
                     "label": "Nome",
-                    "type": "string"
+                    "type": "string",
+                    "order": 2
                 },
                 {
                     "property": "country",
@@ -183,6 +220,7 @@
                         }
                     ],
                     "filter": true,
+                    "visible": true,
                     "gridSmColumns": 12,
                     "gridMdColumns": 12,
                     "gridLgColumns": 12,
@@ -228,16 +266,24 @@
                 {
                     "label": "Google2",
                     "url": "http://www.google.com"
+                },
+                {
+                    "label": "TestAC",
+                    "action": "/customer/novo"
                 }
             ],
             "tableCustomActions": [
                 {
-                    "label": "Google2",
-                    "url": "/custMaintDynamic/new"
+                    "label": "Update1",
+                    "action": "/customer/changeStatus"
                 },
                 {
-                    "label": "Aprova Pagto",
-                    "action": ""
+                    "label": "Google2",
+                    "url": "http://www.google.com/:id"
+                },
+                {
+                    "label": "TestAC",
+                    "action": "/customer/novo2"
                 }
             ],
             "literals": {
@@ -257,7 +303,8 @@
                     "gridSmColumns": 12,
                     "gridMdColumns": 4,
                     "gridLgColumns": 4,
-                    "gridXlColumns": 4
+                    "gridXlColumns": 4,
+                    "order": 2
                 },
                 {
                     "property": "shortName",
@@ -266,7 +313,8 @@
                     "gridSmColumns": 12,
                     "gridMdColumns": 8,
                     "gridLgColumns": 8,
-                    "gridXlColumns": 8
+                    "gridXlColumns": 8,
+                    "order": 1
                 },
                 {
                     "property": "name",
@@ -283,7 +331,7 @@
                     "type": "string",
                     "fieldLabel": "countryName",
                     "fieldValue": "countryCode",
-                    "optionsService": "/country",
+                    "searchService": "/country",
                     "gridSmColumns": 12,
                     "gridMdColumns": 4,
                     "gridLgColumns": 4,
@@ -294,7 +342,7 @@
                     "label": "Status",
                     "type": "label",
                     "tag": true,
-                    "labels": [
+                    "options": [
                         {
                             "value": 1,
                             "label": "Ativo",
@@ -338,7 +386,7 @@
                     "property": "shortName",
                     "label": "Nome Abrev",
                     "type": "string",
-                    "disabled": true,
+                    "disabled": false,
                     "gridSmColumns": 12,
                     "gridMdColumns": 8,
                     "gridLgColumns": 8,
@@ -360,8 +408,8 @@
                     "type": "string",
                     "fieldLabel": "countryName",
                     "fieldValue": "countryCode",
-                    "optionsService": "/country",
-                    "disabled": true,
+                    "searchService": "/country",
+                    "disabled": false,
                     "gridSmColumns": 12,
                     "gridMdColumns": 4,
                     "gridLgColumns": 4,
@@ -392,6 +440,7 @@
                     "gridXlColumns": 8
                 }
             ],
+            "validate": "/customer/validate",
             "fieldsContact": [
                 {
                     "property": "seq",
@@ -458,7 +507,8 @@
                     "gridSmColumns": 12,
                     "gridMdColumns": 4,
                     "gridLgColumns": 4,
-                    "gridXlColumns": 4
+                    "gridXlColumns": 4,
+                    "order": 2
                 },
                 {
                     "property": "shortName",
@@ -467,7 +517,9 @@
                     "gridSmColumns": 12,
                     "gridMdColumns": 8,
                     "gridLgColumns": 8,
-                    "gridXlColumns": 8
+                    "gridXlColumns": 8,
+                    "order": 1,
+                    "validate": "/customer/validate"
                 },
                 {
                     "property": "name",
@@ -532,13 +584,60 @@
             }
         }
     ],
+    "db_vld_edit": [
+        {
+            "property": "shortName",
+            "value": "12"
+        },
+        {
+            "property": "shortName",
+            "value": {
+                "code": 1,
+                "codeIdenf": "1",
+                "internalId": 101,
+                "shortName": "João2",
+                "name": "Joãozinho Maria da Silva",
+                "country": "BRA",
+                "status": 2,
+                "tax": true,
+                "taxValue": 10.3,
+                "percent": 89.0123456789,
+                "admissDate": "2011-04-09",
+                "resignationDate": "2020-12-31",
+                "states": "RS,SC",
+                "contacts": [
+                    {
+                        "seq": 1,
+                        "name": "Zezinho",
+                        "phone": "9835-35456"
+                    },
+                    {
+                        "seq": 2,
+                        "name": "Robervindo",
+                        "phone": "23534544"
+                    }
+                ],
+                "department": "10",
+                "federalID": "000712345678901",
+                "observation": ""
+            }
+        },
+        {
+            "property": "shortName",
+            "value": "dafsf"
+        },
+        {
+            "property": "shortName",
+            "value": "Mais uma novo"
+        }
+    ],
     "database": [
         {
             "code": 1,
             "codeIdenf": "1",
             "internalId": 101,
             "shortName": "João",
-            "name": "Joãozinho Maria da Silva",
+            "name": "Joãozinho Maria da Silva Silveira",
             "country": "ARG",
             "tax": true,
             "taxValue": 10.3,
@@ -561,7 +660,7 @@
             "department": "10",
             "federalID": "000712345678901",
             "observation": "Um observação média, para este cliente, muito importante.",
-            "status": 1
+            "status": 2
         },
         {
             "code": 2,
@@ -570,7 +669,7 @@
             "shortName": "Maria",
             "name": "Maria Barbosa",
             "country": "BRA",
-            "status": 3,
+            "status": 2,
             "tax": true,
             "taxValue": 7,
             "percent": 1.932,
@@ -595,7 +694,7 @@
             "admissDate": "2019-11-01",
             "resignationDate": "2020-04-27",
             "states": "RJ",
-            "status": 2,
+            "status": 1,
             "department": "20",
             "federalID": "12345678901",
             "observation": "Um observação grande, para este cliente, então tem que falar muita coisa sobre ele. Ele costuma sempre comprar conosco, quase todo mês."
@@ -665,7 +764,7 @@
             "code": 9,
             "internalId": 109,
             "shortName": "Vazio",
-            "status": 2
+            "status": 3
         },
         {
             "code": 11,
@@ -757,7 +856,7 @@
             "shortName": "Usuario 18",
             "name": "Usuario Nome 18",
             "country": "BRA",
-            "status": 1,
+            "status": 3,
             "tax": false,
             "department": "18",
             "federalID": "12345678901",
@@ -2240,8 +2339,37 @@
             "shortName": "3232",
             "name": "2323",
             "country": "BRA"
+        },
+        {
+            "status": 1,
+            "code": 333,
+            "shortName": "333",
+            "name": "333",
+            "country": "BRA",
+            "contacts": []
+        },
+        {
+            "status": 2,
+            "code": 9,
+            "shortName": "Novoman",
+            "name": "Um novo registro",
+            "country": "ARG"
+        },
+        {
+            "code": 611,
+            "shortName": "212",
+            "name": "121",
+            "country": "CHI"
+        },
+        {
+            "status": 3,
+            "shortName": "Mais uma novo",
+            "code": 10,
+            "name": "É Mesmo",
+            "country": "CAN"
         }
     ],
+    "db_mtd_delete_list": [],
     "db_nextId": [
         {
             "code": 12
@@ -2281,8 +2409,16 @@
     ],
     "db_file": [
         {
-            "filename": "info_cli.txt",
-            "content": "SW5mb3JtYcOnw7VlcyBkbyBDbGllbnRlIEPDs2RpZ28gMSAhIQ0KUmVsYXTDs3JpbyBubyBmb3JtYXRvIFRYVC4NCkVtcHJlc2EgMTAuDQo="
+            "files": [
+                {
+                    "filename": "info_cli.txt",
+                    "content": "SW5mb3JtYcOnw7VlcyBkbyBDbGllbnRlIEPDs2RpZ28gMSAhIQ0KUmVsYXTDs3JpbyBubyBmb3JtYXRvIFRYVC4NCkVtcHJlc2EgMTAuDQo="
+                },
+                {
+                    "filename": "info_cli2.txt",
+                    "content": "SW5mb3JtYcOnw7VlcyBkbyBDbGllbnRlIEPDs2RpZ28gMiAhIQ0KUmVsYXTDs3JpbyBubyBmb3JtYXRvIFRYVCB0YW1iw6ltLg0KRW1wcmVzYSA1MS4gTm92by4NCg"
+                }
+            ]
         }
     ],
     "db_upload": [
@@ -2309,6 +2445,34 @@
             "size": 939,
             "destination": "C:/Tmp/upload",
             "fileName": "pre-teste_2022-02-04.txt"
+        },
+        {
+            "originalName": "transacoes.txt",
+            "size": 1060,
+            "destination": "C:/Tmp/upload",
+            "fileName": "transacoes_2023-02-16.txt"
+        },
+        {
+            "originalName": "apb337.tmp",
+            "size": 5734,
+            "destination": "C:/Tmp/upload",
+            "fileName": "apb337_2023-02-23.tmp"
+        },
+        {
+            "originalName": "vdProgramasDatasulUPC.sv",
+            "size": 16448,
+            "destination": "C:/Tmp/upload",
+            "fileName": "vdProgramasDatasulUPC_2024-09-03.sv"
+        },
+        {
+            "originalName": "apont-pend.txt",
+            "size": 3968,
+            "destination": "C:/Tmp/upload",
+            "fileName": "apont-pend_2024-10-03.txt"
         }
-    ]
+    ],
+    "mainPath": "/customer",
+    "customSearchFields": {
+        "search": "shortName"
+    }
 }

@@ -7,6 +7,10 @@ export const customerDashEn = {
     customerName: 'Name',
     customerCountry: 'Country',
 
+    active: 'Active',
+    inactive: 'Inactive',
+    blocked: 'Blocked',
+
     orderInfo: 'Customer Orders',
     ordNumber: 'Number',
     issueDate: 'Date',

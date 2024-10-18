@@ -1,11 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PoBreadcrumb } from '@po-ui/ng-components';
-import { PoPageDynamicTableCustomTableAction } from '@po-ui/ng-templates';
-import { BreadcrumbControlService } from 'dts-backoffice-util';
+import { PoPageDynamicTableComponent, PoPageDynamicTableCustomTableAction } from '@po-ui/ng-templates';
 import { Subscription } from 'rxjs';
-import { Customer } from '../../shared/model/customer.model';
 import { CustomerService } from '../../shared/services/customer.service';
+import { Customer } from '../../shared/model/customer.model';
 
 @Component({
     selector: 'app-cust-maint-dynamic-list',
@@ -13,19 +11,19 @@ import { CustomerService } from '../../shared/services/customer.service';
     styleUrls: ['./cust-maint-dynamic.list.component.css']
 })
 export class CustMaintDynamicListComponent implements OnInit, OnDestroy {
+    @ViewChild('dynamicTable', { static: true }) dynamicTable: PoPageDynamicTableComponent;
+
     public metadata: any;
     public serviceApi: string;
 
-    breadcrumb: PoBreadcrumb;
-
     private servCustomerSubscription$: Subscription;
+
     public tableCustomActions: Array<PoPageDynamicTableCustomTableAction>;
 
     constructor(
         private activatedRoute: ActivatedRoute,
         private router: Router,
-        private servCustomer: CustomerService,
-        private breadcrumbControlService: BreadcrumbControlService
+        private servCustomer: CustomerService
     ) { }
 
     ngOnInit(): void {
@@ -50,13 +48,27 @@ export class CustMaintDynamicListComponent implements OnInit, OnDestroy {
         this.router.navigate(['/custMaintDynamic/detail2', cust.code]);
     }
 
-    setupComponents() {
-        this.breadcrumbControlService.addBreadcrumb(this.metadata.title, this.activatedRoute);
-        this.breadcrumb = this.breadcrumbControlService.getBreadcrumb();
+    update(cust: Customer) {
+        //this.dynamicTable.updateDataTable({ page: 1 });
 
+        this.servCustomer.changeStatus(cust.code + '', cust.status + 1).subscribe((response: Customer) => {
+            if (response) {
+                Object.assign(cust, response);
+            }
+            console.log("alterou");
+        })
+
+        /*this.servCustomer.delete(cust.code + '').subscribe(() => {
+            this.dynamicTable.updateDataTable();
+            console.log("deletou");
+        });*/
+    }
+
+    setupComponents() {
         this.tableCustomActions = this.metadata.tableCustomActions ? this.metadata.tableCustomActions : [];
         this.tableCustomActions.push(
-            { label: this.metadata.literals?.detail, action: this.details2.bind(this) }
+            { label: this.metadata.literals?.detail, action: this.details2.bind(this) },
+            { label: 'Update2', action: this.update.bind(this) }
         );
     }
 

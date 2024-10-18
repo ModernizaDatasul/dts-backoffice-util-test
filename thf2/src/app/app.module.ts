@@ -8,7 +8,7 @@ import '@progress/kendo-angular-intl/locales/en/all';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { PoModule, PoI18nModule, PoI18nPipe } from '@po-ui/ng-components';
 import { PoI18nConfig } from '@po-ui/ng-components';
 
@@ -42,6 +42,8 @@ import { TranslateService } from 'dts-backoffice-util';
 import { MenuDatasulService } from 'dts-backoffice-util';
 import { OrderService } from './shared/services/order.service';
 import { HeroesService } from './shared/services/heroes.service';
+import { BranchService } from './shared/services/branch.service';
+import { demoInterceptor } from './shared/services/interceptor-function';
 
 registerLocaleData(localePt);
 registerLocaleData(localeEs);
@@ -95,8 +97,7 @@ const i18nConfig: PoI18nConfig = {
     declarations: [
         AppComponent
     ],
-    entryComponents: [
-    ],
+    bootstrap: [AppComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -104,22 +105,22 @@ const i18nConfig: PoI18nConfig = {
         CommonModule,
         FormsModule,
         AppRoutingModule,
-        PoI18nModule.config(i18nConfig),
-        HttpClientModule
+        PoI18nModule.config(i18nConfig)
     ],
     providers: [
         { provide: LOCALE_ID, useValue: TranslateService.getCurrentLanguage() },
         { provide: DEFAULT_CURRENCY_CODE, useValue: TranslateService.getDefaultCurrencyCode() },
         PoI18nPipe,
         BreadcrumbControlService,
+        BranchService,
         CustomerService,
         CountryService,
         ContactService,
         OrderService,
         TotvsScheduleExecutionService,
         HeroesService,
-        MenuDatasulService
-    ],
-    bootstrap: [AppComponent]
+        MenuDatasulService,
+        provideHttpClient(withInterceptorsFromDi())
+    ]
 })
 export class AppModule { }

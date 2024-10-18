@@ -35,17 +35,26 @@ module.exports = {
         console.log('Payload:', payload);
         //console.log('Database:', database);
 
-        let customer = database.find(cust => cust.code == paramPath.idParam);
+        let custCode = paramPath.idParam ? paramPath.idParam : 0;
+        custCode = custCode == 0 ? payload.code : custCode;
+
+        console.log("CustCode:", custCode);
+
+        let customer = database.find(cust => cust.code == custCode);
 
         if (customer) {
-            customer.status = payload.status;
+            let newStatus = customer.status == payload.status ? payload.status + 1 : payload.status;
+            if (newStatus < 1 || newStatus > 3) { newStatus = 1; }
+            customer.status = newStatus;
+        } else {
+            customer = {};
         }
 
         console.log("customer:", customer);
 
         return {
             statusCode: 200,
-            response: {},
+            response: customer,
             database: database
         }
     }

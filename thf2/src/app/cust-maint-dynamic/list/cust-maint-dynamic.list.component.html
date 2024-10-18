@@ -1,12 +1,14 @@
-<po-page-dynamic-table
-    [p-title]="metadata?.title"
+<po-page-dynamic-table #dynamicTable
     [p-service-api]="serviceApi"
+    [p-title]="metadata?.title"
+    [p-breadcrumb]="metadata?.breadcrumb"
     [p-fields]="metadata?.fields"
-    p-keep-filters="true"
+    [p-hide-columns-manager]="metadata?.hideColumnsManager"
+    [p-hide-close-disclaimers]="metadata?.hideCloseDisclaimers"
+    [p-keep-filters]="metadata?.keepfilters"
     p-actions-right="true"
-    [p-breadcrumb]="breadcrumb"
     [p-actions]="metadata?.actions"
-    [p-table-custom-actions]="tableCustomActions"
-	>
+    [p-page-custom-actions]="metadata?.pageCustomActions"
+    [p-table-custom-actions]="tableCustomActions">
 
 </po-page-dynamic-table>

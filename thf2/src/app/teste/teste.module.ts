@@ -5,7 +5,7 @@ import { TesteRoutingModule } from './teste-routing.module';
 import { TesteComponent } from './teste.component';
 import { PoModule } from '@po-ui/ng-components';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -15,11 +15,10 @@ import { HttpClientModule } from '@angular/common/http';
         CommonModule,
         PoModule,
         FormsModule,
-        HttpClientModule,
         TesteRoutingModule
     ],
     providers: [
-
+        provideHttpClient(withInterceptorsFromDi())
     ]
 })
 export class TesteModule { }

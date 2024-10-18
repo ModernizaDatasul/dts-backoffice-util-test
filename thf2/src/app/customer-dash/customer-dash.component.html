@@ -60,11 +60,17 @@
                 programName="pdapi701"
                 externalName="pdp/pdapi701"
                 parameters="parametersRpw"
-                programEMS5="no"
+                programEMS5="false"
                 programVersion="2.00.22.11"
                 loading="true"
                 (endExecution)="endExecutionScheduleRPW($event)">
             </app-totvs-schedule-execution>
+        </po-tab>
+
+        <po-tab p-label="Mapa">
+            <app-totvs-map 
+                (selectedStateEvent)="selectedState($event)">
+            </app-totvs-map>
         </po-tab>
 
         <po-tab *ngIf="showNewAba" p-label="Nova">

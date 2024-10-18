@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PoModule } from '@po-ui/ng-components';
@@ -11,14 +11,6 @@ import { CustomerMaintEditComponent } from './edit/customer-maint.edit.component
 import { DtsBackofficeUtilsModule } from 'dts-backoffice-util';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        PoModule,
-        FormsModule,
-        HttpClientModule,
-        CustomerMaintRoutingModule,
-        DtsBackofficeUtilsModule.forRoot()
-    ],
     declarations: [
         CustomerMaintListComponent,
         CustomerMaintDetailComponent,
@@ -27,7 +19,15 @@ import { DtsBackofficeUtilsModule } from 'dts-backoffice-util';
     exports: [
         CustomerMaintListComponent
     ],
-    providers: [
+    imports: [
+        CommonModule,
+        PoModule,
+        FormsModule,
+        CustomerMaintRoutingModule,
+        DtsBackofficeUtilsModule.forRoot()
     ],
+    providers: [
+        provideHttpClient(withInterceptorsFromDi())
+    ]
 })
 export class CustomerMaintModule { }

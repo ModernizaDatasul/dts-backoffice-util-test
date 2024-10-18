@@ -17,7 +17,8 @@
         [p-items]="items"
         [p-actions]="tableActions"
         [p-show-more-disabled]="!hasNext"
-        (p-show-more)="search(true)">
+        (p-show-more)="search(true)"
+        (p-change-visible-columns)="changeVisibleColumns($event)">
     
         <ng-template p-table-cell-template let-column="column" let-row="row">
             <po-select *ngIf="column.property === 'status'"
@@ -46,7 +47,7 @@
             </po-popover>
 
             <span>
-                <i #iconObs id="iconObs" class="po-table-link po-icon po-icon-document-filled"></i>
+                <i #iconObs id="iconObs" class="po-table-link  ph ph-file-text"></i>
             </span>
         </ng-template>        
     </po-table>
@@ -79,6 +80,26 @@
             p-required>
         </po-number>
      
+        <po-datepicker-range class="po-md-12" name="filterAdmissDate"
+            [(ngModel)]="filterAdmissDate"
+            [p-label]="literals?.admissDate"
+            p-clean
+            p-required>
+        </po-datepicker-range>
+
+        <po-lookup class="po-md-12" name="filterBranchList"
+            [(ngModel)]="filterBranchList"
+            [p-label]="literals?.branch"
+            [p-placeholder]="literals?.all"
+            [p-columns]="zoomBranchColumns"
+            [p-field-format]="fieldBranchFormat"
+            [p-filter-service]="servBranch"
+            [p-filter-params]="filterParamsBranch"
+            p-field-label="BranchName"
+            p-field-value="BranchCode"
+            p-multiple="true">
+        </po-lookup>         
+
         <po-lookup class="po-md-12" name="filterCountryList"
             [(ngModel)]="filterCountryList"
             [p-label]="literals?.country"
@@ -130,41 +151,52 @@
     [p-primary-action]="confirmScheduleRPW"
     [p-secondary-action]="cancelScheduleRPW">
 
-    <po-button 
+    <po-button class="po-md-4"
         [p-label]="literals?.enableDisable"
         (p-click)="onEnableDisableParam()">
     </po-button>
 
-    <po-button
+    <po-button class="po-md-4"
         [p-label]="literals?.getDataSchedule"
         (p-click)="onGetDataSchedure()">
     </po-button>
 
-    <!--
-     programName="pdapi701"
-     externalName="pdp/pdapi701"
-     programVersion="2.00.22.11"
-     --> 
-     
-    <app-totvs-schedule-execution #schParam
-        programName="api_executa_carga_dados_carol"
-        externalName="api_executa_carga_dados_carol"        
-        programVersion="1.00.00.001"     
-        [parameters]="parametersRpw"
+    <po-radio-group class="po-md-4"
+        [p-options]="productRpwOptions"
+        [(ngModel)]="productRpw">
+    </po-radio-group>
+
+    <app-totvs-schedule-execution *ngIf="productRpw==='EMS5'" #schParamEMS5
+        programName="prog_exp_ems5"
+        externalName="prog_exp_ems5"        
         programEMS5="true"
-        loading="true"
+        programStyle="0"
+        programVersion="1.00.00.001"
+        [parameters]="parametersRpw"
+        [paramSelections]="paramSelectionsRpw"
         [disabledParams]="disableParamRpw"
+        loading="true"
         (endExecution)="endExecutionScheduleRPW($event)">
     </app-totvs-schedule-execution>
 
+    <app-totvs-schedule-execution *ngIf="productRpw==='EMS2'" #schParamEMS2
+        programName="prog_exp_ems2"
+        externalName="esp/prog_exp_ems2.p"      
+        [parameters]="parametersRpw"
+        [paramDigitDef]="paramDigitDefRpw"
+        [paramDigitData]="paramDigitDataRpw"
+        [disabledParams]="disableParamRpw"
+        loading="true"
+        (endExecution)="endExecutionScheduleRPW($event)">
+    </app-totvs-schedule-execution>    
 </po-modal>
 
 <po-modal #modalOrderGeneration
-    p-size="md"
+    p-size="lg"
     [p-title]="literals?.order">
 
     <div class="po-row">
-       <po-lookup class="po-md-8"
+       <po-lookup class="po-md-6"
             name="executionServer"
             [p-label]="literals?.rpwService"
             p-placeholder="Servidor RPW"
@@ -176,7 +208,13 @@
             [(ngModel)]="executionServer">
         </po-lookup>    
 
-        <po-button class="po-md-4 po-mt-4"
+        <po-radio-group class="po-md-3"
+            [p-label]="literals?.product"
+            [p-options]="productRpwOptions"
+            [(ngModel)]="productRpw">
+        </po-radio-group>
+
+        <po-button class="po-md-3 po-mt-4"
             [p-label]="literals?.scheduling"
             (p-click)="scheduling()">
         </po-button>    
@@ -221,6 +259,7 @@
     <po-table class="po-md-12"
         p-selectable="false"
         p-striped="true"
+        p-hide-columns-manager="true"
         [p-loading]="orderLoading"
         [p-columns]="orderColumns"
         [p-items]="orderItems">
@@ -233,6 +272,12 @@
     [p-title]="literals?.upload"
     [p-primary-action]="confirmUpload"
     [p-secondary-action]="cancelUpload">
+
+    <div class="po-md-12">
+       <p [innerHTML]="literals?.uploadMessage"></p>
+    </div>
+
+    <br><br>
 
     <po-upload #uploadFiles
         [p-label]="literals?.upload"

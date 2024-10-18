@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -10,22 +10,21 @@ import { HeroesMaintRoutingModule } from './heroes-maint-routing.module';
 import { PoI18nPipe } from '@po-ui/ng-components';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    PoModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    HeroesMaintRoutingModule
-  ],
-  declarations: [
-    HeroesMaintComponent
-  ],
-  exports: [
-    HeroesMaintComponent
-  ],
-  providers: [
-      PoI18nPipe
-  ],
+    declarations: [
+        HeroesMaintComponent
+    ],
+    exports: [
+        HeroesMaintComponent
+    ],
+    imports: [
+        CommonModule,
+        PoModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HeroesMaintRoutingModule],
+    providers: [
+        PoI18nPipe,
+        provideHttpClient(withInterceptorsFromDi())
+    ]
 })
 export class HeroesMaintModule { }

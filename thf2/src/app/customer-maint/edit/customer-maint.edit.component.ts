@@ -138,7 +138,7 @@ export class CustomerMaintEditComponent implements OnInit, OnDestroy {
         if (doNew) {
             this.breadcrumbControlService.delBreadcrumb(this.getTitle());
             if (lType === 'createMessage') {
-                this.router.navigate(['/'], {skipLocationChange: true}).then(() => {
+                this.router.navigate(['/'], { skipLocationChange: true }).then(() => {
                     this.router.navigate(['/customerMaint', 'new']);
                 });
             } else {
@@ -239,8 +239,8 @@ export class CustomerMaintEditComponent implements OnInit, OnDestroy {
         ];
 
         this.contactTableActions = [
-            { action: this.contactEdit.bind(this), label: this.literals['edit'], icon: 'po-icon po-icon-edit' },
-            { action: this.contactDelete.bind(this), label: this.literals['remove'], icon: 'po-icon po-icon-delete' }
+            { action: this.contactEdit.bind(this), label: this.literals['edit'], icon: ' ph ph-pencil-simple' },
+            { action: this.contactDelete.bind(this), label: this.literals['remove'], icon: ' ph ph-trash' }
         ];
 
         this.contactColumns = [

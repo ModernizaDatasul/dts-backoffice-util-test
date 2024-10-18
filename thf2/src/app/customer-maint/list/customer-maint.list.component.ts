@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PoI18nPipe, PoI18nService, PoNotificationService, PoTableColumn, PoTableComponent } from '@po-ui/ng-components';
+import { PoDatepickerRange, PoI18nPipe, PoI18nService, PoNotificationService, PoRadioGroupOption, PoTableColumn, PoTableComponent } from '@po-ui/ng-components';
 import { PoBreadcrumb, PoPageAction, PoPageListComponent } from '@po-ui/ng-components';
 import { PoSelectOption, PoLookupColumn, PoUploadComponent } from '@po-ui/ng-components';
 import { PoTableAction, PoDisclaimer, PoDisclaimerGroup, PoPageFilter, PoModalComponent, PoModalAction } from '@po-ui/ng-components';
@@ -8,6 +8,7 @@ import { PoDialogService } from '@po-ui/ng-components';
 import { forkJoin, Subscription } from 'rxjs';
 import { ICustomer, Customer } from '../../shared/model/customer.model';
 import { CustomerService } from '../../shared/services/customer.service';
+import { BranchService } from '../../shared/services/branch.service';
 import { CountryService } from '../../shared/services/country.service';
 import { ICountry } from '../../shared/model/country.model';
 import { IFilterRangeNumber } from 'dts-backoffice-util';
@@ -37,7 +38,8 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     @ViewChild('modalScheduleRPW', { static: true }) modalScheduleRPW: PoModalComponent;
     @ViewChild('modalOrderGeneration', { static: true }) modalOrderGeneration: PoModalComponent;
     @ViewChild('modalUpload', { static: true }) modalUpload: PoModalComponent;
-    @ViewChild('schParam', { static: true }) schParam: TotvsScheduleExecutionComponent;
+    @ViewChild('schParamEMS5', { static: false }) schParamEMS5: TotvsScheduleExecutionComponent;
+    @ViewChild('schParamEMS2', { static: false }) schParamEMS2: TotvsScheduleExecutionComponent;
     @ViewChild('uploadFiles', { static: true }) uploadFiles: PoUploadComponent;
     @ViewChild('TableCustomer', { static: true }) TableCustomer: PoTableComponent;
 
@@ -67,6 +69,12 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     cancelUpload: PoModalAction;
 
     filterCode: IFilterRangeNumber;
+    filterAdmissDate: PoDatepickerRange;
+
+    filterBranchList: Array<string>;
+    zoomBranchColumns: Array<PoLookupColumn>;
+    filterParamsBranch = { multiple: true };
+
     filterCountryList: Array<string>;
     zoomCountryColumns: Array<PoLookupColumn>;
     filterParamsCountry = { multiple: true };
@@ -76,6 +84,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     filterActive: boolean;
 
     servCustomerSubscription$: Subscription;
+    servBranchSubscription$: Subscription;
     servCountrySubscription$: Subscription;
     servOrderSubscription$: Subscription;
 
@@ -85,7 +94,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
 
     hasNext = false;
     currentPage = 1;
-    pageSize = 20;
+    pageSize = 10;
 
     orderLoading = false;
     orderColumns: Array<PoTableColumn>;
@@ -104,7 +113,12 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
 
     pageActions: Array<PoPageAction>;
 
+    productRpw = 'EMS5';
+    productRpwOptions = Array<PoRadioGroupOption>();
     parametersRpw = new Array<any>();
+    paramDigitDefRpw = new Array<any>();
+    paramDigitDataRpw = new Array<any>();
+    paramSelectionsRpw = new Array<any>();
     disableParamRpw = true;
 
     fileToSend: any;
@@ -120,6 +134,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private servCustomer: CustomerService,
+        public servBranch: BranchService,
         public servCountry: CountryService,
         private servOrder: OrderService,
         private breadcrumbControlService: BreadcrumbControlService,
@@ -152,6 +167,10 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
 
     fieldRpwServiceFormat(value) {
         return `${value.code} - ${value.name}`;
+    }
+
+    fieldBranchFormat(value) {
+        return `${value.branchCode} - ${value.branchName}`;
     }
 
     fieldCountryFormat(value) {
@@ -233,10 +252,12 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     }
 
     resetFilters(): void {
-        this.executionServer = 'TcFinanc';
+        this.executionServer = '';
 
         // Inicia os Campos de Filtros
         this.filterCode = FilterRangeUtil.makeFilterRangeNumber(0, 999999999);
+        this.filterAdmissDate = null;
+        this.filterBranchList = null;
         this.filterCountryList = null;
         this.filterStatusList = null;
         this.filterActive = false;
@@ -256,6 +277,8 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
 
         // Atualizar os Campos de Filtro conforme o Disclaimer
         this.filterCode = this.disclaimerUtil.atzRangeNumFromDisclamer(this.disclaimers, 'code', this.filterCode);
+        this.filterAdmissDate = this.disclaimerUtil.atzDatepickerRangeFromDisclamer(this.disclaimers, 'admissDate', this.filterAdmissDate);
+        this.filterBranchList = this.disclaimerUtil.atzMultiSelectCharFromDisclamer(this.disclaimers, 'branch', []);
         this.filterCountryList = this.disclaimerUtil.atzMultiSelectCharFromDisclamer(this.disclaimers, 'country', []);
         this.filterStatusList = this.disclaimerUtil.atzMultiSelectNumberFromDisclamer(this.disclaimers, 'status', []);
         this.filterActive = this.disclaimerUtil.atzBooleanFromDisclamer(this.disclaimers, 'active', this.filterActive);
@@ -267,6 +290,8 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         // Inclui os Campos de Filtro no Disclaimer
         this.addDisclaimer([
             this.disclaimerUtil.makeDisclaimerFromRangeNumber('code', this.filterCode),
+            this.disclaimerUtil.makeDisclaimerFromDatepickerRange('admissDate', this.filterAdmissDate),
+            this.disclaimerUtil.makeDisclaimerFromMultiSelect('branch', this.filterBranchList),
             this.disclaimerUtil.makeDisclaimerFromMultiSelect('country', this.filterCountryList),
             this.disclaimerUtil.makeDisclaimerFromMultiSelectNumber('status', this.filterStatusList, this.statusLabelList),
             this.disclaimerUtil.makeDisclaimerFromBoolean('active', this.filterActive)
@@ -341,6 +366,12 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
                         this.search();
                     }, (err: any) => {
                     });
+
+                this.servCustomerSubscription$ = this.servCustomer
+                    .disable(customerCode)
+                    .subscribe(() => {
+                    }, (err: any) => {
+                    });
             }
         });
     }
@@ -376,13 +407,27 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     scheduling(): void {
         console.log('Agendando para Agora...');
 
+        this.createParametersRpw();
+
         const execParam = new ExecutionParameters();
         execParam.executionServer = this.executionServer;
-        execParam.programName = 'api_executa_carga_dados_carol';
-        execParam.externalName = 'api_executa_carga_dados_carol';
-        execParam.programEMS5 = true;
-        execParam.programVersion = '1.00.00.001';
         execParam.businessParams = this.parametersRpw;
+
+        if (this.productRpw === 'EMS5') {
+            execParam.programName = 'prog_exp_ems5';
+            execParam.externalName = 'prog_exp_ems5';
+            execParam.programEMS5 = true;
+            execParam.programStyle = 40;
+            execParam.programVersion = '1.00.00.001';
+            execParam.paramSelections = this.paramSelectionsRpw;
+        }
+
+        if (this.productRpw === 'EMS2') {
+            execParam.programName = 'prog_exp_ems2';
+            execParam.externalName = 'esp/prog_exp_ems2.p';
+            execParam.paramDigitDef = this.paramDigitDefRpw;
+            execParam.paramDigitData = this.paramDigitDataRpw;
+        }
 
         this.schedExecSubscription$ = this.scheduleExecution
             .createExecutionForNow(execParam, true)
@@ -513,16 +558,51 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     }
 
     openScheduleRPW(): void {
-        this.schParam.setScheduleParameters(this.loadLocalStorage('schParam'));
+        if (this.productRpw === 'EMS5') {
+            this.schParamEMS5.setScheduleParameters(this.loadLocalStorage('schParamEMS5'));
+        }
+        if (this.productRpw === 'EMS2') {
+            this.schParamEMS2.setScheduleParameters(this.loadLocalStorage('schParamEMS2'));
+        }
 
+        this.createParametersRpw();
+
+        this.modalScheduleRPW.open();
+    }
+
+    createParametersRpw(): void {
         this.parametersRpw = [
             { chave: 'destino', valor: 2, tipo: 'integer' },
             { chave: 'arquivo', valor: '', tipo: 'character' },
-            { chave: 'usuario', valor: 'FERNANDO', tipo: 'character' },
-            { chave: 'perfil', valor: 880, tipo: 'integer' }
+            { chave: 'usuario', valor: 'AVILA', tipo: 'character' },
+            { chave: 'perfil', valor: 880, tipo: 'integer' },
+            { chave: 'meu-atrib', valor: 'NEW1', tipo: 'character' }
         ];
 
-        this.modalScheduleRPW.open();
+        // só EMS2
+        this.paramDigitDefRpw = [
+            { chave: 'cod-estab', tipo: 'character' },
+            { chave: 'cod-ccusto', tipo: 'integer' }
+        ];
+
+        // só EMS2
+        this.paramDigitDataRpw = [
+            { "cod-estab": '19', "cod-ccusto": 17 },
+            { "cod-estab": '28', "cod-ccusto": 11 },
+            { "cod-estab": '73', "cod-ccusto": 90 }
+        ];
+
+        // só EMS5
+        this.paramSelectionsRpw = [
+            {
+                ind_dwb_set_type: "Regra", cod_dwb_set: "estab",
+                cod_dwb_set_initial: "01", cod_dwb_set_final: "FF", log_dwb_rule: true
+            },
+            {
+                ind_dwb_set_type: "Exceção", cod_dwb_set: "ccusto",
+                cod_dwb_set_initial: "30", cod_dwb_set_final: "35", log_dwb_rule: false
+            }
+        ]
     }
 
     onEnableDisableParam(): void {
@@ -530,9 +610,17 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     }
 
     onGetDataSchedure(): void {
-        const dataSchParam = this.schParam.getScheduleParameters();
-        console.log('dataSchParam', dataSchParam);
-        this.saveLocalStorage('schParam', dataSchParam);
+        if (this.productRpw === 'EMS5') {
+            const dataSchParamEMS5 = this.schParamEMS5.getScheduleParameters();
+            console.log('dataSchParamEMS5', dataSchParamEMS5);
+            this.saveLocalStorage('schParamEMS5', dataSchParamEMS5);
+        }
+
+        if (this.productRpw === 'EMS2') {
+            const dataSchParamEMS2 = this.schParamEMS2.getScheduleParameters();
+            console.log('dataSchParamEMS2', dataSchParamEMS2);
+            this.saveLocalStorage('schParamEMS2', dataSchParamEMS2);
+        }
     }
 
     onConfirmScheduleRPW(): void {
@@ -541,7 +629,13 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
 
     endExecutionScheduleRPW(event): void {
         console.log('terminou:', event);
-        this.saveLocalStorage('schParam', event);
+
+        if (this.productRpw === 'EMS5') {
+            this.saveLocalStorage('schParamEMS5', event);
+        }
+        if (this.productRpw === 'EMS2') {
+            this.saveLocalStorage('schParamEMS2', event);
+        }
     }
 
     downloadFile() {
@@ -549,7 +643,30 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             .getFile('1')  // Método do Serviço de Cliente que devolve do BackEnd um arquivo em base64
             .subscribe((response: Object) => {
 
-                FileUtil.downloadFile(response['content'], response['filename']);
+                if (response) {
+                    if (response['files']) {
+                        response['files'].map(file => {
+                            FileUtil.downloadFile(file['content'], file['filename']);
+                        });
+                    } else {
+                        FileUtil.downloadFile(response['content'], response['filename']);
+                    }
+                }
+            });
+
+        this.servCustomerSubscription$ = this.servCustomer
+            .getFileServer('entity.json')  // Método do Serviço de Cliente que devolve do BackEnd um arquivo em base64
+            .subscribe((response: Object) => {
+
+                if (response) {
+                    if (response['files']) {
+                        response['files'].map(file => {
+                            FileUtil.downloadFile(file['content'], file['filename']);
+                        });
+                    } else {
+                        FileUtil.downloadFile(response['content'], response['filename']);
+                    }
+                }
             });
 
         this.servCustomerSubscription$ = this.servCustomer
@@ -577,6 +694,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     }
 
     upload(): void {
+        this.fileToSend = null;
         this.modalUpload.open();
     }
 
@@ -653,7 +771,9 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         };
         this.menuDatasulService.callProgress(program);
 
-        this.menuDatasulService.openPath('html.inquiryItem', '1509;10;1', true);
+        //this.menuDatasulService.openPath('html.inquiryItem', '1509;10;1', true);
+
+        this.menuDatasulService.openPath('html.customerMaint', 'sub-menu-2', true);
 
         let notification = {
             type: 'success',
@@ -680,6 +800,10 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             .subscribe((response: Array<Object>) => {
                 console.log('response:', response);
             });
+    }
+
+    changeVisibleColumns(listColumns: Array<string>) {
+        console.log('changeVisibleColumns', listColumns);
     }
 
     setupComponents(): void {
@@ -726,18 +850,28 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             { property: 'name', label: 'Descrição', type: 'string', width: '80%' }
         ];
 
+        this.zoomBranchColumns = [
+            { property: 'branchCode', label: this.literals['code'], type: 'string' },
+            { property: 'branchName', label: this.literals['name'], type: 'string' }
+        ];
+
         this.zoomCountryColumns = [
             { property: 'countryCode', label: this.literals['code'], type: 'string' },
             { property: 'countryName', label: this.literals['name'], type: 'string' }
         ];
 
+        this.productRpwOptions = [
+            { label: this.literals?.ems5, value: 'EMS5' },
+            { label: this.literals?.ems2, value: 'EMS2' }
+        ]
+
         this.tableActions = [
-            { action: this.detail.bind(this), label: this.literals['detail'], icon: 'po-icon po-icon-document' },
-            { action: this.edit.bind(this), label: this.literals['edit'], icon: 'po-icon po-icon-edit' },
-            { action: this.delete.bind(this), label: this.literals['remove'], icon: 'po-icon po-icon-delete' },
-            { action: this.block.bind(this), label: this.literals['block'], icon: 'po-icon po-icon-user-delete' },
-            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: 'po-icon po-icon-document-double' },
-            { action: this.changeStatus.bind(this), label: this.literals['changeStatus'], icon: 'po-icon po-icon-refresh' }
+            { action: this.detail.bind(this), label: this.literals['detail'], icon: ' ph ph-file' },
+            { action: this.edit.bind(this), label: this.literals['edit'], icon: ' ph ph-pencil-simple' },
+            { action: this.delete.bind(this), label: this.literals['remove'], icon: ' ph ph-trash' },
+            { action: this.block.bind(this), label: this.literals['block'], icon: ' ph ph-user-x' },
+            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: ' ph ph-files' },
+            { action: this.changeStatus.bind(this), label: this.literals['changeStatus'], icon: ' ph ph-arrows-clockwise' }
         ];
 
         this.statusLabelList = Customer.statusLabelList(this.literals);
@@ -756,9 +890,10 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
                 action: (value, row) => { this.detail(row); }
             },
             { property: 'name', label: this.literals['name'], type: 'string' },
+            { property: 'admissDate', label: this.literals['admissDate'], type: 'date' },
             { property: 'country', label: this.literals['country'], type: 'string' },
             { property: 'status', label: this.literals['status'], type: 'label', labels: this.statusLabelList },
-            // { property: 'status', label: this.literals['status'], type: 'cellTemplate' },
+            //{ property: 'status', label: this.literals['status'], type: 'cellTemplate' },
             { property: 'observation', label: this.literals['observAbrev'], type: 'columnTemplate' }
         ];
 
@@ -774,7 +909,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         ];
 
         this.pageActions = [
-            { label: this.literals['add'], action: this.create.bind(this), icon: 'po-icon-plus' },
+            { label: this.literals['add'], action: this.create.bind(this), icon: 'ph ph-plus' },
             { label: this.literals['totalByStatus'], action: this.openTotalByStatus.bind(this) },
             { label: this.literals['scheduleRPW'], action: this.openScheduleRPW.bind(this) },
             { label: this.literals['order'], action: this.order.bind(this) },
@@ -783,6 +918,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             { label: this.literals['upload'], action: this.upload.bind(this) },
             { label: this.literals['parallel'], action: this.parallel.bind(this) },
             { label: this.literals['selectLine'], action: this.selectLine.bind(this) },
+            { label: this.literals['execMenu'], action: this.execMenu.bind(this) }
         ];
 
         this.resetFilters();
@@ -800,6 +936,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         if (this.servCustomerSubscription$) { this.servCustomerSubscription$.unsubscribe(); }
+        if (this.servBranchSubscription$) { this.servBranchSubscription$.unsubscribe(); }
         if (this.servCountrySubscription$) { this.servCountrySubscription$.unsubscribe(); }
         if (this.servOrderSubscription$) { this.servOrderSubscription$.unsubscribe(); }
         if (this.schedExecSubscription$) { this.schedExecSubscription$.unsubscribe(); }

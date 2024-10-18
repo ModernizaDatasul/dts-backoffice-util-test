@@ -277,11 +277,11 @@ export class KendoxListComponent implements OnInit, OnDestroy {
         };
 
         this.tableActions = [
-            { action: this.detail.bind(this), label: this.literals['detail'], icon: 'po-icon po-icon-document' },
-            { action: this.edit.bind(this), label: this.literals['edit'], icon: 'po-icon po-icon-edit' },
-            { action: this.delete.bind(this), label: this.literals['remove'], icon: 'po-icon po-icon-delete' },
-            { action: this.block.bind(this), label: this.literals['block'], icon: 'po-icon po-icon-user-delete' },
-            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: 'po-icon po-icon-document-double' }
+            { action: this.detail.bind(this), label: this.literals['detail'], icon: ' ph ph-file' },
+            { action: this.edit.bind(this), label: this.literals['edit'], icon: ' ph ph-pencil-simple' },
+            { action: this.delete.bind(this), label: this.literals['remove'], icon: ' ph ph-trash' },
+            { action: this.block.bind(this), label: this.literals['block'], icon: ' ph ph-user-x' },
+            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: ' ph ph-files' }
         ];
 
         this.statusLabelList = Customer.statusLabelList(this.literals);
@@ -295,7 +295,7 @@ export class KendoxListComponent implements OnInit, OnDestroy {
         ];
 
         this.pageActions = [
-            { label: this.literals['add'], action: this.create.bind(this), icon: 'po-icon-plus' }
+            { label: this.literals['add'], action: this.create.bind(this), icon: 'ph ph-plus' }
         ];
 
         this.filterCountryOptions = [];

@@ -28,6 +28,7 @@ export class KendoxBasicComponent implements OnInit, OnDestroy {
     hasNext = false;
     currentPage = 1;
     pageSize = 3;
+    filter = '';
 
     servCustomerSubscription$: Subscription;
 
@@ -86,9 +87,14 @@ export class KendoxBasicComponent implements OnInit, OnDestroy {
             this.items = [];
         }
 
+        let disclaimer = [];
+        if (this.filter) {
+            disclaimer.push({ property: 'status', value: this.filter });
+        }
+
         this.hasNext = false;
         this.servCustomerSubscription$ = this.servCustomer
-            .query([], [], this.currentPage, this.pageSize)
+            .query(disclaimer, [], this.currentPage, this.pageSize)
             .subscribe((response: TotvsResponse<ICustomer>) => {
 
                 if (response && response.items) {
@@ -207,6 +213,18 @@ export class KendoxBasicComponent implements OnInit, OnDestroy {
         this.kendoBasic.changeColumnConfigView({ column: 'internalId', locked: !column.locked });
     }
 
+    onClickEditLine() {
+        //this.kendoBasic.editClickHandler({ rowIndex: 2 });
+    }
+
+    onClickFilter() {
+        this.filter = (this.filter) ? '' : '3';
+
+        console.log(this.filter);
+
+        this.search();
+    }
+
     saveLocalStorage(key: string, value: any): void {
         if (typeof (Storage) === 'undefined') { return; }
 
@@ -243,7 +261,9 @@ export class KendoxBasicComponent implements OnInit, OnDestroy {
         this.actionsOptions = [
             { label: 'Sel/Desc Maria', action: this.onClickSelectDesc.bind(this) },
             { label: 'Show/Hide Nome', action: this.onClickShowHide.bind(this) },
-            { label: 'Lock/noLock IntId', action: this.onClickLock.bind(this) }
+            { label: 'Lock/noLock IntId', action: this.onClickLock.bind(this) },
+            { label: 'Filtro On/Off', action: this.onClickFilter.bind(this) },
+            //{ label: 'Edita Linha 3', action: this.onClickEditLine.bind(this) },
         ];
 
         this.actionsText = '';
@@ -254,11 +274,11 @@ export class KendoxBasicComponent implements OnInit, OnDestroy {
         this.groupChangeText = '';
 
         this.tableActions = [
-            { action: this.detail.bind(this), label: this.literals['detail'], icon: 'po-icon po-icon-document' },
-            { action: this.edit.bind(this), label: this.literals['edit'], icon: 'po-icon po-icon-edit' },
-            { action: this.delete.bind(this), label: this.literals['remove'], icon: 'po-icon po-icon-delete' },
-            { action: this.block.bind(this), label: this.literals['block'], icon: 'po-icon po-icon-user-delete' },
-            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: 'po-icon po-icon-document-double' }
+            { action: this.detail.bind(this), label: this.literals['detail'], icon: ' ph ph-file' },
+            { action: this.edit.bind(this), label: this.literals['edit'], icon: ' ph ph-pencil-simple' },
+            { action: this.delete.bind(this), label: this.literals['remove'], icon: ' ph ph-trash' },
+            { action: this.block.bind(this), label: this.literals['block'], icon: ' ph ph-user-x' },
+            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: ' ph ph-files' }
         ];
 
         this.editActions = {
