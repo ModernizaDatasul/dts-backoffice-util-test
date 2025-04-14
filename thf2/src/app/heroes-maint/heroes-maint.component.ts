@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PoDecimalComponent, PoLookupColumn, PoTableColumn } from '@po-ui/ng-components';
+import { PoDecimalComponent, PoTableColumn } from '@po-ui/ng-components';
 import { IHeroes, Heroes } from '../shared/model/heroes.model';
 import { HeroesService } from '../shared/services/heroes.service';
 import { TotvsResponse } from 'dts-backoffice-util';
@@ -7,17 +7,18 @@ import { TotvsResponse } from 'dts-backoffice-util';
 @Component({
     selector: 'app-heroes-maint',
     templateUrl: './heroes-maint.component.html',
-    styleUrls: ['./heroes-maint.component.css']
+    styleUrls: ['./heroes-maint.component.css'],
+    standalone: false
 })
 export class HeroesMaintComponent implements OnInit {
     @ViewChild('fieldId', { static: true }) fieldId: PoDecimalComponent;
     //@ViewChild('fieldSalary', { static: true }) fieldSalary: PoDecimalComponent;
 
-    heroesColumns: Array<PoTableColumn>;
-    heroesItems: Array<IHeroes>;
+    heroesColumns: PoTableColumn[];
+    heroesItems: IHeroes[];
 
     //zoomHeroesColumns: Array<PoLookupColumn>;
-    zoomHeroesColumns: Array<PoTableColumn>;
+    zoomHeroesColumns: PoTableColumn[];
 
     hero: IHeroes = new Heroes();
 
@@ -67,7 +68,7 @@ export class HeroesMaintComponent implements OnInit {
 
     focusInternalInput(idField: string) {
         const fieldComponent = document.getElementById(idField);
-        const fieldInput = (<HTMLScriptElement[]><any>fieldComponent.getElementsByClassName('po-input'))[0];
+        const fieldInput = (fieldComponent.getElementsByClassName('po-input') as unknown as HTMLInputElement[])[0];
         fieldInput.focus();
     }
 

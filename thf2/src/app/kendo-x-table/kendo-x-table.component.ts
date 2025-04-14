@@ -4,26 +4,27 @@ import { forkJoin, Subscription } from 'rxjs';
 import { ICustomer, Customer } from '../shared/model/customer.model';
 import { CustomerService } from '../shared/services/customer.service';
 import { TotvsResponse } from 'dts-backoffice-util';
-import { DtsKendoGridColumn } from 'dts-backoffice-kendo-grid';
+import { DtsKendoGridColumn, DtsLabel } from 'dts-backoffice-kendo-grid';
 
 @Component({
     selector: 'app-kendo-x-table',
     templateUrl: './kendo-x-table.component.html',
-    styleUrls: ['./kendo-x-table.component.css']
+    styleUrls: ['./kendo-x-table.component.css'],
+    standalone: false
 })
 export class KendoxTableComponent implements OnInit, OnDestroy {
-    literals: any = {};
+    literals: Record<string, string> = {};
 
-    disclaimers: Array<PoDisclaimer> = [];
+    disclaimers: PoDisclaimer[] = [];
     expandables = [''];
 
-    statusLabelList: Array<any>;
+    statusLabelList: DtsLabel[];
 
-    tableActions: Array<PoTableAction>;
-    columnsKendo: Array<DtsKendoGridColumn>;
-    columnsPo: Array<PoTableColumn>;
+    tableActions: PoTableAction[];
+    columnsKendo: DtsKendoGridColumn[];
+    columnsPo: PoTableColumn[];
 
-    items: Array<ICustomer> = new Array<ICustomer>();
+    items:ICustomer[] = new Array<ICustomer>();
     hasNext = false;
     currentPage = 1;
     pageSize = 3;
@@ -92,11 +93,11 @@ export class KendoxTableComponent implements OnInit, OnDestroy {
 
     setupComponents(): void {
         this.tableActions = [
-            { action: this.detail.bind(this), label: this.literals['detail'], icon: ' ph ph-file' },
-            { action: this.edit.bind(this), label: this.literals['edit'], icon: ' ph ph-pencil-simple' },
-            { action: this.delete.bind(this), label: this.literals['remove'], icon: ' ph ph-trash' },
-            { action: this.block.bind(this), label: this.literals['block'], icon: ' ph ph-user-x' },
-            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: ' ph ph-files' }
+            { action: this.detail.bind(this), label: this.literals['detail'], icon: ' an an-file' },
+            { action: this.edit.bind(this), label: this.literals['edit'], icon: ' an an-pencil-simple' },
+            { action: this.delete.bind(this), label: this.literals['remove'], icon: ' an an-trash' },
+            { action: this.block.bind(this), label: this.literals['block'], icon: ' an an-user-x' },
+            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: ' an an-files' }
         ];
 
         this.statusLabelList = Customer.statusLabelList(this.literals);

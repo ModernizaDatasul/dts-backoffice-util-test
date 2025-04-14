@@ -1,5 +1,5 @@
 <po-page-default
-    [p-title]="metadata?.title"
+    [p-title]="metadata['title']"
     [p-breadcrumb]="breadcrumb"
     [p-actions]="pageCustomAction"
     >
@@ -11,14 +11,14 @@
                 po-lx-4 po-offset-lx-4">
 
         <po-dynamic-form
-            [p-fields]="metadata?.fields"
-            [p-value]="metadata?.value"
-            [p-validate]="metadata?.validate"
-            [p-validate-fields]="metadata?.validateFields">
+            [p-fields]="metadata['fields']"
+            [p-value]="metadata['value']"
+            [p-validate]="metadata['validate']"
+            [p-validate-fields]="metadata['validateFields']">
         </po-dynamic-form>
 
         <po-divider class="po-sm-12 po-md-12 po-lg-12 po-lx-12"
-            [p-label]="metadata?.literals?.contact" >
+            [p-label]="metadata['literals']['contact']" >
         </po-divider>
 
         <po-table 
@@ -29,8 +29,8 @@
             p-hide-columns-manager="true"
             p-selectable="false"
             p-striped="true"
-            [p-columns]="metadata?.fieldsContact"
-            [p-items]="metadata?.value?.contacts">
+            [p-columns]="metadata['fieldsContact']"
+            [p-items]="metadata['value']['contacts']">
         </po-table>
 
     </div>

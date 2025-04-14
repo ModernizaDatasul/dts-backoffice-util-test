@@ -2,6 +2,7 @@ import { CommonModule, registerLocaleData } from '@angular/common';
 import { DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from '@angular/core';
 import localePt from '@angular/common/locales/pt';
 import localeEs from '@angular/common/locales/es';
+import localeEn from '@angular/common/locales/en';
 import '@progress/kendo-angular-intl/locales/pt/all';
 import '@progress/kendo-angular-intl/locales/es/all';
 import '@progress/kendo-angular-intl/locales/en/all';
@@ -43,10 +44,10 @@ import { MenuDatasulService } from 'dts-backoffice-util';
 import { OrderService } from './shared/services/order.service';
 import { HeroesService } from './shared/services/heroes.service';
 import { BranchService } from './shared/services/branch.service';
-import { demoInterceptor } from './shared/services/interceptor-function';
 
 registerLocaleData(localePt);
 registerLocaleData(localeEs);
+registerLocaleData(localeEn);
 
 const i18nConfig: PoI18nConfig = {
     default: {

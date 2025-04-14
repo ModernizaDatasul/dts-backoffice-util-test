@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { PoBreadcrumb, PoI18nPipe, PoI18nService, PoNotificationService, PoDialogService } from '@po-ui/ng-components';
-import { PoSelectOption, PoTableColumn, PoLookupColumn } from '@po-ui/ng-components';
+import { PoBreadcrumb, PoI18nPipe, PoI18nService, PoNotificationService, PoDialogService, PoTableColumnLabel } from '@po-ui/ng-components';
+import { PoSelectOption, PoTableColumn } from '@po-ui/ng-components';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerService } from '../shared/services/customer.service';
 import { Subscription, forkJoin } from 'rxjs';
@@ -15,12 +15,13 @@ import { IScheduleParameters } from 'dts-backoffice-util';
 @Component({
     selector: 'app-customer-dash',
     templateUrl: './customer-dash.component.html',
-    styleUrls: ['./customer-dash.component.css']
+    styleUrls: ['./customer-dash.component.css'],
+    standalone: false
 })
 export class CustomerDashComponent implements OnInit, OnDestroy {
     @ViewChild('schParam', { static: true }) schParam: TotvsScheduleExecutionComponent;
 
-    literals: any = {};
+    literals: Record<string, string> = {};
 
     breadcrumb: PoBreadcrumb;
 
@@ -29,25 +30,28 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
     servCustomerSubscription$: Subscription;
     servOrderSubscription$: Subscription;
 
-    customerOptions: Array<PoSelectOption>;
+    customerOptions: PoSelectOption[];
     selectCustomer = 0;
     customer: ICustomer = new Customer();
 
     disableCustDetail = true;
 
-    orderColumns: Array<PoTableColumn>;
-    orderItems: Array<IOrder> = new Array<IOrder>();
+    orderColumns: PoTableColumn[]
+    orderItems: IOrder[] = new Array<IOrder>();
 
     hasNext = false;
     currentPage = 1;
     pageSize = 20;
 
-    orderStatusLabelList: any;
-    customerStatusLabelList: any;
+    orderStatusLabelList: PoTableColumnLabel[];
+    customerStatusLabelList: PoTableColumnLabel[];
 
     scheduleParms: IScheduleParameters;
 
     showNewAba = true;
+
+    enabledStates: string[];
+    initialSelectedState: string;
 
     constructor(
         private poI18nPipe: PoI18nPipe,
@@ -62,6 +66,9 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit(): void {
+        //this.initialSelectedState = "SC";
+        this.enabledStates = ["SC", "RJ", "PR", "SP", "MT","BA"];
+
         forkJoin([
             this.poI18nService.getLiterals(),
             this.poI18nService.getLiterals({ context: 'customerDash' })

@@ -7,43 +7,17 @@ export class Branch implements IBranch {
     branchCode: string;
     branchName: string;
 
-    constructor(values: Object = {}) {
+    constructor(values: object = {}) {
         Object.assign(this, values);
     }
 
-    /**
-     * Getter $branchCode
-     * @return {string}
-     */
-    public get $branchCode(): string {
-        return this.branchCode;
-    }
+    public get $branchCode(): string { return this.branchCode; }
+    public set $branchCode(value: string) { this.branchCode = value; }
 
-    /**
-     * Getter $branchName
-     * @return {string}
-     */
-    public get $branchName(): string {
-        return this.branchName;
-    }
+    public get $branchName(): string { return this.branchName; }
+    public set $branchName(value: string) { this.branchName = value; }
 
-    /**
-     * Setter $branchCode
-     * @param {string} value
-     */
-    public set $branchCode(value: string) {
-        this.branchCode = value;
-    }
-
-    /**
-     * Setter $branchName
-     * @param {string} value
-     */
-    public set $branchName(value: string) {
-        this.branchName = value;
-    }
-
-    static of(json: any = {}) {
+    static of(json: object = {}) {
         return new Branch(json);
     }
 
@@ -51,9 +25,9 @@ export class Branch implements IBranch {
         return new Branch();
     }
 
-    static fromJson(json: Array<any> = []) {
+    static fromJson(json: object[] = []) {
 
-        const items: Array<IBranch> = [];
+        const items: IBranch[] = [];
 
         for (const values of json) {
             items.push(new Branch(values));

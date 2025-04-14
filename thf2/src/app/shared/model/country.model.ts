@@ -7,7 +7,7 @@ export class Country implements ICountry {
     countryCode: string;
     countryName: string;
 
-    constructor(values: Object = {}) {
+    constructor(values: object = {}) {
         Object.assign(this, values);
     }
 
@@ -16,8 +16,8 @@ export class Country implements ICountry {
     }
 
     get $countryCode(): string { return this.countryCode; }
-    get $countryName(): string { return this.countryName; }
-
     set $countryCode(value: string) { this.countryCode = value; }
+
+    get $countryName(): string { return this.countryName; }
     set $countryName(value: string) { this.countryName = value; }
 }

@@ -10,25 +10,26 @@ import { GenericFunctionsUtils } from 'dts-backoffice-util';
 @Component({
     selector: 'app-kendo-x-modal',
     templateUrl: './kendo-x-modal.component.html',
-    styleUrls: ['./kendo-x-modal.component.css']
+    styleUrls: ['./kendo-x-modal.component.css'],
+    standalone: false
 })
 export class KendoxModalComponent implements OnInit, OnDestroy {
     @ViewChild('modalKendo') modalKendo: PoModalComponent;
 
-    literals: any = {};
+    literals: Record<string, string> = {};
     genericFunctionsUtils: GenericFunctionsUtils;
 
-    disclaimers: Array<PoDisclaimer> = [];
+    disclaimers: PoDisclaimer[] = [];
     expandables = [''];
 
-    statusLabelList: Array<DtsLabel>;
-    statesSubtitleList: Array<DtsLabel>;
+    statusLabelList: DtsLabel[];
+    statesSubtitleList: DtsLabel[];
 
-    tableActions: Array<PoTableAction>;
+    tableActions: PoTableAction[];
     editActions: DtsEditAction;
-    columns: Array<DtsKendoGridColumn>;
+    columns: DtsKendoGridColumn[];
 
-    items: Array<ICustomer> = new Array<ICustomer>();
+    items: ICustomer[] = new Array<ICustomer>();
     hasNext = false;
     currentPage = 1;
     pageSize = 3;
@@ -159,11 +160,11 @@ export class KendoxModalComponent implements OnInit, OnDestroy {
         };
 
         this.tableActions = [
-            { action: this.detail.bind(this), label: this.literals['detail'], icon: ' ph ph-file' },
-            { action: this.edit.bind(this), label: this.literals['edit'], icon: ' ph ph-pencil-simple' },
-            { action: this.delete.bind(this), label: this.literals['remove'], icon: ' ph ph-trash' },
-            { action: this.block.bind(this), label: this.literals['block'], icon: ' ph ph-user-x' },
-            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: ' ph ph-files' }
+            { action: this.detail.bind(this), label: this.literals['detail'], icon: ' an an-file' },
+            { action: this.edit.bind(this), label: this.literals['edit'], icon: ' an an-pencil-simple' },
+            { action: this.delete.bind(this), label: this.literals['remove'], icon: ' an an-trash' },
+            { action: this.block.bind(this), label: this.literals['block'], icon: ' an an-user-x' },
+            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: ' an an-files' }
         ];
 
         this.editActions = {

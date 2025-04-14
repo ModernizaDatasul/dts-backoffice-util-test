@@ -18,7 +18,7 @@ export class BranchService {
 
     query(filters: PoDisclaimer[], page = 1, pageSize = 20, currentCompany = false): Observable<TotvsResponse<IBranch>> {
         let url = '';
-        const urlParams = new Array<String>();
+        const urlParams = new Array<string>();
 
         urlParams.push(`pageSize=${pageSize}`);
         urlParams.push(`page=${page}`);
@@ -38,7 +38,7 @@ export class BranchService {
         return this.http.get<TotvsResponse<IBranch>>(url);
     }
 
-    getObjectByValue(id: any): Observable<IBranch> {
+    getObjectByValue(id: object): Observable<IBranch> {
         return this.http.get<IBranch>(`${this.apiUrl}/${id}`);
     }
 

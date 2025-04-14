@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PoDisclaimer, PoLookupFilteredItemsParams } from '@po-ui/ng-components';
+import { PoDisclaimer, PoLookupFilteredItemsParams, PoLookupResponseApi } from '@po-ui/ng-components';
 import { TotvsResponse } from 'dts-backoffice-util';
 import { IHeroes } from '../model/heroes.model';
 
@@ -20,7 +20,7 @@ export class HeroesService {
         let url = `${this.apiUrl}?pageSize=${pageSize}&page=${page}`;
 
         if (filters && filters.length > 0) {
-            const urlParams = new Array<String>();
+            const urlParams = new Array<string>();
 
             filters.map(filter => {
                 urlParams.push(`${filter.property}=${filter.value}`);
@@ -36,11 +36,11 @@ export class HeroesService {
         return this.http.get<IHeroes>(`${this.apiUrl}/${label}`);
     }
 
-    getObjectByValue(id: string, filterParams: any): Observable<IHeroes> {
+    getObjectByValue(id: string, filterParams: object): Observable<IHeroes> {
         id = btoa(id);
 
         let loading = false;
-        if (filterParams && filterParams.loading) {
+        if (filterParams && filterParams['loading']) {
             loading = true;
         }
 
@@ -51,7 +51,7 @@ export class HeroesService {
         }
     }
 
-    getFilteredItems(params: PoLookupFilteredItemsParams): Observable<any> {
+    getFilteredItems(params: PoLookupFilteredItemsParams): Observable<PoLookupResponseApi> {
         const header = { params: { page: params.page.toString(), pageSize: params.pageSize.toString() } };
 
         if (params.filter && params.filter.length > 0) {
@@ -62,7 +62,7 @@ export class HeroesService {
             header['headers'] = this.headers.headers;
         }
 
-        return this.http.get(this.apiUrl, header);
+        return this.http.get<PoLookupResponseApi>(this.apiUrl, header);
     }
 
     create(model: IHeroes): Observable<IHeroes> {
@@ -73,7 +73,7 @@ export class HeroesService {
         return this.http.post<IHeroes>(`${this.apiUrl}`, model);
     }
 
-    delete(label: string): Observable<Object> {
+    delete(label: string): Observable<object> {
         return this.http.delete(`${this.apiUrl}/${label}`);
     }
 }

@@ -1,29 +1,30 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PoI18nService, PoTableColumn, PoTableAction, PoDisclaimer } from '@po-ui/ng-components';
+import { PoI18nService, PoTableAction, PoDisclaimer } from '@po-ui/ng-components';
 import { forkJoin, Subscription } from 'rxjs';
 import { ICustomer, Customer } from '../shared/model/customer.model';
 import { CustomerService } from '../shared/services/customer.service';
 import { TotvsResponse } from 'dts-backoffice-util';
-import { DtsKendoGridColumn } from 'dts-backoffice-kendo-grid';
+import { DtsKendoGridColumn, DtsLabel } from 'dts-backoffice-kendo-grid';
 
 @Component({
     selector: 'app-kendo-x-kendo',
     templateUrl: './kendo-x-kendo.component.html',
-    styleUrls: ['./kendo-x-kendo.component.css']
+    styleUrls: ['./kendo-x-kendo.component.css'],
+    standalone: false
 })
 export class KendoxKendoComponent implements OnInit, OnDestroy {
-    literals: any = {};
+    literals: Record<string, string> = {};
 
-    disclaimers: Array<PoDisclaimer> = [];
+    disclaimers: PoDisclaimer[] = [];
     expandables = [''];
 
-    statusLabelList: Array<any>;
+    statusLabelList: DtsLabel[];
 
-    tableActions: Array<PoTableAction>;
-    columnsKendo1: Array<DtsKendoGridColumn>;
-    columnsKendo2: Array<DtsKendoGridColumn>;
+    tableActions: PoTableAction[];
+    columnsKendo1: DtsKendoGridColumn[];
+    columnsKendo2: DtsKendoGridColumn[];
 
-    items: Array<ICustomer> = new Array<ICustomer>();
+    items: ICustomer[] = new Array<ICustomer>();
     hasNext = false;
     currentPage = 1;
     pageSize = 20;
@@ -81,27 +82,27 @@ export class KendoxKendoComponent implements OnInit, OnDestroy {
         console.table(this.items);
     }
 
-    detail() {
+    detail(): void {
         alert('detail');
     }
 
-    edit() {
+    edit(): void {
         alert('edit');
     }
 
-    delete() {
+    delete(): void {
         alert('delete');
     }
 
-    block() {
+    block(): void {
         alert('block');
     }
 
-    duplic() {
+    duplic(): void {
         alert('duplic');
     }
 
-    onSaveColumnManager(event: any) {
+    onSaveColumnManager(event: object): void {
         console.table(event);
     }
 
@@ -109,11 +110,11 @@ export class KendoxKendoComponent implements OnInit, OnDestroy {
         this.lEditable = true;
 
         this.tableActions = [
-            { action: this.detail.bind(this), label: this.literals['detail'], icon: ' ph ph-file' },
-            { action: this.edit.bind(this), label: this.literals['edit'], icon: ' ph ph-pencil-simple' },
-            { action: this.delete.bind(this), label: this.literals['remove'], icon: ' ph ph-trash' },
-            { action: this.block.bind(this), label: this.literals['block'], icon: ' ph ph-user-x' },
-            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: ' ph ph-files' }
+            { action: this.detail.bind(this), label: this.literals['detail'], icon: ' an an-file' },
+            { action: this.edit.bind(this), label: this.literals['edit'], icon: ' an an-pencil-simple' },
+            { action: this.delete.bind(this), label: this.literals['remove'], icon: ' an an-trash' },
+            { action: this.block.bind(this), label: this.literals['block'], icon: ' an an-user-x' },
+            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: ' an an-files' }
         ];
 
         this.statusLabelList = Customer.statusLabelList(this.literals);

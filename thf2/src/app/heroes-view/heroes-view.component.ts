@@ -7,12 +7,13 @@ import { PoSlideItem } from '@po-ui/ng-components';
 @Component({
     selector: 'app-heroes-view',
     templateUrl: './heroes-view.component.html',
-    styleUrls: ['./heroes-view.component.css']
+    styleUrls: ['./heroes-view.component.css'],
+    standalone: false
 })
 export class HeroesViewComponent implements OnInit {
 
-    listHeroes: Array<IHeroes> = [];
-    listHeroesImage: Array<PoSlideItem> = [];
+    listHeroes: IHeroes[] = [];
+    listHeroesImage: PoSlideItem[] = [];
 
     constructor(
         public heroesService: HeroesService
@@ -48,11 +49,11 @@ export class HeroesViewComponent implements OnInit {
     }
 
     edit(ID: number) {
-
+        console.log('edit', ID);
     }
 
     delete(ID: number) {
-
+        console.log('delete', ID);
     }
 
     setupComponents(): void {

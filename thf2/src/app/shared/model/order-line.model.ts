@@ -11,7 +11,7 @@ export class OderLine implements IOderLine {
     qtd: number;
     itemValue: number;
 
-    constructor(values: Object = {}) {
+    constructor(values: object = {}) {
         Object.assign(this, values);
     }
 
@@ -20,12 +20,14 @@ export class OderLine implements IOderLine {
     }
 
     get $seq(): number { return this.seq; }
-    get $item(): string { return this.item; }
-    get $qtd(): number { return this.qtd; }
-    get $itemValue(): number { return this.itemValue; }
-
     set $seq(value: number) { this.seq = value; }
+
+    get $item(): string { return this.item; }
     set $item(value: string) { this.item = value; }
+
+    get $qtd(): number { return this.qtd; }
     set $qtd(value: number) { this.qtd = value; }
+
+    get $itemValue(): number { return this.itemValue; }
     set $itemValue(value: number) { this.itemValue = value; }
 }

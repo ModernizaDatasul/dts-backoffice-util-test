@@ -8,17 +8,18 @@ import { Customer } from '../../shared/model/customer.model';
 @Component({
     selector: 'app-cust-maint-dynamic-list',
     templateUrl: './cust-maint-dynamic.list.component.html',
-    styleUrls: ['./cust-maint-dynamic.list.component.css']
+    styleUrls: ['./cust-maint-dynamic.list.component.css'],
+    standalone: false
 })
 export class CustMaintDynamicListComponent implements OnInit, OnDestroy {
     @ViewChild('dynamicTable', { static: true }) dynamicTable: PoPageDynamicTableComponent;
 
-    public metadata: any;
+    public metadata: object;
     public serviceApi: string;
 
     private servCustomerSubscription$: Subscription;
 
-    public tableCustomActions: Array<PoPageDynamicTableCustomTableAction>;
+    public tableCustomActions: PoPageDynamicTableCustomTableAction[];
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -35,7 +36,7 @@ export class CustMaintDynamicListComponent implements OnInit, OnDestroy {
     getMetadata() {
         this.servCustomerSubscription$ = this.servCustomer
             .getMetadata('list')
-            .subscribe((response: any) => {
+            .subscribe((response: object) => {
                 if (response) {
                     this.metadata = response;
                 }
@@ -65,9 +66,9 @@ export class CustMaintDynamicListComponent implements OnInit, OnDestroy {
     }
 
     setupComponents() {
-        this.tableCustomActions = this.metadata.tableCustomActions ? this.metadata.tableCustomActions : [];
+        this.tableCustomActions = this.metadata['tableCustomActions'] ? this.metadata['tableCustomActions'] : [];
         this.tableCustomActions.push(
-            { label: this.metadata.literals?.detail, action: this.details2.bind(this) },
+            { label: this.metadata['literals']['detail'], action: this.details2.bind(this) },
             { label: 'Update2', action: this.update.bind(this) }
         );
     }

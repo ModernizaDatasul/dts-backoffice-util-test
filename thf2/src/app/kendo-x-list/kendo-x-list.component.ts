@@ -14,25 +14,26 @@ import { DisclaimerUtil } from 'dts-backoffice-util';
 import { FieldValidationUtil } from 'dts-backoffice-util';
 import { BreadcrumbControlService } from 'dts-backoffice-util';
 import { TotvsResponse } from 'dts-backoffice-util';
-import { DtsKendoGridColumn } from 'dts-backoffice-kendo-grid';
+import { DtsKendoGridColumn, DtsLabel } from 'dts-backoffice-kendo-grid';
 
 @Component({
     selector: 'app-kendo-x-list',
     templateUrl: './kendo-x-list.component.html',
-    styleUrls: ['./kendo-x-list.component.css']
+    styleUrls: ['./kendo-x-list.component.css'],
+    standalone: false
 })
 export class KendoxListComponent implements OnInit, OnDestroy {
     @ViewChild('modalAdvanceSearch', { static: true }) modalAdvanceSearch: PoModalComponent;
 
-    literals: any = {};
+    literals: Record<string, string> = {};
 
     breadcrumb: PoBreadcrumb;
 
     expandables = [''];
 
-    statusLabelList: Array<any>;
+    statusLabelList: DtsLabel[];
 
-    disclaimers: Array<PoDisclaimer> = [];
+    disclaimers: PoDisclaimer[] = [];
     disclaimerGroup: PoDisclaimerGroup;
 
     disclaimerUtil: DisclaimerUtil;
@@ -44,21 +45,21 @@ export class KendoxListComponent implements OnInit, OnDestroy {
     cancelAdvSearchAction: PoModalAction;
 
     filterCode: IFilterRangeNumber;
-    filterCountryList: Array<string>;
-    filterCountryOptions: Array<PoSelectOption>;
+    filterCountryList: string[];
+    filterCountryOptions: PoSelectOption[];
 
     servCustomerSubscription$: Subscription;
     servCountrySubscription$: Subscription;
 
-    columns: Array<DtsKendoGridColumn>;
-    tableActions: Array<PoTableAction>;
-    items: Array<ICustomer> = new Array<ICustomer>();
+    columns: DtsKendoGridColumn[];
+    tableActions: PoTableAction[];
+    items: ICustomer[] = new Array<ICustomer>();
 
     hasNext = false;
     currentPage = 1;
     pageSize = 20;
 
-    pageActions: Array<PoPageAction>;
+    pageActions: PoPageAction[];
 
     constructor(
         private poI18nPipe: PoI18nPipe,
@@ -123,7 +124,7 @@ export class KendoxListComponent implements OnInit, OnDestroy {
         ]);
     }
 
-    addDisclaimer(disclaimerListItem: Array<PoDisclaimer>): void {
+    addDisclaimer(disclaimerListItem: PoDisclaimer[]): void {
         if (!disclaimerListItem) { return; }
 
         disclaimerListItem.map(disclaimerItem => {
@@ -132,7 +133,7 @@ export class KendoxListComponent implements OnInit, OnDestroy {
         this.disclaimerGroup.disclaimers = [...this.disclaimers];
     }
 
-    onChangeDisclaimer(disclaimers: Array<PoDisclaimer>): void {
+    onChangeDisclaimer(disclaimers: PoDisclaimer[]): void {
         this.disclaimers = disclaimers;
         this.refreshFilters();
         this.search();
@@ -211,11 +212,11 @@ export class KendoxListComponent implements OnInit, OnDestroy {
     }
 
     detail(item: ICustomer): void {
-        console.log('detail');
+        console.log('detail', item);
     }
 
     edit(item: ICustomer): void {
-        console.log('edit');
+        console.log('edit', item);
     }
 
     create(): void {
@@ -223,7 +224,7 @@ export class KendoxListComponent implements OnInit, OnDestroy {
     }
 
     delete(item: ICustomer): void {
-        console.log('delete');
+        console.log('delete', item);
     }
 
     block(item: ICustomer): void {
@@ -237,7 +238,6 @@ export class KendoxListComponent implements OnInit, OnDestroy {
                     .subscribe(() => {
                         this.poNotification.success(this.literals['bockSucessMessage']);
                         this.search();
-                    }, (err: any) => {
                     });
             }
         });
@@ -248,7 +248,6 @@ export class KendoxListComponent implements OnInit, OnDestroy {
             .duplic(item)
             .subscribe(() => {
                 this.poNotification.success(this.literals['duplicSucessMessage']);
-            }, (err: any) => {
             });
     }
 
@@ -277,11 +276,11 @@ export class KendoxListComponent implements OnInit, OnDestroy {
         };
 
         this.tableActions = [
-            { action: this.detail.bind(this), label: this.literals['detail'], icon: ' ph ph-file' },
-            { action: this.edit.bind(this), label: this.literals['edit'], icon: ' ph ph-pencil-simple' },
-            { action: this.delete.bind(this), label: this.literals['remove'], icon: ' ph ph-trash' },
-            { action: this.block.bind(this), label: this.literals['block'], icon: ' ph ph-user-x' },
-            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: ' ph ph-files' }
+            { action: this.detail.bind(this), label: this.literals['detail'], icon: ' an an-file' },
+            { action: this.edit.bind(this), label: this.literals['edit'], icon: ' an an-pencil-simple' },
+            { action: this.delete.bind(this), label: this.literals['remove'], icon: ' an an-trash' },
+            { action: this.block.bind(this), label: this.literals['block'], icon: ' an an-user-x' },
+            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: ' an an-files' }
         ];
 
         this.statusLabelList = Customer.statusLabelList(this.literals);
@@ -295,7 +294,7 @@ export class KendoxListComponent implements OnInit, OnDestroy {
         ];
 
         this.pageActions = [
-            { label: this.literals['add'], action: this.create.bind(this), icon: 'ph ph-plus' }
+            { label: this.literals['add'], action: this.create.bind(this), icon: 'an an-plus' }
         ];
 
         this.filterCountryOptions = [];

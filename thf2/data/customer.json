@@ -36,17 +36,32 @@
             "database": "db_mtd_edit"
         },
         {
-            "name": "validateEdit",
+            "name": "validateForm",
             "method": "POST",
-            "path": "/validate",
+            "path": "/validateForm",
             "savePayload": true,
             "responseType": "object",
-            "database": "db_vld_edit"
+            "database": "db_vld_form"
+        },
+        {
+            "name": "validateField",
+            "method": "POST",
+            "path": "/validateField",
+            "savePayload": true,
+            "responseType": "object",
+            "database": "db_vld_field"
         },
         {
             "name": "metadataNew",
             "method": "GET",
             "path": "/metadata/new",
+            "responseType": "object",
+            "database": "db_mtd_edit"
+        },
+        {
+            "name": "metadataCopy",
+            "method": "GET",
+            "path": "/metadata/copy",
             "responseType": "object",
             "database": "db_mtd_edit"
         },
@@ -75,6 +90,16 @@
             "method": "GET",
             "path": "/:idParam/file",
             "database": "db_file"
+        },
+        {
+            "name": "download",
+            "method": "GET",
+            "path": "/getFile/:idParam",
+            "fileParam": {
+                "fileName": "#idParam#",
+                "directory": "C:/tmp/"
+            },
+            "responseType": "file"
         },
         {
             "name": "totalByStatus",
@@ -149,6 +174,7 @@
                     }
                 ]
             },
+            "keepfilters": true,
             "hideColumnsManager": false,
             "hideCloseDisclaimers": [
                 "status"
@@ -175,11 +201,13 @@
                     "property": "shortName",
                     "label": "Nome Abrev",
                     "type": "string",
+                    "duplicate": true,
                     "order": 3
                 },
                 {
                     "property": "name",
                     "label": "Nome",
+                    "duplicate": true,
                     "type": "string",
                     "order": 2
                 },
@@ -187,6 +215,7 @@
                     "property": "country",
                     "label": "País",
                     "type": "string",
+                    "duplicate": true,
                     "filter": true,
                     "gridSmColumns": 12,
                     "gridMdColumns": 12,
@@ -201,6 +230,7 @@
                 {
                     "property": "status",
                     "label": "Status",
+                    "duplicate": true,
                     "type": "label",
                     "labels": [
                         {
@@ -259,13 +289,16 @@
             "actions": {
                 "detail": "/custMaintDynamic/detail/:id",
                 "edit": "/custMaintDynamic/edit/:id",
+                "duplicate": "/custMaintDynamic/new",
                 "new": "/custMaintDynamic/new",
-                "remove": true
+                "remove": true,
+                "removeAll": true
             },
             "pageCustomActions": [
                 {
                     "label": "Google2",
-                    "url": "http://www.google.com"
+                    "url": "http://www.google.com",
+                    "selectable": true
                 },
                 {
                     "label": "TestAC",
@@ -376,7 +409,7 @@
                     "label": "Código",
                     "type": "number",
                     "key": true,
-                    "disabled": true,
+                    "disabled": false,
                     "gridSmColumns": 12,
                     "gridMdColumns": 4,
                     "gridLgColumns": 4,
@@ -440,7 +473,11 @@
                     "gridXlColumns": 8
                 }
             ],
-            "validate": "/customer/validate",
+            "validateFields": [
+                "code",
+                "shortName"
+            ],
+            "validate": "/customer/validateForm",
             "fieldsContact": [
                 {
                     "property": "seq",
@@ -519,7 +556,7 @@
                     "gridLgColumns": 8,
                     "gridXlColumns": 8,
                     "order": 1,
-                    "validate": "/customer/validate"
+                    "validate": "/customer/validateField"
                 },
                 {
                     "property": "name",
@@ -584,10 +621,79 @@
             }
         }
     ],
-    "db_vld_edit": [
+    "db_vld_form": [
+        {
+            "fields": [
+                {
+                    "property": "name",
+                    "label": "Nome Alterado"
+                }
+            ],
+            "focus": "code",
+            "property": "shortName",
+            "value": {
+                "code": 1,
+                "codeIdenf": "1",
+                "internalId": 101,
+                "shortName": "João2",
+                "name": "Joãozinho Maria da Silva",
+                "country": "BRA",
+                "status": 2,
+                "tax": true,
+                "taxValue": 10.3,
+                "percent": 89.0123456789,
+                "admissDate": "2011-04-09",
+                "resignationDate": "2020-12-31",
+                "states": "RS,SC",
+                "contacts": [
+                    {
+                        "seq": 1,
+                        "name": "Zezinho",
+                        "phone": "9835-35456"
+                    },
+                    {
+                        "seq": 2,
+                        "name": "Robervindo",
+                        "phone": "23534544"
+                    }
+                ],
+                "department": "10",
+                "federalID": "000712345678901",
+                "observation": ""
+            }
+        },
         {
             "property": "shortName",
-            "value": "12"
+            "value": {
+                "code": 1,
+                "codeIdenf": "1",
+                "internalId": 101,
+                "shortName": "João",
+                "name": "Joãozinho Maria da Silva",
+                "country": "BRA",
+                "status": 2,
+                "tax": true,
+                "taxValue": 10.3,
+                "percent": 89.0123456789,
+                "admissDate": "2011-04-09",
+                "resignationDate": "2020-12-31",
+                "states": "RS,SC",
+                "contacts": [
+                    {
+                        "seq": 1,
+                        "name": "Zezinho",
+                        "phone": "9835-35456"
+                    },
+                    {
+                        "seq": 2,
+                        "name": "Robervindo",
+                        "phone": "23534544"
+                    }
+                ],
+                "department": "10",
+                "federalID": "000712345678901",
+                "observation": ""
+            }
         },
         {
             "property": "shortName",
@@ -624,11 +730,92 @@
         },
         {
             "property": "shortName",
-            "value": "dafsf"
+            "value": {
+                "code": 1,
+                "codeIdenf": "1",
+                "internalId": 101,
+                "shortName": "João",
+                "name": "Joãozinho Maria da Silva",
+                "country": "BRA",
+                "status": 2,
+                "tax": true,
+                "taxValue": 10.3,
+                "percent": 89.0123456789,
+                "admissDate": "2011-04-09",
+                "resignationDate": "2020-12-31",
+                "states": "RS,SC",
+                "contacts": [
+                    {
+                        "seq": 1,
+                        "name": "Zezinho",
+                        "phone": "9835-35456"
+                    },
+                    {
+                        "seq": 2,
+                        "name": "Robervindo",
+                        "phone": "23534544"
+                    }
+                ],
+                "department": "10",
+                "federalID": "000712345678901",
+                "observation": ""
+            }
         },
         {
             "property": "shortName",
-            "value": "Mais uma novo"
+            "value": {
+                "code": 1,
+                "codeIdenf": "1",
+                "internalId": 101,
+                "shortName": "João2",
+                "name": "Joãozinho Maria da Silva",
+                "country": "BRA",
+                "status": 2,
+                "tax": true,
+                "taxValue": 10.3,
+                "percent": 89.0123456789,
+                "admissDate": "2011-04-09",
+                "resignationDate": "2020-12-31",
+                "states": "RS,SC",
+                "contacts": [
+                    {
+                        "seq": 1,
+                        "name": "Zezinho",
+                        "phone": "9835-35456"
+                    },
+                    {
+                        "seq": 2,
+                        "name": "Robervindo",
+                        "phone": "23534544"
+                    }
+                ],
+                "department": "10",
+                "federalID": "000712345678901",
+                "observation": ""
+            }
+        }
+    ],
+    "db_vld_field": [
+        {
+            "property": "shortName",
+            "value": "Joãod"
+        },
+        {
+            "property": "shortName",
+            "value": "João2",
+            "field": {
+                "property": "shortName",
+                "label": "Novo Nome Abrev"
+            },
+            "focus": true
+        },
+        {
+            "property": "shortName",
+            "value": "Joãod"
+        },
+        {
+            "property": "shortName",
+            "value": "João2"
         }
     ],
     "database": [
@@ -754,7 +941,7 @@
             "shortName": "Gustavo",
             "name": "Gustavo Assis de Machado",
             "country": "USA",
-            "status": 1,
+            "status": 2,
             "tax": false,
             "department": "40",
             "federalID": "12345678901",
@@ -764,7 +951,7 @@
             "code": 9,
             "internalId": 109,
             "shortName": "Vazio",
-            "status": 3
+            "status": 2
         },
         {
             "code": 11,
@@ -775,18 +962,6 @@
             "status": 1,
             "tax": false,
             "department": "11",
-            "federalID": "12345678901",
-            "observation": ""
-        },
-        {
-            "code": 12,
-            "internalId": 112,
-            "shortName": "Usuario 12",
-            "name": "Usuario Nome 12",
-            "country": "BRA",
-            "status": 2,
-            "tax": false,
-            "department": "12",
             "federalID": "12345678901",
             "observation": ""
         },
@@ -2360,13 +2535,6 @@
             "shortName": "212",
             "name": "121",
             "country": "CHI"
-        },
-        {
-            "status": 3,
-            "shortName": "Mais uma novo",
-            "code": 10,
-            "name": "É Mesmo",
-            "country": "CAN"
         }
     ],
     "db_mtd_delete_list": [],

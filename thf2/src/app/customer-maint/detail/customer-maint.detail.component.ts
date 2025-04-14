@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PoI18nPipe, PoI18nService, PoNotificationService, PoTableColumn, PoBreadcrumb, PoRadioGroupOption } from '@po-ui/ng-components';
-import { PoTableAction } from '@po-ui/ng-components';
 import { PoDialogService } from '@po-ui/ng-components';
 import { forkJoin, Subscription } from 'rxjs';
 import { ICustomer, Customer } from '../../shared/model/customer.model';
@@ -13,11 +12,12 @@ import { BreadcrumbControlService } from 'dts-backoffice-util';
 @Component({
     selector: 'app-customer-maint-detail',
     templateUrl: './customer-maint.detail.component.html',
-    styleUrls: ['./customer-maint.detail.component.css']
+    styleUrls: ['./customer-maint.detail.component.css'],
+    standalone: false
 })
 export class CustomerMaintDetailComponent implements OnInit, OnDestroy {
 
-    literals: any = {};
+    literals: Record<string, string> = {};
 
     breadcrumb: PoBreadcrumb;
 
@@ -25,12 +25,12 @@ export class CustomerMaintDetailComponent implements OnInit, OnDestroy {
 
     expandables = [''];
 
-    statusOptions: Array<PoRadioGroupOption>;
+    statusOptions: PoRadioGroupOption[];
 
     customer: ICustomer = new Customer();
 
-    contactColumns: Array<PoTableColumn>;
-    contactItems: Array<IContact> = new Array<IContact>();
+    contactColumns: PoTableColumn[];
+    contactItems: IContact[] = new Array<IContact>();
 
     constructor(
         private poI18nPipe: PoI18nPipe,

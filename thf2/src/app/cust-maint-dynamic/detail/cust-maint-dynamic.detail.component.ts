@@ -8,10 +8,11 @@ import { CustomerService } from '../../shared/services/customer.service';
 @Component({
     selector: 'app-cust-maint-dynamic-detail',
     templateUrl: './cust-maint-dynamic.detail.component.html',
-    styleUrls: ['./cust-maint-dynamic.detail.component.css']
+    styleUrls: ['./cust-maint-dynamic.detail.component.css'],
+    standalone: false
 })
 export class CustMaintDynamicDetailComponent implements OnInit, OnDestroy {
-    public metadata: any;
+    public metadata: object;
     public serviceApi: string;
 
     breadcrumb: PoBreadcrumb;
@@ -34,7 +35,7 @@ export class CustMaintDynamicDetailComponent implements OnInit, OnDestroy {
     getMetadata() {
         this.servCustomerSubscription$ = this.servCustomer
             .getMetadata('detail')
-            .subscribe((response: any) => {
+            .subscribe((response: object) => {
                 if (response) {
                     this.metadata = response;
                 }
@@ -44,7 +45,7 @@ export class CustMaintDynamicDetailComponent implements OnInit, OnDestroy {
     }
 
     setupComponents() {
-        this.breadcrumbControlService.addBreadcrumb(this.metadata.title, this.activatedRoute);
+        this.breadcrumbControlService.addBreadcrumb(this.metadata['title'], this.activatedRoute);
         this.breadcrumb = this.breadcrumbControlService.getBreadcrumb();
     }
 

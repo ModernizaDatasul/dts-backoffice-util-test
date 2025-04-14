@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { PoI18nService, PoTableAction, PoDisclaimer, PoNotificationService, PoModalAction, PoModalComponent } from '@po-ui/ng-components';
+import { PoI18nService, PoModalAction, PoModalComponent } from '@po-ui/ng-components';
 import { forkJoin, Subscription } from 'rxjs';
-import { ICustomer, Customer } from '../shared/model/customer.model';
+import { ICustomer } from '../shared/model/customer.model';
 import { CustomerService } from '../shared/services/customer.service';
 import { TotvsResponse } from 'dts-backoffice-util';
 import { DataResult, GroupDescriptor, process, SortDescriptor } from '@progress/kendo-data-query';
@@ -10,14 +10,15 @@ import { SelectableSettings, SortSettings } from '@progress/kendo-angular-grid';
 @Component({
     selector: 'app-kendo-x-kendo-puro',
     templateUrl: './kendo-x-kendo-puro.component.html',
-    styleUrls: ['./kendo-x-kendo-puro.component.css']
+    styleUrls: ['./kendo-x-kendo-puro.component.css'],
+    standalone: false
 })
 export class KendoxKendoPuroComponent implements OnInit, OnDestroy {
     @ViewChild('modalKendo') modalKendo: PoModalComponent;
 
-    literals: any = {};
+    literals: Record<string, string> = {};
 
-    items: Array<ICustomer> = new Array<ICustomer>();
+    items: ICustomer[] = new Array<ICustomer>();
     hasNext = false;
     currentPage = 1;
     pageSize = 10;

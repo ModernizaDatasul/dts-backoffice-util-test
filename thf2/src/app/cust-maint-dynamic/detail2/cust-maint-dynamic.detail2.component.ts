@@ -8,16 +8,17 @@ import { CustomerService } from '../../shared/services/customer.service';
 @Component({
     selector: 'app-cust-maint-dynamic-detail2',
     templateUrl: './cust-maint-dynamic.detail2.component.html',
-    styleUrls: ['./cust-maint-dynamic.detail2.component.css']
+    styleUrls: ['./cust-maint-dynamic.detail2.component.css'],
+    standalone: false
 })
 export class CustMaintDynamicDetail2Component implements OnInit, OnDestroy {
-    public metadata: any;
+    public metadata: object;
     public serviceApi: string;
 
     breadcrumb: PoBreadcrumb;
 
     private servCustomerSubscription$: Subscription;
-    public pageCustomAction: Array<PoPageAction>;
+    public pageCustomAction: PoPageAction[];
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -37,7 +38,7 @@ export class CustMaintDynamicDetail2Component implements OnInit, OnDestroy {
 
         this.servCustomerSubscription$ = this.servCustomer
             .getMetadata('detail', code)
-            .subscribe((response: any) => {
+            .subscribe((response: object) => {
                 if (response) {
                     this.metadata = response;
                 }
@@ -51,12 +52,12 @@ export class CustMaintDynamicDetail2Component implements OnInit, OnDestroy {
     }
 
     setupComponents() {
-        this.breadcrumbControlService.addBreadcrumb(this.metadata.title, this.activatedRoute);
+        this.breadcrumbControlService.addBreadcrumb(this.metadata['title'], this.activatedRoute);
         this.breadcrumb = this.breadcrumbControlService.getBreadcrumb();
 
-        this.pageCustomAction = this.metadata.pageCustomAction ? this.metadata.pageCustomAction : [];
+        this.pageCustomAction = this.metadata['pageCustomAction'] ? this.metadata['pageCustomAction'] : [];
         this.pageCustomAction.push(
-            { label: this.metadata.literals?.back, action: this.back.bind(this) }
+            { label: this.metadata['literals']['back'], action: this.back.bind(this) }
         );
     }
 

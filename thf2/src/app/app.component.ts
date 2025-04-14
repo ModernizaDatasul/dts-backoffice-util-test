@@ -3,16 +3,17 @@ import { PoI18nService } from '@po-ui/ng-components';
 import { Router } from '@angular/router';
 import { BreadcrumbControlService } from 'dts-backoffice-util';
 import { TranslateService } from 'dts-backoffice-util';
-import PackageInfo from '../../package.json';
+import packageInfo from '../../package.json';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    styleUrls: ['./app.component.css'],
+    standalone: false
 })
 export class AppComponent {
     menus = [
-        { label: 'Home', shortLabel: 'Home', link: '/' },
+        { label: 'Home', shortLabel: 'Home', link: '/', icon: 'an an-house' },
         {
             label: 'Cliente', shortLabel: 'Cliente', subItems: [
                 { label: 'Cadastro de Cliente (Estático)', action: this.goTo.bind(this, '/customerMaint') },
@@ -52,11 +53,13 @@ export class AppComponent {
     }
 
     displayVersions(): void {
-        console.log('App:', PackageInfo.name);
-        console.log('Git Info:', PackageInfo.git);
-        console.log('Versão do App:', PackageInfo.version);
+        console.log('App:', packageInfo.name);
+        console.log('Git Info:', packageInfo.git);
+        console.log('Versão do App:', packageInfo.version);
         console.log('Dependencias:');
-        Object.keys(PackageInfo.dependencies).forEach((key) => console.log(' - ', key, ':', PackageInfo.dependencies[key]));
+        for (const [key, value] of Object.entries(packageInfo.dependencies)) {
+            console.log(' - ', key, ':', value);
+        }
     }
 
     public goTo(url: string) {

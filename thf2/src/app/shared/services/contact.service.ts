@@ -41,12 +41,12 @@ export class ContactService {
         return this.http.put<IContact>(`${this.apiBaseUrl}/${Contact.getInternalId(model)}`, model, this.headers);
     }
 
-    delete(id: string): Observable<Object> {
+    delete(id: string): Observable<object> {
         return this.http.delete(`${this.apiBaseUrl}/${id}`, this.headers);
     }
 
     getUrl(urlBase: string, filters: PoDisclaimer[], expandables: string[], page: number, pageSize: number): string {
-        const urlParams = new Array<String>();
+        const urlParams = new Array<string>();
 
         urlParams.push(`pageSize=${pageSize}`);
         urlParams.push(`page=${page}`);

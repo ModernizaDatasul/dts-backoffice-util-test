@@ -16,20 +16,21 @@ import { BreadcrumbControlService } from 'dts-backoffice-util';
 @Component({
     selector: 'app-customer-maint-edit',
     templateUrl: './customer-maint.edit.component.html',
-    styleUrls: ['./customer-maint.edit.component.css']
+    styleUrls: ['./customer-maint.edit.component.css'],
+    standalone: false
 })
 export class CustomerMaintEditComponent implements OnInit, OnDestroy {
     @ViewChild('modalEditContact', { static: true }) modalEditContact: PoModalComponent;
 
-    literals: any = {};
+    literals: Record<string, string> = {};
 
     breadcrumb: PoBreadcrumb;
 
     isEdit: boolean;
 
-    statusOptions: Array<PoRadioGroupOption>;
+    statusOptions: PoRadioGroupOption[];
 
-    zoomCountryColumns: Array<PoLookupColumn>;
+    zoomCountryColumns: PoLookupColumn[];
 
     servCustomerSubscription$: Subscription;
 
@@ -43,9 +44,9 @@ export class CustomerMaintEditComponent implements OnInit, OnDestroy {
     customer: ICustomer = new Customer();
     contact: IContact = new Contact();
 
-    contactColumns: Array<PoTableColumn>;
-    contactTableActions: Array<PoTableAction>;
-    contactItems: Array<IContact> = new Array<IContact>();
+    contactColumns: PoTableColumn[];
+    contactTableActions: PoTableAction[];
+    contactItems: IContact[] = new Array<IContact>();
 
     constructor(
         private poI18nPipe: PoI18nPipe,
@@ -113,16 +114,12 @@ export class CustomerMaintEditComponent implements OnInit, OnDestroy {
                     .update(this.customer)
                     .subscribe(() => {
                         this.finishSave('updatedMessage', doNew);
-                    }, (err: any) => {
-
                     });
             } else {
                 this.servCustomerSubscription$ = this.servCustomer
                     .create(this.customer)
                     .subscribe(() => {
                         this.finishSave('createMessage', doNew);
-                    }, (err: any) => {
-
                     });
             }
         }
@@ -239,8 +236,8 @@ export class CustomerMaintEditComponent implements OnInit, OnDestroy {
         ];
 
         this.contactTableActions = [
-            { action: this.contactEdit.bind(this), label: this.literals['edit'], icon: ' ph ph-pencil-simple' },
-            { action: this.contactDelete.bind(this), label: this.literals['remove'], icon: ' ph ph-trash' }
+            { action: this.contactEdit.bind(this), label: this.literals['edit'], icon: ' an an-pencil-simple' },
+            { action: this.contactDelete.bind(this), label: this.literals['remove'], icon: ' an an-trash' }
         ];
 
         this.contactColumns = [

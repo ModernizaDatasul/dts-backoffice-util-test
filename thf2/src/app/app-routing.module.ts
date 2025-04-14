@@ -1,5 +1,5 @@
-import { InjectionToken, NgModule } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterModule, RouterStateSnapshot, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { ActivatedRouteSnapshot, RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 
 const routes: Routes = [
@@ -68,8 +68,8 @@ const routes: Routes = [
     providers: [
         {
             provide: 'externalUrlRedirectResolver',
-            useValue: (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
-                window.location.href = (route.data as any).externalUrl;
+            useValue: (route: ActivatedRouteSnapshot) => {
+                window.location.href = (route.data as object)['externalUrl'];
             }
         }
     ],

@@ -1,3 +1,4 @@
+import { PoTableColumnLabel } from '@po-ui/ng-components';
 import { IOderLine } from './order-line.model';
 
 export interface IOrder {
@@ -6,7 +7,7 @@ export interface IOrder {
     issueDate: Date;
     ordValue: number;
     status: number;
-    orderLines: Array<IOderLine>;
+    orderLines: IOderLine[];
 }
 
 export class Order implements IOrder {
@@ -15,9 +16,9 @@ export class Order implements IOrder {
     issueDate: Date;
     ordValue: number;
     status: number;
-    orderLines: Array<IOderLine>;
+    orderLines: IOderLine[];
 
-    constructor(values: Object = {}) {
+    constructor(values: object = {}) {
         Object.assign(this, values);
     }
 
@@ -26,7 +27,7 @@ export class Order implements IOrder {
             item.ordNumber.toString();
     }
 
-    static statusLabelList(literals: {}): Array<any> {
+    static statusLabelList(literals: Record<string, string>): PoTableColumnLabel[] {
         return [
             { value: 1, color: 'warning', label: literals['statusOrdProc'] },
             { value: 2, color: 'success', label: literals['statusOrdPay'] },
@@ -35,16 +36,20 @@ export class Order implements IOrder {
     }
 
     get $customer(): number { return this.customer; }
-    get $ordNumber(): number { return this.ordNumber; }
-    get $issueDate(): Date { return this.issueDate; }
-    get $ordValue(): number { return this.ordValue; }
-    get $status(): number { return this.status; }
-    get $orderLines(): Array<IOderLine> { return this.orderLines; }
-
     set $customer(value: number) { this.customer = value; }
+
+    get $ordNumber(): number { return this.ordNumber; }
     set $ordNumber(value: number) { this.ordNumber = value; }
+
+    get $issueDate(): Date { return this.issueDate; }
     set $issueDate(value: Date) { this.issueDate = value; }
+
+    get $ordValue(): number { return this.ordValue; }
     set $ordValue(value: number) { this.ordValue = value; }
+
+    get $status(): number { return this.status; }
     set $status(value: number) { this.status = value; }
-    set $orderLines(value: Array<IOderLine>) { this.orderLines = value; }
+
+    get $orderLines(): IOderLine[] { return this.orderLines; }
+    set $orderLines(value: IOderLine[]) { this.orderLines = value; }
 }

@@ -4,27 +4,28 @@ import { forkJoin, Subscription } from 'rxjs';
 import { ICustomer, Customer } from '../shared/model/customer.model';
 import { CustomerService } from '../shared/services/customer.service';
 import { TotvsResponse } from 'dts-backoffice-util';
-import { DtsKendoGridColumn, DtsEditAction, DtsLabel } from 'dts-backoffice-kendo-grid';
+import { DtsKendoGridColumn, DtsEditAction, DtsLabel, DtsColumnConfigView } from 'dts-backoffice-kendo-grid';
 import { DtsKendoGridComponent } from 'dts-backoffice-kendo-grid';
 
 @Component({
     selector: 'app-kendo-x-basic',
     templateUrl: './kendo-x-basic.component.html',
-    styleUrls: ['./kendo-x-basic.component.css']
+    styleUrls: ['./kendo-x-basic.component.css'],
+    standalone: false
 })
 export class KendoxBasicComponent implements OnInit, OnDestroy {
     @ViewChild('kendoBasic', { static: true }) kendoBasic: DtsKendoGridComponent;
 
-    literals: any = {};
+    literals: Record<string, string> = {};
 
-    statusLabelList: Array<DtsLabel>;
-    statesSubtitleList: Array<DtsLabel>;
+    statusLabelList: DtsLabel[];
+    statesSubtitleList: DtsLabel[];
 
-    tableActions: Array<PoTableAction>;
-    columns: Array<DtsKendoGridColumn>;
+    tableActions: PoTableAction[];
+    columns: DtsKendoGridColumn[];
     editActions: DtsEditAction;
 
-    items: Array<ICustomer> = new Array<ICustomer>();
+    items: ICustomer[] = new Array<ICustomer>();
     hasNext = false;
     currentPage = 1;
     pageSize = 3;
@@ -45,9 +46,9 @@ export class KendoxBasicComponent implements OnInit, OnDestroy {
     lShowAddButton: boolean;
     lShowExportButtons: boolean;
 
-    showMaximizeOptions: Array<PoSelectOption>;
+    showMaximizeOptions: PoSelectOption[];
 
-    actionsOptions: Array<PoDropdownAction>;
+    actionsOptions: PoDropdownAction[];
 
     actionsText: string;
     selectionChangeText: string;
@@ -75,7 +76,7 @@ export class KendoxBasicComponent implements OnInit, OnDestroy {
 
             this.kendoBasic.changeColumnConfigView({ column: 'country', visible: true });
             this.kendoBasic.changeColumnConfigView({ column: 'code', visible: false });
-            this.kendoBasic.changeColumnConfigViewList(this.loadLocalStorage('columnList'));
+            this.kendoBasic.changeColumnConfigViewList(this.loadLocalStorage('columnList') as DtsColumnConfigView[]);
         });
     }
 
@@ -87,7 +88,7 @@ export class KendoxBasicComponent implements OnInit, OnDestroy {
             this.items = [];
         }
 
-        let disclaimer = [];
+        const disclaimer = [];
         if (this.filter) {
             disclaimer.push({ property: 'status', value: this.filter });
         }
@@ -131,7 +132,7 @@ export class KendoxBasicComponent implements OnInit, OnDestroy {
         this.actionsText = `${action}: ${JSON.stringify(item)}`;
     }
 
-    onSelectionChange(event: any) {
+    onSelectionChange(event: object) {
         console.log('d-selection-change');
         console.table(event);
         console.table(this.items);
@@ -173,21 +174,21 @@ export class KendoxBasicComponent implements OnInit, OnDestroy {
         return true;
     }
 
-    onSaveColumnManager(event: any) {
+    onSaveColumnManager(event: object) {
         console.log('d-save-column-manager');
         console.table(event);
         this.saveLocalStorage('columnList', event);
     }
 
-    onSaveValue(event: any) {
-        const customer: ICustomer = event.data;
+    onSaveValue(event: object) {
+        const customer: ICustomer = event['data'];
         customer.department = `${customer.department}-alt`;
 
         console.log('d-save-value', event);
         this.saveValueText = JSON.stringify(event);
     }
 
-    onGroupChange(event: any) {
+    onGroupChange(event: object) {
         console.log('d-group-change', event);
         this.groupChangeText = JSON.stringify(event);
     }
@@ -225,13 +226,13 @@ export class KendoxBasicComponent implements OnInit, OnDestroy {
         this.search();
     }
 
-    saveLocalStorage(key: string, value: any): void {
+    saveLocalStorage(key: string, value: object): void {
         if (typeof (Storage) === 'undefined') { return; }
 
         localStorage.setItem(`kendo-x-basic.${key}`, JSON.stringify(value));
     }
 
-    loadLocalStorage(key: string): any {
+    loadLocalStorage(key: string): object {
         if (typeof (Storage) === 'undefined') { return; }
 
         return JSON.parse(localStorage.getItem(`kendo-x-basic.${key}`));
@@ -274,11 +275,11 @@ export class KendoxBasicComponent implements OnInit, OnDestroy {
         this.groupChangeText = '';
 
         this.tableActions = [
-            { action: this.detail.bind(this), label: this.literals['detail'], icon: ' ph ph-file' },
-            { action: this.edit.bind(this), label: this.literals['edit'], icon: ' ph ph-pencil-simple' },
-            { action: this.delete.bind(this), label: this.literals['remove'], icon: ' ph ph-trash' },
-            { action: this.block.bind(this), label: this.literals['block'], icon: ' ph ph-user-x' },
-            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: ' ph ph-files' }
+            { action: this.detail.bind(this), label: this.literals['detail'], icon: ' an an-file' },
+            { action: this.edit.bind(this), label: this.literals['edit'], icon: ' an an-pencil-simple' },
+            { action: this.delete.bind(this), label: this.literals['remove'], icon: ' an an-trash' },
+            { action: this.block.bind(this), label: this.literals['block'], icon: ' an an-user-x' },
+            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: ' an an-files' }
         ];
 
         this.editActions = {

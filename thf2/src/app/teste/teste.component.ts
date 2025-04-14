@@ -1,15 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PoI18nPipe, PoI18nService, PoNotificationService, PoDialogService, PoTableColumn } from '@po-ui/ng-components';
+import { PoI18nPipe, PoI18nService, PoNotificationService, PoDialogService } from '@po-ui/ng-components';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-teste',
     templateUrl: './teste.component.html',
-    styleUrls: ['./teste.component.css']
+    styleUrls: ['./teste.component.css'],
+    standalone: false
 })
 export class TesteComponent implements OnInit, OnDestroy {
-    literals: any = {};
+    literals: Record<string, string> = {};
 
     servSubscription$: Subscription;
 
@@ -36,7 +37,7 @@ export class TesteComponent implements OnInit, OnDestroy {
     }
 
     setupComponents(): void {
-
+        // Configuração de componentes
     }
 
     ngOnDestroy(): void {

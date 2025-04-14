@@ -14,16 +14,17 @@
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "tsConfig": "tsconfig.app.json",
             "baseHref": "./",
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets"
             ],
             "styles": [
+              "node_modules/@po-ui/style/css/po-theme-default.min.css",
+              "node_modules/@po-ui/style/css/po-theme-core.min.css",
               "node_modules/@totvs/po-theme/css/po-theme-default-variables.min.css",
               "node_modules/@totvs/po-theme/css/po-theme-default.min.css",
-              "node_modules/@po-ui/style/css/po-theme-core.min.css",
               "node_modules/@progress/kendo-theme-default/dist/all.css",
               "src/styles.css"
             ],
@@ -83,12 +84,13 @@
             "main": "src/test.ts",
             "karmaConfig": "./karma.conf.js",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
+            "tsConfig": "tsconfig.spec.json",
             "scripts": [],
             "styles": [
+              "node_modules/@po-ui/style/css/po-theme-default.min.css",
+              "node_modules/@po-ui/style/css/po-theme-core.min.css",
               "node_modules/@totvs/po-theme/css/po-theme-default-variables.min.css",
               "node_modules/@totvs/po-theme/css/po-theme-default.min.css",
-              "node_modules/@po-ui/style/css/po-theme-core.min.css",
               "node_modules/@progress/kendo-theme-default/dist/all.css",
               "src/styles.css"
             ],
@@ -128,18 +130,12 @@
     },
     "@schematics/angular:directive": {
       "prefix": "app"
-    },
-    "@angular-eslint/schematics:application": {
-      "setParserOptionsProject": true
-    },
-    "@angular-eslint/schematics:library": {
-      "setParserOptionsProject": true
     }
   },
   "cli": {
     "analytics": false,
     "schematicCollections": [
-      "@angular-eslint/schematics"
+      "angular-eslint"
     ]
   }
 }

@@ -41,13 +41,13 @@
                     ngModel="{{value}}">
                 </po-textarea>
                 
-                <span on-click="onClickClosePopovObs()" class="po-table-link po-pull-right">
+                <button (click)="onClickClosePopovObs()" (keyup.enter)="onClickClosePopovObs()" class="po-table-link po-pull-right">
                     {{ literals?.close }}
-                </span>
+                </button>
             </po-popover>
 
             <span>
-                <i #iconObs id="iconObs" class="po-table-link  ph ph-file-text"></i>
+                <i #iconObs id="iconObs" class="po-table-link  an an-file-text"></i>
             </span>
         </ng-template>        
     </po-table>

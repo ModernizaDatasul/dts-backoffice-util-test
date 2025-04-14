@@ -11,7 +11,7 @@ import { CustomerService } from '../../shared/services/customer.service';
 import { BranchService } from '../../shared/services/branch.service';
 import { CountryService } from '../../shared/services/country.service';
 import { ICountry } from '../../shared/model/country.model';
-import { IFilterRangeNumber } from 'dts-backoffice-util';
+import { IFilterRangeNumber, IScheduleParameters } from 'dts-backoffice-util';
 import { FilterRangeUtil } from 'dts-backoffice-util';
 import { DisclaimerUtil } from 'dts-backoffice-util';
 import { FieldValidationUtil } from 'dts-backoffice-util';
@@ -25,11 +25,13 @@ import { TotvsScheduleExecutionService } from 'dts-backoffice-util';
 import { ExecutionParameters, IExecutionStatus } from 'dts-backoffice-util';
 import { map } from 'rxjs/operators';
 import { MenuDatasulService } from 'dts-backoffice-util';
+import { DtsLabel } from 'dts-backoffice-kendo-grid';
 
 @Component({
     selector: 'app-customer-maint-list',
     templateUrl: './customer-maint.list.component.html',
-    styleUrls: ['./customer-maint.list.component.css']
+    styleUrls: ['./customer-maint.list.component.css'],
+    standalone: false
 })
 export class CustomerMaintListComponent implements OnInit, OnDestroy {
     @ViewChild('poPageList', { static: true }) poPageList: PoPageListComponent;
@@ -43,15 +45,15 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     @ViewChild('uploadFiles', { static: true }) uploadFiles: PoUploadComponent;
     @ViewChild('TableCustomer', { static: true }) TableCustomer: PoTableComponent;
 
-    literals: any = {};
+    literals: Record<string, string> = {};
 
     breadcrumb: PoBreadcrumb;
 
     expandables = [''];
 
-    statusLabelList: Array<any>;
+    statusLabelList: DtsLabel[];
 
-    disclaimers: Array<PoDisclaimer> = [];
+    disclaimers: PoDisclaimer[] = [];
     disclaimerGroup: PoDisclaimerGroup;
 
     disclaimerUtil: DisclaimerUtil;
@@ -71,16 +73,16 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     filterCode: IFilterRangeNumber;
     filterAdmissDate: PoDatepickerRange;
 
-    filterBranchList: Array<string>;
-    zoomBranchColumns: Array<PoLookupColumn>;
+    filterBranchList: string[];
+    zoomBranchColumns: PoLookupColumn[];
     filterParamsBranch = { multiple: true };
 
-    filterCountryList: Array<string>;
-    zoomCountryColumns: Array<PoLookupColumn>;
+    filterCountryList: string[];
+    zoomCountryColumns: PoLookupColumn[];
     filterParamsCountry = { multiple: true };
 
-    filterStatusList: Array<number>;
-    filterStatusOptions: Array<PoSelectOption>;
+    filterStatusList: number[];
+    filterStatusOptions: PoSelectOption[];
     filterActive: boolean;
 
     servCustomerSubscription$: Subscription;
@@ -88,40 +90,40 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     servCountrySubscription$: Subscription;
     servOrderSubscription$: Subscription;
 
-    columns: Array<PoTableColumn>;
-    tableActions: Array<PoTableAction>;
-    items: Array<ICustomer> = new Array<ICustomer>();
+    columns: PoTableColumn[];
+    tableActions: PoTableAction[];
+    items: ICustomer[] = new Array<ICustomer>();
 
     hasNext = false;
     currentPage = 1;
     pageSize = 10;
 
     orderLoading = false;
-    orderColumns: Array<PoTableColumn>;
-    orderItems: Array<IOrder> = new Array<IOrder>();
+    orderColumns: PoTableColumn[];
+    orderItems: IOrder[] = new Array<IOrder>();
     orderHasNext = false;
     orderCurrentPage = 1;
 
-    columnsTotalByStatus: Array<PoTableColumn>;
-    itemsTotalByStatus: Array<Object>;
+    columnsTotalByStatus: PoTableColumn[];
+    itemsTotalByStatus: object[];
 
     executionServer: string;
     jobScheduleID: string;
     executionID: string;
     schedExecSubscription$: Subscription;
-    zoomRpwServiceColumns: Array<PoLookupColumn>;
+    zoomRpwServiceColumns: PoLookupColumn[];
 
-    pageActions: Array<PoPageAction>;
+    pageActions: PoPageAction[];
 
     productRpw = 'EMS5';
     productRpwOptions = Array<PoRadioGroupOption>();
-    parametersRpw = new Array<any>();
-    paramDigitDefRpw = new Array<any>();
-    paramDigitDataRpw = new Array<any>();
-    paramSelectionsRpw = new Array<any>();
+    parametersRpw = new Array<object>();
+    paramDigitDefRpw = new Array<object>();
+    paramDigitDataRpw = new Array<object>();
+    paramSelectionsRpw = new Array<object>();
     disableParamRpw = true;
 
-    fileToSend: any;
+    fileToSend: object;
     public apiUploadUrl: string;
 
     initPos = true;
@@ -210,12 +212,12 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             .pipe(
                 map((respCustomer: TotvsResponse<ICustomer>) => this.getCountry(respCustomer))
             )
-            .subscribe((response: any) => {
+            .subscribe((response: TotvsResponse<ICustomer>) => {
                 console.log('last', response);
             });
     }
 
-    getCountry(respCustomer: TotvsResponse<ICustomer>): any {
+    getCountry(respCustomer: TotvsResponse<ICustomer>): TotvsResponse<ICustomer> {
         respCustomer.items.forEach(customer => {
             if (customer.country) {
                 this.servCountry
@@ -236,7 +238,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         ]);
     }
 
-    addDisclaimer(disclaimerListItem: Array<PoDisclaimer>): void {
+    addDisclaimer(disclaimerListItem: PoDisclaimer[]): void {
         if (!disclaimerListItem) { return; }
 
         disclaimerListItem.map(disclaimerItem => {
@@ -245,7 +247,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         this.disclaimerGroup.disclaimers = [...this.disclaimers];
     }
 
-    onChangeDisclaimer(disclaimers: Array<PoDisclaimer>): void {
+    onChangeDisclaimer(disclaimers: PoDisclaimer[]): void {
         this.disclaimers = disclaimers;
         this.refreshFilters();
         this.search();
@@ -347,7 +349,6 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
                     .subscribe(() => {
                         this.poNotification.success(this.literals['deleteMessage']);
                         this.search();
-                    }, (err: any) => {
                     });
             }
         });
@@ -364,13 +365,12 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
                     .subscribe(() => {
                         this.poNotification.success(this.literals['bockSucessMessage']);
                         this.search();
-                    }, (err: any) => {
                     });
 
                 this.servCustomerSubscription$ = this.servCustomer
                     .disable(customerCode)
                     .subscribe(() => {
-                    }, (err: any) => {
+                        // Trata o retorno do serviço
                     });
             }
         });
@@ -381,7 +381,6 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             .duplic(item)
             .subscribe(() => {
                 this.poNotification.success(this.literals['duplicSucessMessage']);
-            }, (err: any) => {
             });
     }
 
@@ -431,11 +430,11 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
 
         this.schedExecSubscription$ = this.scheduleExecution
             .createExecutionForNow(execParam, true)
-            .subscribe((response: any) => {
+            .subscribe((response: object) => {
 
                 console.log('Criou a Agenda...: ', response);
 
-                this.jobScheduleID = response.jobScheduleID;
+                this.jobScheduleID = response['jobScheduleID'];
             });
     }
 
@@ -559,10 +558,10 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
 
     openScheduleRPW(): void {
         if (this.productRpw === 'EMS5') {
-            this.schParamEMS5.setScheduleParameters(this.loadLocalStorage('schParamEMS5'));
+            this.schParamEMS5.setScheduleParameters(this.loadLocalStorage('schParamEMS5') as IScheduleParameters);
         }
         if (this.productRpw === 'EMS2') {
-            this.schParamEMS2.setScheduleParameters(this.loadLocalStorage('schParamEMS2'));
+            this.schParamEMS2.setScheduleParameters(this.loadLocalStorage('schParamEMS2') as IScheduleParameters);
         }
 
         this.createParametersRpw();
@@ -641,7 +640,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     downloadFile() {
         this.servCustomerSubscription$ = this.servCustomer
             .getFile('1')  // Método do Serviço de Cliente que devolve do BackEnd um arquivo em base64
-            .subscribe((response: Object) => {
+            .subscribe((response: object) => {
 
                 if (response) {
                     if (response['files']) {
@@ -699,7 +698,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     }
 
     onConfirmUpload(): void {
-        if (!this.fileToSend || this.fileToSend.length < 1) { return; }
+        if (!this.fileToSend || this.fileToSend['length'] < 1) { return; }
 
         console.log('fileToSend', this.fileToSend);
 
@@ -725,7 +724,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     parallel(): void {
         console.log('Req. Paralela', 'INÍCIO');
 
-        const listCustomer: Array<ICustomer> = [];
+        const listCustomer: ICustomer[] = [];
         listCustomer.push(new Customer({ code: 1, shortName: 'João', country: 'ARG' }));
         listCustomer.push(new Customer({ code: 2, shortName: 'Maria', country: 'BRA' }));
         listCustomer.push(new Customer({ code: 10, shortName: 'Usuario 10', country: 'BRA' }));
@@ -736,20 +735,23 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             qtdRequest++;
             this.servCustomerSubscription$ = this.servCustomer
                 .update(cust)
-                .subscribe((response: ICustomer) => {
-                    qtdRequest--;
-                    console.log('Req. Paralela', 'response', response);
-                    if (qtdRequest <= 0) { console.log('Req. Paralela', 'FIM'); }
-                }, (err: any) => {
-                    qtdRequest--;
-                    console.log('Req. Paralela', 'err', err);
-                    if (qtdRequest <= 0) { console.log('Req. Paralela', 'FIM'); }
+                .subscribe({
+                    next: (response: ICustomer) => {
+                        qtdRequest--;
+                        console.log('Req. Paralela', 'response', response);
+                        if (qtdRequest <= 0) { console.log('Req. Paralela', 'FIM'); }
+                    },
+                    error: (err: Error) => {
+                        qtdRequest--;
+                        console.log('Req. Paralela', 'err', err);
+                        if (qtdRequest <= 0) { console.log('Req. Paralela', 'FIM'); }
+                    }
                 });
         });
     }
 
     selectLine(): void {
-        let idx = this.items.findIndex(item => item.code === 3);
+        const idx = this.items.findIndex(item => item.code === 3);
         if (idx !== -1) {
             this.items[idx]['$selected'] = true;
         }
@@ -762,7 +764,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
            Menu do Datasul (parte HTML do Menu). Portanto, eles somente funcionam quando o projeto está 
            sendo executado por dentro do Menu do Datasul. Para realizar o teste, é necessário: compilar 
            o projeto, jogar o .war o tomcat, cadastrar o projeto no menu e executar */
-        let program = {
+        const program = {
             prg: 'bas_lote_liquidac_acr',
             params: [
                 { type: 'character', value: 'ABC' },
@@ -775,7 +777,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
 
         this.menuDatasulService.openPath('html.customerMaint', 'sub-menu-2', true);
 
-        let notification = {
+        const notification = {
             type: 'success',
             title: 'Operação foi executada com Sucesso.',
             detail: 'A Operação 4343 foi executada conforme parametrizado e finalizou.'
@@ -786,23 +788,23 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
     vldSegurMenu(): void {
         this.menuDatasulService
             .programSecurity('html.cashControl')
-            .subscribe((response: Array<Object>) => {
+            .subscribe((response: object[]) => {
                 console.log('response:', response[0]);
             });
 
-        let programList = [];
+        const programList = [];
         programList.push('empresa');
         programList.push('html.prgNoExist');
         programList.push('bas_empresa');
 
         this.menuDatasulService
             .programSecurity(programList)
-            .subscribe((response: Array<Object>) => {
+            .subscribe((response: object[]) => {
                 console.log('response:', response);
             });
     }
 
-    changeVisibleColumns(listColumns: Array<string>) {
+    changeVisibleColumns(listColumns: string[]) {
         console.log('changeVisibleColumns', listColumns);
     }
 
@@ -866,12 +868,12 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         ]
 
         this.tableActions = [
-            { action: this.detail.bind(this), label: this.literals['detail'], icon: ' ph ph-file' },
-            { action: this.edit.bind(this), label: this.literals['edit'], icon: ' ph ph-pencil-simple' },
-            { action: this.delete.bind(this), label: this.literals['remove'], icon: ' ph ph-trash' },
-            { action: this.block.bind(this), label: this.literals['block'], icon: ' ph ph-user-x' },
-            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: ' ph ph-files' },
-            { action: this.changeStatus.bind(this), label: this.literals['changeStatus'], icon: ' ph ph-arrows-clockwise' }
+            { action: this.detail.bind(this), label: this.literals['detail'], icon: ' an an-file' },
+            { action: this.edit.bind(this), label: this.literals['edit'], icon: ' an an-pencil-simple' },
+            { action: this.delete.bind(this), label: this.literals['remove'], icon: ' an an-trash' },
+            { action: this.block.bind(this), label: this.literals['block'], icon: ' an an-user-x' },
+            { action: this.duplic.bind(this), label: this.literals['duplic'], icon: ' an an-files' },
+            { action: this.changeStatus.bind(this), label: this.literals['changeStatus'], icon: ' an an-arrows-clockwise' }
         ];
 
         this.statusLabelList = Customer.statusLabelList(this.literals);
@@ -909,7 +911,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         ];
 
         this.pageActions = [
-            { label: this.literals['add'], action: this.create.bind(this), icon: 'ph ph-plus' },
+            { label: this.literals['add'], action: this.create.bind(this), icon: 'an an-plus' },
             { label: this.literals['totalByStatus'], action: this.openTotalByStatus.bind(this) },
             { label: this.literals['scheduleRPW'], action: this.openScheduleRPW.bind(this) },
             { label: this.literals['order'], action: this.order.bind(this) },
@@ -924,12 +926,12 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         this.resetFilters();
     }
 
-    saveLocalStorage(key: string, value: any): void {
+    saveLocalStorage(key: string, value: object): void {
         if (typeof (Storage) === 'undefined') { return; }
         localStorage.setItem(`customer-maint.${key}`, JSON.stringify(value));
     }
 
-    loadLocalStorage(key: string): any {
+    loadLocalStorage(key: string): object {
         if (typeof (Storage) === 'undefined') { return; }
         return JSON.parse(localStorage.getItem(`customer-maint.${key}`));
     }

@@ -9,7 +9,7 @@ export class Contact implements IContact {
     name: string;
     phone: string;
 
-    constructor(values: Object = {}) {
+    constructor(values: object = {}) {
         Object.assign(this, values);
     }
 
@@ -18,10 +18,11 @@ export class Contact implements IContact {
     }
 
     get $seq(): number { return this.seq; }
-    get $name(): string { return this.name; }
-    get $phone(): string { return this.phone; }
-
     set $seq(value: number) { this.seq = value; }
+
+    get $name(): string { return this.name; }
     set $name(value: string) { this.name = value; }
+
+    get $phone(): string { return this.phone; }
     set $phone(value: string) { this.phone = value; }
 }

@@ -3,7 +3,7 @@
     [p-breadcrumb]="breadcrumb">
 
     <po-tabs>
-        <po-tab p-label="Pedidos" p-active>
+        <po-tab p-label="Pedidos" [p-active]="true">
             <div class="po-row po-sm-12 po-md-8 po-lg-6 po-lx-6">
                 <po-select name="selectCustomer" class="po-sm-12 po-md-12 po-lg-12 po-lx-12"
                     [p-label]="literals?.customer"
@@ -68,7 +68,9 @@
         </po-tab>
 
         <po-tab p-label="Mapa">
-            <app-totvs-map 
+            <app-totvs-map
+                [initialSelectedState]="initialSelectedState"
+                [enabledStates]="enabledStates"
                 (selectedStateEvent)="selectedState($event)">
             </app-totvs-map>
         </po-tab>

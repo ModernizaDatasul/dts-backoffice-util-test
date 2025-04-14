@@ -42,7 +42,7 @@ export class CustomerService {
         return this.http.get<ICustomer>(`${this.apiBaseUrl}/${id}${lstExpandables}`, this.headers);
     }
 
-    getMetadata(type = '', id = ''): Observable<any> {
+    getMetadata(type = '', id = ''): Observable<object> {
         let url = `${this.apiBaseUrl}/metadata`;
         if (id) { url = `${url}/${id}`; }
         if (type) { url = `${url}/${type}`; }
@@ -71,30 +71,30 @@ export class CustomerService {
         return this.http.put<ICustomer>(`${this.apiBaseUrl}/${Customer.getInternalId(model)}`, model, this.headers);
     }
 
-    delete(id: string): Observable<Object> {
+    delete(id: string): Observable<object> {
         return this.http.delete(`${this.apiBaseUrl}/${id}`, this.headers);
     }
 
-    disable(id: string): Observable<Object> {
+    disable(id: string): Observable<object> {
         return this.http.delete(`${this.apiBaseUrl}/${id}/disable`, this.headers);
     }
 
-    block(id: string): Observable<Object> {
+    block(id: string): Observable<object> {
         return this.http.post(`${this.apiBaseUrl}/${id}/block`, null, this.headers);
     }
 
-    duplic(model: ICustomer): Observable<Object> {
+    duplic(model: ICustomer): Observable<object> {
         return this.http.post(`${this.apiBaseUrl}/${Customer.getInternalId(model)}/duplic`, model, this.headers);
     }
 
-    getFile(id: string): Observable<Object> {
+    getFile(id: string): Observable<object> {
         const url = `/customer/${id}/file`;
         return this.http.get(url, this.headers);
     }
 
-    getFileServer(id: string): Observable<Object> {
+    getFileServer(id: string): Observable<Blob> {
         const url = `/customer/getFile/${id}`;
-        return this.http.put(url, this.headers);
+        return this.http.get(url, { responseType: 'blob' });
     }
 
     getQrCode(text: string): Observable<Blob> {
@@ -109,7 +109,7 @@ export class CustomerService {
         return this.http.post<ICustomer>(`${this.apiBaseUrl}/${id}/changeStatus`, model, this.headers);
     }
 
-    getTotalByStatus(): Observable<Object> {
+    getTotalByStatus(): Observable<object> {
         return this.http.get('/customer/totBySatus', this.headers);
     }
 

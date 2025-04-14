@@ -8,10 +8,11 @@ import { CustomerService } from '../../shared/services/customer.service';
 @Component({
     selector: 'app-cust-maint-dynamic-edit',
     templateUrl: './cust-maint-dynamic.edit.component.html',
-    styleUrls: ['./cust-maint-dynamic.edit.component.css']
+    styleUrls: ['./cust-maint-dynamic.edit.component.css'],
+    standalone: false
 })
 export class CustMaintDynamicEditComponent implements OnInit, OnDestroy {
-    public metadata: any;
+    public metadata: object;
     public serviceApi: string;
 
     breadcrumb: PoBreadcrumb;
@@ -36,11 +37,16 @@ export class CustMaintDynamicEditComponent implements OnInit, OnDestroy {
         const code = this.activatedRoute.snapshot.paramMap.get('id');
         if (code) {
             type = 'edit';
+        } else {
+            const duplicate = this.activatedRoute.snapshot.queryParamMap.get('duplicate');
+            if (duplicate) {
+                type = 'copy';
+            }
         }
 
         this.servCustomerSubscription$ = this.servCustomer
             .getMetadata(type)
-            .subscribe((response: any) => {
+            .subscribe((response: object) => {
                 if (response) {
                     this.metadata = response;
                 }
@@ -50,7 +56,7 @@ export class CustMaintDynamicEditComponent implements OnInit, OnDestroy {
     }
 
     setupComponents() {
-        this.breadcrumbControlService.addBreadcrumb(this.metadata.title, this.activatedRoute);
+        this.breadcrumbControlService.addBreadcrumb(this.metadata['title'], this.activatedRoute);
         this.breadcrumb = this.breadcrumbControlService.getBreadcrumb();
     }
 

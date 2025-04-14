@@ -40,15 +40,15 @@ export class CountryService {
         return this.query(filters, null, params.page, params.pageSize);
     }
 
-    getObjectByValue(id: any, filterParams: any): Observable<any> {
-        if (filterParams && filterParams.multiple) {
-            let paramId = Array.isArray(id) ? id : [id];
+    getObjectByValue(id: string, filterParams: object): Observable<object> {
+        if (filterParams && filterParams['multiple']) {
+            const paramId = Array.isArray(id) ? id : [id];
 
             const filters = new Array<PoDisclaimer>();
             filters.push({ property: 'countryCode', value: paramId.join(',') });
 
             return this.query(filters, null, 1, 999).pipe(map((resp: TotvsResponse<ICountry>) => resp.items));
-        } else {
+        } else { 
             return this.getById(id, null);
         }
     }
@@ -61,12 +61,12 @@ export class CountryService {
         return this.http.put<ICountry>(`${this.apiBaseUrl}/${Country.getInternalId(model)}`, model, this.headers);
     }
 
-    delete(id: string): Observable<Object> {
+    delete(id: string): Observable<object> {
         return this.http.delete(`${this.apiBaseUrl}/${id}`, this.headers);
     }
 
     getUrl(urlBase: string, filters: PoDisclaimer[], expandables: string[], page: number, pageSize: number): string {
-        const urlParams = new Array<String>();
+        const urlParams = new Array<string>();
 
         urlParams.push(`pageSize=${pageSize}`);
         urlParams.push(`page=${page}`);
