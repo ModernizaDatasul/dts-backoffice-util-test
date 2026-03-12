@@ -7,10 +7,6 @@ module.exports = tseslint.config(
   {
     files: ["**/*.ts"],
     extends: [
-      eslint.configs.recommended,
-      ...tseslint.configs.recommended,
-      ...tseslint.configs.stylistic,
-      ...angular.configs.tsRecommended,
     ],
     processor: angular.processInlineTemplates,
     rules: {

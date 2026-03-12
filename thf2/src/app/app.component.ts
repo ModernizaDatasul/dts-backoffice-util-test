@@ -39,6 +39,7 @@ export class AppComponent {
             ]
         },
         { label: 'Teste', action: this.goTo.bind(this, '/teste') },
+        { label: 'Config Theme', action: this.goTo.bind(this, '/configTheme') },
         //{ label: 'Link Externo', action: this.goTo.bind(this, '/externalLink') }
     ];
 

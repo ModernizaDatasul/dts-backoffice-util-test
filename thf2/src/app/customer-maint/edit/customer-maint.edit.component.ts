@@ -46,7 +46,6 @@ export class CustomerMaintEditComponent implements OnInit, OnDestroy {
 
     contactColumns: PoTableColumn[];
     contactTableActions: PoTableAction[];
-    contactItems: IContact[] = new Array<IContact>();
 
     constructor(
         private poI18nPipe: PoI18nPipe,
@@ -102,7 +101,6 @@ export class CustomerMaintEditComponent implements OnInit, OnDestroy {
                 if (response) {
                     this.customer = response;
                     if (!this.customer.contacts) { this.customer.contacts = []; }
-                    this.contactItems = this.customer.contacts;
                 }
             });
     }
@@ -180,7 +178,7 @@ export class CustomerMaintEditComponent implements OnInit, OnDestroy {
         this.contact = new Contact();
 
         let nextSeq = 1;
-        this.contactItems.map(item => {
+        this.customer.contacts.map(item => {
             if (item.seq >= nextSeq) {
                 nextSeq = item.seq + 1;
             }
@@ -204,9 +202,9 @@ export class CustomerMaintEditComponent implements OnInit, OnDestroy {
                 this.literals['modalDeleteMessage'],
                 [contactCode]),
             confirm: () => {
-                const idx = this.contactItems.findIndex(item => item.seq === itemToDelete.seq);
+                const idx = this.customer.contacts.findIndex(item => item.seq === itemToDelete.seq);
                 if (idx >= 0) {
-                    this.contactItems.splice(idx, 1);
+                    this.customer.contacts.splice(idx, 1);
                 }
             }
         });
@@ -214,11 +212,11 @@ export class CustomerMaintEditComponent implements OnInit, OnDestroy {
 
     onConfirmContact(): void {
         if (this.onValidFieldsContact()) {
-            const idx = this.contactItems.findIndex(item => item.seq === this.contact.seq);
+            const idx = this.customer.contacts.findIndex(item => item.seq === this.contact.seq);
             if (idx >= 0) {
-                this.contactItems[idx] = this.contact;
+                this.customer.contacts[idx] = this.contact;
             } else {
-                this.contactItems.push(this.contact);
+                this.customer.contacts.push(this.contact);
             }
             this.modalEditContact.close();
         }

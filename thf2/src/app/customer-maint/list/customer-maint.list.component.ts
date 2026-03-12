@@ -11,7 +11,8 @@ import { CustomerService } from '../../shared/services/customer.service';
 import { BranchService } from '../../shared/services/branch.service';
 import { CountryService } from '../../shared/services/country.service';
 import { ICountry } from '../../shared/model/country.model';
-import { IFilterRangeNumber, IScheduleParameters } from 'dts-backoffice-util';
+import { IFilterRangeNumber } from 'dts-backoffice-util';
+import { IScheduleParameters } from 'dts-backoffice-util';
 import { FilterRangeUtil } from 'dts-backoffice-util';
 import { DisclaimerUtil } from 'dts-backoffice-util';
 import { FieldValidationUtil } from 'dts-backoffice-util';
@@ -234,7 +235,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         this.disclaimers = [];
 
         this.addDisclaimer([
-            this.disclaimerUtil.makeDisclaimer('shortName', filter)
+            this.disclaimerUtil.makeDisclaimer('search', filter)
         ]);
     }
 
@@ -262,7 +263,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         this.filterBranchList = null;
         this.filterCountryList = null;
         this.filterStatusList = null;
-        this.filterActive = false;
+        this.filterActive = null;
     }
 
     refreshFilters(): void {
@@ -273,7 +274,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
             return;
         }
 
-        if (this.disclaimers.findIndex(disclaimer => disclaimer.property === 'shortName') === -1) {
+        if (this.disclaimers.findIndex(disclaimer => disclaimer.property === 'search') === -1) {
             this.poPageList.clearInputSearch();
         }
 
@@ -765,17 +766,28 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
            sendo executado por dentro do Menu do Datasul. Para realizar o teste, é necessário: compilar 
            o projeto, jogar o .war o tomcat, cadastrar o projeto no menu e executar */
         const program = {
-            prg: 'bas_lote_liquidac_acr',
+            prg: 'fchapb222',
             params: [
-                { type: 'character', value: 'ABC' },
-                { type: 'integer', value: '345' }
+                { 'type': 'character', 'value': '5' },
+                { 'type': 'character', 'value': '' },
+                { 'type': 'character', 'value': 'DP' },
+                { 'type': 'character', 'value': '0000001710' },
+                { 'type': 'character', 'value': '1' },
+                { 'type': 'character', 'value': '1' }
             ]
         };
-        this.menuDatasulService.callProgress(program);
+
+        //parent.postMessage({ program: program }, "*");
+
+        parent.postMessage({ program: { prg: 'bas_tit_ap_fin' } }, "*");
+
+        //
+
+        //this.menuDatasulService.callProgress(program);
 
         //this.menuDatasulService.openPath('html.inquiryItem', '1509;10;1', true);
 
-        this.menuDatasulService.openPath('html.customerMaint', 'sub-menu-2', true);
+        //this.menuDatasulService.openPath('html.customerMaint', 'sub-menu-2', true);
 
         const notification = {
             type: 'success',
@@ -820,7 +832,7 @@ export class CustomerMaintListComponent implements OnInit, OnDestroy {
         this.filterSettings = {
             action: this.searchBy.bind(this),
             advancedAction: this.advancedSearch.bind(this),
-            placeholder: this.literals['shortName']
+            placeholder: this.literals['search']
         };
 
         this.confirmAdvSearchAction = {

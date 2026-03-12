@@ -6,6 +6,12 @@
     ],
     "searchField": "shortName",
     "base64Key": false,
+    "routeDelay": [
+        {
+            "route": "totalByStatus",
+            "delay": 3000
+        }
+    ],
     "customRoutes": [
         {
             "name": "metadataList",
@@ -104,7 +110,7 @@
         {
             "name": "totalByStatus",
             "method": "GET",
-            "path": "/totBySatus",
+            "path": "/totByStatus",
             "script": "customer.js",
             "database": "database"
         },
@@ -825,7 +831,7 @@
             "internalId": 101,
             "shortName": "João",
             "name": "Joãozinho Maria da Silva Silveira",
-            "country": "ARG",
+            "country": "USA",
             "tax": true,
             "taxValue": 10.3,
             "percent": 89.0123456789,
@@ -847,7 +853,7 @@
             "department": "10",
             "federalID": "000712345678901",
             "observation": "Um observação média, para este cliente, muito importante.",
-            "status": 2
+            "status": 1
         },
         {
             "code": 2,
@@ -927,7 +933,7 @@
             "internalId": 107,
             "shortName": "Gabriela",
             "name": "Gabriela Pereira",
-            "country": "ARG",
+            "country": "USA",
             "status": 1,
             "contacts": [],
             "tax": true,
@@ -1095,7 +1101,8 @@
             "tax": false,
             "department": "10",
             "federalID": "12345678901",
-            "observation": ""
+            "observation": "",
+            "contacts": []
         },
         {
             "code": 24,
@@ -1599,7 +1606,8 @@
             "tax": false,
             "department": "66",
             "federalID": "12345678901",
-            "observation": ""
+            "observation": "",
+            "contacts": []
         },
         {
             "code": 67,
@@ -2535,6 +2543,13 @@
             "shortName": "212",
             "name": "121",
             "country": "CHI"
+        },
+        {
+            "status": 3,
+            "code": 3333,
+            "shortName": "Novo",
+            "name": "Novo mesmo",
+            "country": "BRA"
         }
     ],
     "db_mtd_delete_list": [],

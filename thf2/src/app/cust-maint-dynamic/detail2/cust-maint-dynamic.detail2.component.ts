@@ -12,7 +12,7 @@ import { CustomerService } from '../../shared/services/customer.service';
     standalone: false
 })
 export class CustMaintDynamicDetail2Component implements OnInit, OnDestroy {
-    public metadata: object;
+    public metadata = {};
     public serviceApi: string;
 
     breadcrumb: PoBreadcrumb;

@@ -4,18 +4,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   <parent>
     <groupId>com.totvs.thf</groupId>
     <artifactId>dts-backoffice-util-test-parent</artifactId>   
-    <version>11.5.X-SNAPSHOT</version>
+    <version>11.5.X-CL-SNAPSHOT</version>
+    <relativePath>../pom-cl.xml</relativePath>
   </parent>
-  <version>11.5.X-SNAPSHOT</version>
+  <version>11.5.X-CL-SNAPSHOT</version>
   <artifactId>dts-backoffice-util-test-wildfly</artifactId>  
   <packaging>war</packaging>
-  <dependencies>
-    <dependency>
-			<groupId>com.totvs.framework</groupId>
-			<artifactId>totvs-fwk-sso</artifactId>
-			<version>11.5.X-NFRW-SNAPSHOT</version>
-		</dependency>
-  </dependencies>
   <build>
     <finalName>dts-backoffice-util-test</finalName>
     <plugins>

@@ -22,23 +22,23 @@ export interface ICustomer {
 }
 
 export class Customer implements ICustomer {
-    code: number;
-    codeIdenf: string;
-    internalId: number;
-    shortName: string;
-    name: string;
-    country: string;
-    status: number;
-    tax: boolean;
-    taxValue: number;
-    percent: number;
-    admissDate: Date;
-    resignationDate: Date;
-    states: string;
-    contacts: IContact[];
-    department: string;
-    federalID: string;
-    observation: string;
+    code = 0;
+    codeIdenf = '';
+    internalId = 0;
+    shortName = '';
+    name = '';
+    country = '';
+    status = 0;
+    tax = false;
+    taxValue = 0;
+    percent = 0;
+    admissDate = new Date();
+    resignationDate = new Date();
+    states = '';
+    contacts: IContact[] = [];
+    department = '';
+    federalID = '';
+    observation = '';
 
     constructor(values: object = {}) {
         Object.assign(this, values);

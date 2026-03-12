@@ -47,7 +47,7 @@
             </po-popover>
 
             <span>
-                <i #iconObs id="iconObs" class="po-table-link  an an-file-text"></i>
+                <i #iconObs id="iconObs" class="po-table-link an an-file-text"></i>
             </span>
         </ng-template>        
     </po-table>
@@ -176,6 +176,7 @@
         [paramSelections]="paramSelectionsRpw"
         [disabledParams]="disableParamRpw"
         loading="true"
+        hideRepeatExecution="true"
         (endExecution)="endExecutionScheduleRPW($event)">
     </app-totvs-schedule-execution>
 

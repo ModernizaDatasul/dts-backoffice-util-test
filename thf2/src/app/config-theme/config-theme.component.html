@@ -1,0 +1,194 @@
+<po-page-default p-title="PO UI (Theme Service)">
+  <po-widget p-title="Theme Selector">
+    <div style="gap: 16px; display:flex; flex-direction: column">
+      <div style="gap: 16px; display:flex">
+        <po-button
+          p-label="PoThemeDefault (PO-UI Theme)"
+          [p-kind]="isThemeActive('default') ? 'primary' : 'secondary'"
+          (p-click)="changeTheme('default')"
+        />
+        <po-button
+          p-label="MyTheme (Custom Theme)"
+          [p-kind]="isThemeActive('mytheme') ? 'primary' : 'secondary'"
+          (p-click)="changeTheme('myTheme')"
+        />
+      </div>
+      <div style="gap: 16px; display:flex">
+        <po-radio-group
+          p-label="Theme Type"
+          class="po-lg-4 po-pl-2"
+          name="themeType"
+          [(ngModel)]="themeType"
+          [p-options]="themeTypeOptions"
+          (p-change)="changeThemeType($event)"
+        >
+        </po-radio-group>
+        <po-radio-group
+          p-label="Accessibility"
+          class="po-lg-4 po-pl-2"
+          name="themeA11y"
+          [(ngModel)]="themeA11y"
+          [p-options]="themeA11yOptions"
+          (p-change)="changeThemeA11y($event)"
+        >
+        </po-radio-group>
+        <po-radio-group
+          p-label="Size"
+          class="po-lg-4 po-pl-2"
+          name="themeSize"
+          [(ngModel)]="themeSize"
+          [p-options]="themeSizeOptions"
+          (p-change)="changeThemeSize($event)"
+        >
+        </po-radio-group>
+      </div>
+    </div>
+  </po-widget>
+
+  <div class="po-mt-2"></div>
+
+  <po-widget p-title="TYPOGRAPH">
+    <div class="typography po-row po-pt-2">
+      <po-widget p-title="--font-family-theme" class="po-md-4">
+        <div
+          class="typography-title-wrapper"
+          [style.color]="'var(--color-brand-01-base)'"
+        >
+          <span [style.fontFamily]="fontFamilyTheme">{{
+            fontFamilyTheme
+          }}</span>
+        </div>
+      </po-widget>
+      <po-widget p-title="--font-family-theme-bold" class="po-md-4 bold">
+        <div
+          class="typography-title-wrapper"
+          [style.color]="'var(--color-brand-01-base)'"
+        >
+          <span [style.fontFamily]="fontFamilyThemeBold">{{
+            fontFamilyThemeBold
+          }}</span>
+        </div>
+      </po-widget>
+      <po-widget
+        p-title="--font-family-theme-extra-light"
+        class="po-md-4 extra-light"
+      >
+        <div
+          class="typography-title-wrapper"
+          [style.color]="'var(--color-brand-01-base)'"
+        >
+          <span [style.fontFamily]="fontFamilyThemeExtraLight">{{
+            fontFamilyThemeExtraLight
+          }}</span>
+        </div>
+      </po-widget>
+    </div>
+  </po-widget>
+
+  <div class="po-mt-2"></div>
+
+  <po-widget p-title="COLORS">
+    <po-tabs>
+      <po-tab p-label="--color-brand-*" [p-active]="true">
+        <div style="display: grid; gap: 16px;">
+          <div
+            class="buttongroup-container"
+            *ngFor="let brand of getArrayFormObject(colors.brand)"
+          >
+            <po-button
+              *ngFor="let tone of getArrayFormObject(brand[1])"
+              [style.--background-color]="tone[1]"
+              [style.--background-hover]="tone[1]"
+              [style.--background-pressed]="tone[1]"
+              [p-label]="brand[0] + '-' + tone[0]"
+              [style.--color]="getTextColor(tone[0])"
+              (p-click)="
+                copyClipboard(
+                  'var(--color-brand-' +
+                    brand[0] +
+                    '-' +
+                    tone[0] +
+                    ') //' +
+                    tone[1]
+                )
+              "
+            ></po-button>
+          </div>
+        </div>
+      </po-tab>
+      <po-tab p-label="--color-action-*">
+        <div style="display: grid; gap: 16px;">
+          <div class="buttongroup-container">
+            <po-button
+              *ngFor="let action of getArrayFormObject(colors.action)"
+              [style.--background-color]="action[1]"
+              [style.--background-hover]="action[1]"
+              [style.--background-pressed]="action[1]"
+              [p-label]="action[0]"
+              [style.--color]="getTextColor(action[0])"
+              (p-click)="
+                copyClipboard(
+                  'var(--color-action-' + action[0] + ') //' + action[1]
+                )
+              "
+            ></po-button>
+          </div>
+        </div>
+      </po-tab>
+      <po-tab p-label="--color-neutral-*">
+        <div style="display: grid; gap: 16px;">
+          <div
+            class="buttongroup-container"
+            *ngFor="let neutral of getArrayFormObject(colors.neutral)"
+          >
+            <po-button
+              *ngFor="let tone of getArrayFormObject(neutral[1])"
+              [style.--background-color]="tone[1]"
+              [style.--background-hover]="tone[1]"
+              [style.--background-pressed]="tone[1]"
+              [p-label]="neutral[0] + '-' + tone[0]"
+              [style.--color]="getTextColor(tone[0])"
+              (p-click)="
+                copyClipboard(
+                  'var(--color-neutral-' +
+                    neutral[0] +
+                    '-' +
+                    tone[0] +
+                    ') //' +
+                    tone[1]
+                )
+              "
+            ></po-button>
+          </div>
+        </div>
+      </po-tab>
+      <po-tab p-label="--color-feedback-*">
+        <div style="display: grid; gap: 16px;">
+          <div
+            class="buttongroup-container"
+            *ngFor="let feedback of getArrayFormObject(colors.feedback)"
+          >
+            <po-button
+              *ngFor="let tone of getArrayFormObject(feedback[1])"
+              [style.--background-color]="tone[1]"
+              [style.--background-hover]="tone[1]"
+              [style.--background-pressed]="tone[1]"
+              [p-label]="feedback[0] + '-' + tone[0]"
+              [style.--color]="getTextColor(tone[0])"
+              (p-click)="
+                copyClipboard(
+                  'var(--color-feedback-' +
+                    feedback[0] +
+                    '-' +
+                    tone[0] +
+                    ') //' +
+                    tone[1]
+                )
+              "
+            ></po-button>
+          </div>
+        </div>
+      </po-tab>
+    </po-tabs>
+  </po-widget>
+</po-page-default>

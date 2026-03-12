@@ -8,7 +8,8 @@ const PROXY_CONFIG = [
             "/contact",
             "/order",
             "/genericsZoom",
-            "/jobScheduler"
+            "/jobScheduler",
+            "/jobExecution"
         ],
         target: "http://localhost:3000",
         secure: false,
@@ -19,7 +20,8 @@ const PROXY_CONFIG = [
         context: [
             "/josso",
             "/dts/datasul-rest",
-            "/qrcode/download"
+            "/qrcode/download",
+            "/api"
         ],
         //target: "https://caraiva:8180",
         target: "http://engjv-devdock01:8183",

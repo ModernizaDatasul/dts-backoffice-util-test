@@ -2,7 +2,9 @@
     "entityName": "jobScheduler",
     "entityLabel": "jobScheduler",
     "keys": [
-        "processID"
+        "processID",
+        "firstExecution",
+        "daily"
     ],
     "database": [
         {
@@ -77,6 +79,1378 @@
                     "minute": 41
                 }
             }
+        },
+        {
+            "status": "active",
+            "processID": "prog_exp_ems5",
+            "recurrent": false,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "Servidor 2"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "prog_exp_ems5"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "yes"
+                    },
+                    {
+                        "chave": "RPW_PRG_ESTILO",
+                        "valor": "0"
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": "1.00.00.001"
+                    },
+                    {
+                        "parametros_negocio": [
+                            {
+                                "chave": "destino",
+                                "valor": 2,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "arquivo",
+                                "valor": "",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "usuario",
+                                "valor": "AVILA",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "perfil",
+                                "valor": 880,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "meu-atrib",
+                                "valor": "NEW1",
+                                "tipo": "character"
+                            }
+                        ]
+                    },
+                    {
+                        "selecoes": [
+                            {
+                                "ind_dwb_set_type": "Regra",
+                                "cod_dwb_set": "estab",
+                                "cod_dwb_set_initial": "01",
+                                "cod_dwb_set_final": "FF",
+                                "log_dwb_rule": true
+                            },
+                            {
+                                "ind_dwb_set_type": "Exceção",
+                                "cod_dwb_set": "ccusto",
+                                "cod_dwb_set_initial": "30",
+                                "cod_dwb_set_final": "35",
+                                "log_dwb_rule": false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "firstExecution": "2025-4-28T14:47:00.000Z"
+        },
+        {
+            "status": "active",
+            "processID": "prog_exp_ems2",
+            "recurrent": false,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "Servidor 1"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "esp/prog_exp_ems2.p"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "no"
+                    },
+                    {
+                        "chave": "RPW_PRG_ESTILO",
+                        "valor": 0
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": ""
+                    },
+                    {
+                        "parametros_negocio": [
+                            {
+                                "chave": "destino",
+                                "valor": 2,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "arquivo",
+                                "valor": "",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "usuario",
+                                "valor": "AVILA",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "perfil",
+                                "valor": 880,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "meu-atrib",
+                                "valor": "NEW1",
+                                "tipo": "character"
+                            }
+                        ]
+                    },
+                    {
+                        "param_digita_def": [
+                            {
+                                "chave": "cod-estab",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "cod-ccusto",
+                                "tipo": "integer"
+                            }
+                        ]
+                    },
+                    {
+                        "param_digita_dados": [
+                            {
+                                "cod-estab": "19",
+                                "cod-ccusto": 17
+                            },
+                            {
+                                "cod-estab": "28",
+                                "cod-ccusto": 11
+                            },
+                            {
+                                "cod-estab": "73",
+                                "cod-ccusto": 90
+                            }
+                        ]
+                    }
+                ]
+            },
+            "firstExecution": "2025-4-28T14:48:00.000Z"
+        },
+        {
+            "status": "active",
+            "processID": "prog_exp_ems2",
+            "recurrent": true,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "Servidor 1"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "esp/prog_exp_ems2.p"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "no"
+                    },
+                    {
+                        "chave": "RPW_PRG_ESTILO",
+                        "valor": 0
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": ""
+                    },
+                    {
+                        "parametros_negocio": [
+                            {
+                                "chave": "destino",
+                                "valor": 2,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "arquivo",
+                                "valor": "",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "usuario",
+                                "valor": "AVILA",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "perfil",
+                                "valor": 880,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "meu-atrib",
+                                "valor": "NEW1",
+                                "tipo": "character"
+                            }
+                        ]
+                    },
+                    {
+                        "param_digita_def": [
+                            {
+                                "chave": "cod-estab",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "cod-ccusto",
+                                "tipo": "integer"
+                            }
+                        ]
+                    },
+                    {
+                        "param_digita_dados": [
+                            {
+                                "cod-estab": "19",
+                                "cod-ccusto": 17
+                            },
+                            {
+                                "cod-estab": "28",
+                                "cod-ccusto": 11
+                            },
+                            {
+                                "cod-estab": "73",
+                                "cod-ccusto": 90
+                            }
+                        ]
+                    }
+                ]
+            },
+            "firstExecution": "2025-4-28T14:50:00.000Z"
+        },
+        {
+            "status": "active",
+            "processID": "prog_exp_ems2",
+            "recurrent": true,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "Servidor 1"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "esp/prog_exp_ems2.p"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "no"
+                    },
+                    {
+                        "chave": "RPW_PRG_ESTILO",
+                        "valor": 0
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": ""
+                    },
+                    {
+                        "parametros_negocio": [
+                            {
+                                "chave": "destino",
+                                "valor": 2,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "arquivo",
+                                "valor": "",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "usuario",
+                                "valor": "AVILA",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "perfil",
+                                "valor": 880,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "meu-atrib",
+                                "valor": "NEW1",
+                                "tipo": "character"
+                            }
+                        ]
+                    },
+                    {
+                        "param_digita_def": [
+                            {
+                                "chave": "cod-estab",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "cod-ccusto",
+                                "tipo": "integer"
+                            }
+                        ]
+                    },
+                    {
+                        "param_digita_dados": [
+                            {
+                                "cod-estab": "19",
+                                "cod-ccusto": 17
+                            },
+                            {
+                                "cod-estab": "28",
+                                "cod-ccusto": 11
+                            },
+                            {
+                                "cod-estab": "73",
+                                "cod-ccusto": 90
+                            }
+                        ]
+                    }
+                ]
+            },
+            "firstExecution": "2025-4-28T14:54:00.000Z"
+        },
+        {
+            "status": "active",
+            "processID": "prog_exp_ems2",
+            "recurrent": true,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "Servidor 1"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "esp/prog_exp_ems2.p"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "no"
+                    },
+                    {
+                        "chave": "RPW_PRG_ESTILO",
+                        "valor": 0
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": ""
+                    },
+                    {
+                        "parametros_negocio": [
+                            {
+                                "chave": "destino",
+                                "valor": 2,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "arquivo",
+                                "valor": "",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "usuario",
+                                "valor": "AVILA",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "perfil",
+                                "valor": 880,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "meu-atrib",
+                                "valor": "NEW1",
+                                "tipo": "character"
+                            }
+                        ]
+                    },
+                    {
+                        "param_digita_def": [
+                            {
+                                "chave": "cod-estab",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "cod-ccusto",
+                                "tipo": "integer"
+                            }
+                        ]
+                    },
+                    {
+                        "param_digita_dados": [
+                            {
+                                "cod-estab": "19",
+                                "cod-ccusto": 17
+                            },
+                            {
+                                "cod-estab": "28",
+                                "cod-ccusto": 11
+                            },
+                            {
+                                "cod-estab": "73",
+                                "cod-ccusto": 90
+                            }
+                        ]
+                    }
+                ]
+            },
+            "firstExecution": "2025-4-28T14:56:00.000Z"
+        },
+        {
+            "status": "active",
+            "processID": "prog_exp_ems5",
+            "recurrent": true,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "RPW1"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "prog_exp_ems5"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "yes"
+                    },
+                    {
+                        "chave": "RPW_PRG_ESTILO",
+                        "valor": "0"
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": "1.00.00.001"
+                    },
+                    {
+                        "parametros_negocio": [
+                            {
+                                "chave": "destino",
+                                "valor": 2,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "arquivo",
+                                "valor": "",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "usuario",
+                                "valor": "AVILA",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "perfil",
+                                "valor": 880,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "meu-atrib",
+                                "valor": "NEW1",
+                                "tipo": "character"
+                            }
+                        ]
+                    },
+                    {
+                        "selecoes": [
+                            {
+                                "ind_dwb_set_type": "Regra",
+                                "cod_dwb_set": "estab",
+                                "cod_dwb_set_initial": "01",
+                                "cod_dwb_set_final": "FF",
+                                "log_dwb_rule": true
+                            },
+                            {
+                                "ind_dwb_set_type": "Exceção",
+                                "cod_dwb_set": "ccusto",
+                                "cod_dwb_set_initial": "30",
+                                "cod_dwb_set_final": "35",
+                                "log_dwb_rule": false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "firstExecution": "2025-4-28T17:46:00.000Z"
+        },
+        {
+            "status": "active",
+            "processID": "prog_exp_ems5",
+            "recurrent": true,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "RPW1"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "prog_exp_ems5"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "yes"
+                    },
+                    {
+                        "chave": "RPW_PRG_ESTILO",
+                        "valor": "0"
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": "1.00.00.001"
+                    },
+                    {
+                        "parametros_negocio": [
+                            {
+                                "chave": "destino",
+                                "valor": 2,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "arquivo",
+                                "valor": "",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "usuario",
+                                "valor": "AVILA",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "perfil",
+                                "valor": 880,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "meu-atrib",
+                                "valor": "NEW1",
+                                "tipo": "character"
+                            }
+                        ]
+                    },
+                    {
+                        "selecoes": [
+                            {
+                                "ind_dwb_set_type": "Regra",
+                                "cod_dwb_set": "estab",
+                                "cod_dwb_set_initial": "01",
+                                "cod_dwb_set_final": "FF",
+                                "log_dwb_rule": true
+                            },
+                            {
+                                "ind_dwb_set_type": "Exceção",
+                                "cod_dwb_set": "ccusto",
+                                "cod_dwb_set_initial": "30",
+                                "cod_dwb_set_final": "35",
+                                "log_dwb_rule": false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "firstExecution": "2025-4-28T17:46:00.000Z",
+            "daily": {
+                "hour": 17,
+                "minute": 39
+            }
+        },
+        {
+            "status": "active",
+            "processID": "prog_exp_ems5",
+            "recurrent": false,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "RPW1"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "prog_exp_ems5"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "yes"
+                    },
+                    {
+                        "chave": "RPW_PRG_ESTILO",
+                        "valor": "0"
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": "1.00.00.001"
+                    },
+                    {
+                        "parametros_negocio": [
+                            {
+                                "chave": "destino",
+                                "valor": 2,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "arquivo",
+                                "valor": "",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "usuario",
+                                "valor": "AVILA",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "perfil",
+                                "valor": 880,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "meu-atrib",
+                                "valor": "NEW1",
+                                "tipo": "character"
+                            }
+                        ]
+                    },
+                    {
+                        "selecoes": [
+                            {
+                                "ind_dwb_set_type": "Regra",
+                                "cod_dwb_set": "estab",
+                                "cod_dwb_set_initial": "01",
+                                "cod_dwb_set_final": "FF",
+                                "log_dwb_rule": true
+                            },
+                            {
+                                "ind_dwb_set_type": "Exceção",
+                                "cod_dwb_set": "ccusto",
+                                "cod_dwb_set_initial": "30",
+                                "cod_dwb_set_final": "35",
+                                "log_dwb_rule": false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "firstExecution": "2025-4-28T17:47:00.000Z"
+        },
+        {
+            "status": "active",
+            "processID": "prog_exp_ems5",
+            "firstExecution": "2025-4-28T17:50:00.000Z",
+            "recurrent": false,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "RPW1"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "prog_exp_ems5"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "yes"
+                    },
+                    {
+                        "chave": "RPW_PRG_ESTILO",
+                        "valor": 40
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": "1.00.00.001"
+                    },
+                    {
+                        "parametros_negocio": [
+                            {
+                                "chave": "destino",
+                                "valor": 2,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "arquivo",
+                                "valor": "",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "usuario",
+                                "valor": "AVILA",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "perfil",
+                                "valor": 880,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "meu-atrib",
+                                "valor": "NEW1",
+                                "tipo": "character"
+                            }
+                        ]
+                    },
+                    {
+                        "selecoes": [
+                            {
+                                "ind_dwb_set_type": "Regra",
+                                "cod_dwb_set": "estab",
+                                "cod_dwb_set_initial": "01",
+                                "cod_dwb_set_final": "FF",
+                                "log_dwb_rule": true
+                            },
+                            {
+                                "ind_dwb_set_type": "Exceção",
+                                "cod_dwb_set": "ccusto",
+                                "cod_dwb_set_initial": "30",
+                                "cod_dwb_set_final": "35",
+                                "log_dwb_rule": false
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "status": "active",
+            "processID": "prog_exp_ems2",
+            "recurrent": false,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "RPW2"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "esp/prog_exp_ems2.p"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "no"
+                    },
+                    {
+                        "chave": "RPW_PRG_ESTILO",
+                        "valor": 0
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": ""
+                    },
+                    {
+                        "parametros_negocio": [
+                            {
+                                "chave": "destino",
+                                "valor": 2,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "arquivo",
+                                "valor": "",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "usuario",
+                                "valor": "AVILA",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "perfil",
+                                "valor": 880,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "meu-atrib",
+                                "valor": "NEW1",
+                                "tipo": "character"
+                            }
+                        ]
+                    },
+                    {
+                        "param_digita_def": [
+                            {
+                                "chave": "cod-estab",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "cod-ccusto",
+                                "tipo": "integer"
+                            }
+                        ]
+                    },
+                    {
+                        "param_digita_dados": [
+                            {
+                                "cod-estab": "19",
+                                "cod-ccusto": 17
+                            },
+                            {
+                                "cod-estab": "28",
+                                "cod-ccusto": 11
+                            },
+                            {
+                                "cod-estab": "73",
+                                "cod-ccusto": 90
+                            }
+                        ]
+                    }
+                ]
+            },
+            "firstExecution": "2025-4-28T18:12:00.000Z"
+        },
+        {
+            "status": "active",
+            "processID": "prog_exp_ems5",
+            "recurrent": false,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "RPW1"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "prog_exp_ems5"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "yes"
+                    },
+                    {
+                        "chave": "RPW_PRG_ESTILO",
+                        "valor": "0"
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": "1.00.00.001"
+                    },
+                    {
+                        "parametros_negocio": [
+                            {
+                                "chave": "destino",
+                                "valor": 2,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "arquivo",
+                                "valor": "",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "usuario",
+                                "valor": "AVILA",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "perfil",
+                                "valor": 880,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "meu-atrib",
+                                "valor": "NEW1",
+                                "tipo": "character"
+                            }
+                        ]
+                    },
+                    {
+                        "selecoes": [
+                            {
+                                "ind_dwb_set_type": "Regra",
+                                "cod_dwb_set": "estab",
+                                "cod_dwb_set_initial": "01",
+                                "cod_dwb_set_final": "FF",
+                                "log_dwb_rule": true
+                            },
+                            {
+                                "ind_dwb_set_type": "Exceção",
+                                "cod_dwb_set": "ccusto",
+                                "cod_dwb_set_initial": "30",
+                                "cod_dwb_set_final": "35",
+                                "log_dwb_rule": false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "firstExecution": "2025-4-28T21:18:00.000Z"
+        },
+        {
+            "status": "active",
+            "processID": "prog_exp_ems5",
+            "recurrent": true,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "RPW1"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "prog_exp_ems5"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "yes"
+                    },
+                    {
+                        "chave": "RPW_PRG_ESTILO",
+                        "valor": "0"
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": "1.00.00.001"
+                    },
+                    {
+                        "parametros_negocio": [
+                            {
+                                "chave": "destino",
+                                "valor": 2,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "arquivo",
+                                "valor": "",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "usuario",
+                                "valor": "AVILA",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "perfil",
+                                "valor": 880,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "meu-atrib",
+                                "valor": "NEW1",
+                                "tipo": "character"
+                            }
+                        ]
+                    },
+                    {
+                        "selecoes": [
+                            {
+                                "ind_dwb_set_type": "Regra",
+                                "cod_dwb_set": "estab",
+                                "cod_dwb_set_initial": "01",
+                                "cod_dwb_set_final": "FF",
+                                "log_dwb_rule": true
+                            },
+                            {
+                                "ind_dwb_set_type": "Exceção",
+                                "cod_dwb_set": "ccusto",
+                                "cod_dwb_set_initial": "30",
+                                "cod_dwb_set_final": "35",
+                                "log_dwb_rule": false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "firstExecution": "2025-4-28T21:19:00.000Z"
+        },
+        {
+            "status": "active",
+            "processID": "prog_exp_ems5",
+            "recurrent": true,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "RPW1"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "prog_exp_ems5"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "yes"
+                    },
+                    {
+                        "chave": "RPW_PRG_ESTILO",
+                        "valor": "0"
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": "1.00.00.001"
+                    },
+                    {
+                        "parametros_negocio": [
+                            {
+                                "chave": "destino",
+                                "valor": 2,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "arquivo",
+                                "valor": "",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "usuario",
+                                "valor": "AVILA",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "perfil",
+                                "valor": 880,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "meu-atrib",
+                                "valor": "NEW1",
+                                "tipo": "character"
+                            }
+                        ]
+                    },
+                    {
+                        "selecoes": [
+                            {
+                                "ind_dwb_set_type": "Regra",
+                                "cod_dwb_set": "estab",
+                                "cod_dwb_set_initial": "01",
+                                "cod_dwb_set_final": "FF",
+                                "log_dwb_rule": true
+                            },
+                            {
+                                "ind_dwb_set_type": "Exceção",
+                                "cod_dwb_set": "ccusto",
+                                "cod_dwb_set_initial": "30",
+                                "cod_dwb_set_final": "35",
+                                "log_dwb_rule": false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "firstExecution": "2025-4-28T21:20:00.000Z"
+        },
+        {
+            "status": "active",
+            "processID": "prog_exp_ems5",
+            "recurrent": true,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "RPW1"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "prog_exp_ems5"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "yes"
+                    },
+                    {
+                        "chave": "RPW_PRG_ESTILO",
+                        "valor": "0"
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": "1.00.00.001"
+                    },
+                    {
+                        "parametros_negocio": [
+                            {
+                                "chave": "destino",
+                                "valor": 2,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "arquivo",
+                                "valor": "",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "usuario",
+                                "valor": "AVILA",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "perfil",
+                                "valor": 880,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "meu-atrib",
+                                "valor": "NEW1",
+                                "tipo": "character"
+                            }
+                        ]
+                    },
+                    {
+                        "selecoes": [
+                            {
+                                "ind_dwb_set_type": "Regra",
+                                "cod_dwb_set": "estab",
+                                "cod_dwb_set_initial": "01",
+                                "cod_dwb_set_final": "FF",
+                                "log_dwb_rule": true
+                            },
+                            {
+                                "ind_dwb_set_type": "Exceção",
+                                "cod_dwb_set": "ccusto",
+                                "cod_dwb_set_initial": "30",
+                                "cod_dwb_set_final": "35",
+                                "log_dwb_rule": false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "firstExecution": "2025-4-28T21:20:00.000Z",
+            "daily": {
+                "hour": 17,
+                "minute": 39
+            }
+        },
+        {
+            "status": "active",
+            "processID": "prog_exp_ems5",
+            "recurrent": false,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "RPW1"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "prog_exp_ems5"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "yes"
+                    },
+                    {
+                        "chave": "RPW_PRG_ESTILO",
+                        "valor": "0"
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": "1.00.00.001"
+                    },
+                    {
+                        "parametros_negocio": [
+                            {
+                                "chave": "destino",
+                                "valor": 2,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "arquivo",
+                                "valor": "",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "usuario",
+                                "valor": "AVILA",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "perfil",
+                                "valor": 880,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "meu-atrib",
+                                "valor": "NEW1",
+                                "tipo": "character"
+                            }
+                        ]
+                    },
+                    {
+                        "selecoes": [
+                            {
+                                "ind_dwb_set_type": "Regra",
+                                "cod_dwb_set": "estab",
+                                "cod_dwb_set_initial": "01",
+                                "cod_dwb_set_final": "FF",
+                                "log_dwb_rule": true
+                            },
+                            {
+                                "ind_dwb_set_type": "Exceção",
+                                "cod_dwb_set": "ccusto",
+                                "cod_dwb_set_initial": "30",
+                                "cod_dwb_set_final": "35",
+                                "log_dwb_rule": false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "firstExecution": "2025-4-28T21:21:00.000Z"
+        },
+        {
+            "status": "active",
+            "processID": "prog_exp_ems5",
+            "recurrent": true,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "RPW1"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "prog_exp_ems5"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "yes"
+                    },
+                    {
+                        "chave": "RPW_PRG_ESTILO",
+                        "valor": "0"
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": "1.00.00.001"
+                    },
+                    {
+                        "parametros_negocio": [
+                            {
+                                "chave": "destino",
+                                "valor": 2,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "arquivo",
+                                "valor": "",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "usuario",
+                                "valor": "AVILA",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "perfil",
+                                "valor": 880,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "meu-atrib",
+                                "valor": "NEW1",
+                                "tipo": "character"
+                            }
+                        ]
+                    },
+                    {
+                        "selecoes": [
+                            {
+                                "ind_dwb_set_type": "Regra",
+                                "cod_dwb_set": "estab",
+                                "cod_dwb_set_initial": "01",
+                                "cod_dwb_set_final": "FF",
+                                "log_dwb_rule": true
+                            },
+                            {
+                                "ind_dwb_set_type": "Exceção",
+                                "cod_dwb_set": "ccusto",
+                                "cod_dwb_set_initial": "30",
+                                "cod_dwb_set_final": "35",
+                                "log_dwb_rule": false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "firstExecution": "2025-4-28T21:22:00.000Z"
+        },
+        {
+            "status": "active",
+            "processID": "prog_exp_ems5",
+            "recurrent": true,
+            "executionParameter": {
+                "parametros": [
+                    {
+                        "chave": "rpwServer",
+                        "valor": "RPW1"
+                    },
+                    {
+                        "chave": "RPW_PROGRAM",
+                        "valor": "prog_exp_ems5"
+                    },
+                    {
+                        "chave": "RPW_PRG_EMS5",
+                        "valor": "yes"
+                    },
+                    {
+                        "chave": "RPW_PRG_ESTILO",
+                        "valor": "0"
+                    },
+                    {
+                        "chave": "RPW_PRG_VERS",
+                        "valor": "1.00.00.001"
+                    },
+                    {
+                        "parametros_negocio": [
+                            {
+                                "chave": "destino",
+                                "valor": 2,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "arquivo",
+                                "valor": "",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "usuario",
+                                "valor": "AVILA",
+                                "tipo": "character"
+                            },
+                            {
+                                "chave": "perfil",
+                                "valor": 880,
+                                "tipo": "integer"
+                            },
+                            {
+                                "chave": "meu-atrib",
+                                "valor": "NEW1",
+                                "tipo": "character"
+                            }
+                        ]
+                    },
+                    {
+                        "selecoes": [
+                            {
+                                "ind_dwb_set_type": "Regra",
+                                "cod_dwb_set": "estab",
+                                "cod_dwb_set_initial": "01",
+                                "cod_dwb_set_final": "FF",
+                                "log_dwb_rule": true
+                            },
+                            {
+                                "ind_dwb_set_type": "Exceção",
+                                "cod_dwb_set": "ccusto",
+                                "cod_dwb_set_initial": "30",
+                                "cod_dwb_set_final": "35",
+                                "log_dwb_rule": false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "firstExecution": "2025-4-28T21:22:00.000Z",
+            "daily": {
+                "hour": 17,
+                "minute": 39
+            }
         }
-    ]
+    ],
+    "mainPath": "/jobScheduler"
 }

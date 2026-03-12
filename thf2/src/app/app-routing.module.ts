@@ -52,6 +52,10 @@ const routes: Routes = [
         loadChildren: () => import('./teste/teste.module').then(m => m.TesteModule)
     },
     {
+        path: 'configTheme',
+        loadChildren: () => import('./config-theme/config-theme.module').then(m => m.ConfigThemeModule)
+    },
+    {
         path: 'externalLink',
         component: AppComponent,
         resolve: {

@@ -6,16 +6,16 @@
 	<parent>
 		<groupId>com.totvs.thf</groupId>
 		<artifactId>totvs-thf2-parent</artifactId>
-	    <version>11.5.X-SNAPSHOT</version>
+		<version>11.5.X-CL-SNAPSHOT</version>
 	</parent>
-	<version>11.5.X-SNAPSHOT</version>
+	<version>11.5.X-CL-SNAPSHOT</version>
 	<artifactId>dts-backoffice-util-test-parent</artifactId>
 	
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>thf2</module>
-		<module>war-wildfly</module>
+		<module>thf2/pom-cl.xml</module>
+		<module>war-wildfly/pom-cl.xml</module>
 	</modules>
 
 </project>

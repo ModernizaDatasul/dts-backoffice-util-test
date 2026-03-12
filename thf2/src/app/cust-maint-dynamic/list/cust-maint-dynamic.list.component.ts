@@ -14,7 +14,7 @@ import { Customer } from '../../shared/model/customer.model';
 export class CustMaintDynamicListComponent implements OnInit, OnDestroy {
     @ViewChild('dynamicTable', { static: true }) dynamicTable: PoPageDynamicTableComponent;
 
-    public metadata: object;
+    public metadata = {};
     public serviceApi: string;
 
     private servCustomerSubscription$: Subscription;

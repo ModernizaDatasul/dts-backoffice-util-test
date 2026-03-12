@@ -110,7 +110,7 @@ export class CustomerService {
     }
 
     getTotalByStatus(): Observable<object> {
-        return this.http.get('/customer/totBySatus', this.headers);
+        return this.http.get('/customer/totByStatus', this.headers);
     }
 
     getUrl(urlBase: string, filters: PoDisclaimer[], expandables: string[], page: number, pageSize: number): string {

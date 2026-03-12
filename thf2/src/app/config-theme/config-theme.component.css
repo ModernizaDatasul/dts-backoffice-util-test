@@ -1,0 +1,55 @@
+.typography {
+    box-sizing: border-box;
+    color: #545454;
+    font-family: var(--font-family-theme);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.4;
+
+    .bold {
+        --font-family: var(--font-family-theme-bold);
+    }
+
+    .extra-light {
+        --font-family: var(--font-family-theme-extra-light);
+    }
+
+    .typography-title-wrapper {
+        text-transform: uppercase;
+        font-size: var(--font-size-xl);
+        line-height: 1;
+    }
+}
+
+.buttongroup-container {
+    display: flex;
+
+    & po-button {
+        display: grid;
+        width: 100%;
+        --padding: 0;
+        --border-radius: 0;
+        --border-width: 0;
+
+        &:focus-within {
+            z-index: 1;
+        }
+
+        &:hover {
+            --shadow: var(--shadow-md);
+            --font-weight: var(--font-weight-bold);
+        }
+
+        &:first-child {
+            --border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
+        }
+
+        &:last-child {
+            --border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+        }
+
+        &:only-child {
+            --border-radius: var(--border-radius-md);
+        }
+    }
+}
