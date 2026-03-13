@@ -23,9 +23,9 @@
             "styles": [
               "node_modules/@po-ui/style/css/po-theme-default.min.css",
               "node_modules/@po-ui/style/css/po-theme-core.min.css",
+              "node_modules/@progress/kendo-theme-default/dist/all.css",
               "node_modules/@totvs/po-theme/css/po-theme-default-variables.min.css",
               "node_modules/@totvs/po-theme/css/po-theme-default.min.css",
-              "node_modules/@progress/kendo-theme-default/dist/all.css",
               "src/styles.css"
             ],
             "scripts": [],
@@ -89,9 +89,9 @@
             "styles": [
               "node_modules/@po-ui/style/css/po-theme-default.min.css",
               "node_modules/@po-ui/style/css/po-theme-core.min.css",
+              "node_modules/@progress/kendo-theme-default/dist/all.css",
               "node_modules/@totvs/po-theme/css/po-theme-default-variables.min.css",
               "node_modules/@totvs/po-theme/css/po-theme-default.min.css",
-              "node_modules/@progress/kendo-theme-default/dist/all.css",
               "src/styles.css"
             ],
             "assets": [
@@ -126,10 +126,30 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
-      "style": "css"
+      "style": "css",
+      "type": "component"
     },
     "@schematics/angular:directive": {
-      "prefix": "app"
+      "prefix": "app",
+      "type": "directive"
+    },
+    "@schematics/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
     }
   },
   "cli": {
